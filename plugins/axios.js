@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default defineNuxtPlugin((NuxtApp) => {
-  axios.defaults.baseURL = "https://pokeapi.co/api/v2";
+  axios.defaults.baseURL = process.env.API_BASE;
   // axios.defaults.withCredentials = true
   return {
     provide: {
