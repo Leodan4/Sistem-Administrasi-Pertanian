@@ -3,8 +3,6 @@ import axios from "../plugins/axios";
 
 const $axios = axios().provide.axios;
 
-console.log($axios);
-
 export const useGeneralStore = defineStore("general", {
   state: () => ({
     name: "",
