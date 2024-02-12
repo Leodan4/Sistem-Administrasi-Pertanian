@@ -7,9 +7,7 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   vite: {
     define: {
-      "process.env.NUXT_API_ENDPOINT_BASE_URL": JSON.stringify(
-        process.env.NUXT_API_ENDPOINT_BASE_URL
-      ),
+      "process.env.API_BASE": JSON.stringify(process.env.NUXT_PUBLIC_API_BASE),
     },
   },
   postcss: {
