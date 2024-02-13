@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   ssr: false,
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@nuxt/image"],
   vite: {
     define: {
       "process.env.API_BASE": JSON.stringify(process.env.NUXT_PUBLIC_API_BASE),
@@ -15,5 +15,9 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  image: {
+    format: ["webp"],
+    presets: {},
   },
 });
