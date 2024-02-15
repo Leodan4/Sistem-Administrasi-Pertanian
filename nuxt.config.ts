@@ -26,7 +26,19 @@ export default defineNuxtConfig({
     },
   },
   image: {
+    provider: "ipx",
     format: ["webp"],
-    presets: {},
+    presets: {
+      default: {
+        modifiers: {
+          format: "webp",
+          loading: "lazy",
+          quality: "100",
+        },
+      },
+      svg: {
+        modifiers: { format: "svg", loading: "lazy", quality: "100" },
+      },
+    },
   },
 });
