@@ -3,7 +3,7 @@
   <MainLayout>
     <div class="w-full mt-8 px-8">
       <div class="md:flex justify-between md:space-y-0 space-y-2 items-center">
-        <div class="w-[300px]">
+        <div class="w-full md:w-4/12">
           <label
             for="default-search"
             class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="md:w-[200px] w-[300px]">
+        <div class="w-full md:w-4/12 lg:w-3/12">
           <vue-date-picker
             class="custom-date-picker"
             placeholder="Pilih Tanggal"

@@ -7,10 +7,10 @@
         route.fullPath === navigate ? 'bg-[#E4262C] fill-white text-white' : ''
       "
       @click="router.push(navigate)"
-      class="flex items-center justify-center md:justify-normal cursor-pointer transition-colors duration-200 ease-in-out hover:bg-[#E4262C] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2 w-full"
+      class="flex items-center justify-normal cursor-pointer transition-colors duration-200 ease-in-out hover:bg-[#E4262C] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2 w-full"
     >
       <component :is="iconComponent" class="" />
-      <p class="md:block hidden text-lg">{{ menuText }}</p>
+      <p class="block sm:text-[12px] md:text-lg">{{ menuText }}</p>
     </div>
   </div>
 </template>
