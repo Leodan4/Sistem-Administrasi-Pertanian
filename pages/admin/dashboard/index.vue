@@ -11,7 +11,7 @@
           </h4>
           <p class="text-sm tracking-wide">Halo, Sugeng!</p>
         </div>
-        <div class="md:block hidden">
+        <div class="lg:block hidden">
           <NuxtImg
             class="absolute bottom-0 right-6 h-[130px]"
             src="/dashboard/welcome_dashboard.svg"

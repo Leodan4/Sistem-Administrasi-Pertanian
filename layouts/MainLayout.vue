@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen bg-[#F6F7FF] relative">
+  <div class="h-screen w-screen bg-[#F6F7FF] relative">
     <TopNav></TopNav>
-    <div class="flex">
+    <div class="flex w-full h-full">
       <SideNav />
       <div class="z-10 mt-[64px] flex-grow overflow-auto">
         <slot />
