@@ -7,12 +7,17 @@ export const useGeneralStore = defineStore("general", {
   state: () => ({
     name: "",
     data: null,
+    detailData: null,
   }),
   persist: true,
   actions: {
     Hello(name) {
       this.name = name;
       return "Hello" + this.name;
+    },
+
+    async detail(value) {
+      this.detailData = value;
     },
 
     async getApiPokemon(type) {

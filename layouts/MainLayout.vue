@@ -3,7 +3,7 @@
     <TopNav></TopNav>
     <div class="flex">
       <SideNav />
-      <div class="z-10 mt-[64px] flex-grow">
+      <div class="z-10 mt-[64px] flex-grow overflow-auto">
         <slot />
       </div>
     </div>
