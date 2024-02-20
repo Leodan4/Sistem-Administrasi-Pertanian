@@ -23,7 +23,7 @@
   <aside
     id="default-sidebar"
     aria-label="Sidebar"
-    class="bg-white h-screen pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 absolute sm:static top-0 flex-col"
+    class="bg-white h-screen overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 absolute sm:static top-0 flex-col"
   >
     <div class="flex justify-center font-bold text-xl mb-7">Logo</div>
     <div class="flex flex-col space-y-4 flex-grow">
@@ -43,9 +43,11 @@
     <div class="bg-gray-100 h-20 flex px-4 items-center">
       <div class="flex items-center w-full space-x-2 justify-normal">
         <NuxtImg
-          class="w-12 h-12 rounded-full self-center"
+          @click="router.push('/admin/profile')"
+          class="w-12 h-12 rounded-full self-center cursor-pointer"
           src="/dashboard/test_image.png"
-          alt="Rounded avatar"
+          alt="Rounded
+        avatar"
         />
         <div class="flex flex-col items-start justify-center">
           <h4 class="text-sm">Atsal Faiz</h4>
@@ -60,6 +62,7 @@
 <script setup>
 import MenuItem from "./MenuItem.vue";
 import LogoutIcon from "../../assets/icon/logout.svg?component";
+const router = useRouter();
 import { initFlowbite } from "flowbite";
 
 onMounted(() => {
