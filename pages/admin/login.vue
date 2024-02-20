@@ -25,18 +25,16 @@
             <form @submit.prevent="handleLogin">
               <div class="lg:mx-6 md:mx-2 mt-6 space-y-6">
                 <div>
-                  <h3 class="mb-1">Email</h3>
-                  <label for="email" class="sr-only">Email</label>
-                  <input required type="text" name="email" id="email"
-                    class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                  <span class="">Email</span>
+                  <input required for="email" type="text" name="email" id="email"
+                    class="block w-full px-3 py-1 my-2 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                     placeholder="Masukkan Email" v-model="email" />
                 </div>
                 <div>
-                  <h3 class="mb-1">Sandi</h3>
-                  <label for="password" class="sr-only">Password</label>
+                  <h3 class="">Sandi</h3>
                   <div class="relative">
-                    <input required :type="showPassword ? 'text' : 'password'" name="password" id="password"
-                      class="block w-full px-3 py-1 text-base text-neutral-600 bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                    <input required for="password" :type="showPassword ? 'text' : 'password'" name="password" id="password"
+                      class="block w-full px-3 py-1 my-2 text-base text-neutral-600 bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                       placeholder="Masukkan Sandi" v-model="password" />
                     <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                       @click="togglePasswordVisibility">
@@ -66,12 +64,10 @@
 </template>
 
 <script>
-import axios from "../plugins/axios";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuth } from "~/stores/auth";
-import { defineStore } from "pinia";
 import Swal from 'sweetalert2';
+import { useLoginStore } from "~/stores/login"; // Impor store login
 
 export default {
   setup() {
@@ -79,10 +75,7 @@ export default {
     const password = ref('');
     const showPassword = ref(false);
     const router = useRouter();
-
-    const auth_data = computed(() => {
-      useAuth().isAuth_data = true
-    })
+    const loginStore = useLoginStore(); // Gunakan store login
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
@@ -94,52 +87,18 @@ export default {
         password: password.value,
       };
 
-
-      const defaultUrl = process.env.API_BASE;
-
-      const api = axios.create({
-        baseURL: defaultUrl,
-        // headers: {
-        //   common: {
-        //     Authorization: Bearer ${localStorage.getItem("token")},
-        //   },
-        // },
-      });
-
-      api.post('/login/', loginData)
-        .then((response) => {
-          console.log('Login successful:', response.data);
-          localStorage.setItem('token', response.data.token)
-          // Navigasi ke halaman dashboard setelah login berhasil
-
+      // Panggil action loginUser dari store login
+      loginStore.loginUser(loginData)
+        .then(() => {
+          // Jika login berhasil, navigasi ke halaman dashboard
           router.push('/dashboard');
 
-          Swal.fire({
-            icon: 'success',
-            title: '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
-            showConfirmButton: false,
-            timer: 2000, // Auto-close the alert after 2 seconds
-            didClose: () => {
-              // Optionally perform any action after the alert is closed
-            },
-          });
+          // Tambahkan logika lain jika perlu
         })
         .catch((error) => {
-          if (error.response) {
-            // Objek error.response ada, kita dapat membaca propertinya
-            console.error('Login failed. Server response:', error.response);
-            console.error('Error message:', error.response.data);
-          } else {
-            // Objek error.response tidak ada, mungkin masalah koneksi atau server mati
-            console.error('Login failed. Unable to connect to the server.');
-          }
-          Swal.fire({
-            icon: 'error',
-            title: '<span style="font-size: 40px; font-weight: bold; color: red; padding-top: 5px;"> Login Failed! </span>',
-            html: '<div style="padding-bottom: 10px; font-weight: bold;">Invalid email or password. Please try again</div>',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Try Again!',
-          });
+          // Tangani kesalahan jika login gagal
+          console.error('Login failed:', error);
+          // Tampilkan pesan kesalahan kepada pengguna jika diperlukan
         });
     };
 
