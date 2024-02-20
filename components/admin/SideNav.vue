@@ -23,7 +23,7 @@
   <aside
     id="default-sidebar"
     aria-label="Sidebar"
-    class="bg-white h-screen overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 absolute sm:static top-0 flex-col"
+    class="bg-white h-screen min-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 absolute sm:static top-0 flex-col"
   >
     <div class="flex justify-center font-bold text-xl mb-7">Logo</div>
     <div class="flex flex-col space-y-4 flex-grow">
@@ -41,7 +41,9 @@
       />
     </div>
     <div class="bg-gray-100 h-20 flex px-4 items-center">
-      <div class="flex items-center w-full space-x-2 justify-normal">
+      <div
+        class="flex items-center w-full space-x-2 justify-center lg:justify-normal"
+      >
         <NuxtImg
           @click="router.push('/admin/profile')"
           class="w-12 h-12 rounded-full self-center cursor-pointer"
@@ -53,7 +55,9 @@
           <h4 class="text-sm">Atsal Faiz</h4>
           <p class="text-sm">Atsalfaiz@gmail.com</p>
         </div>
-        <div class="cursor-pointer flex pl-4"><LogoutIcon /></div>
+        <div class="cursor-pointer flex pl-4">
+          <LogoutIcon />
+        </div>
       </div>
     </div>
   </aside>
