@@ -3,7 +3,7 @@
         <div class="h-screen w-screen flex items-center justify-center bg-cover"
             :style="{ 'background-image': 'url(/assets/bg-login.png)' }">
             <div
-                class="mx-auto text-left align-bottom transition-all transform bg-white rounded-[40px] sm:align-middle sm:max-w-lg sm:w-full">
+                class="w-full mx-4 text-left align-bottom transition-all transform bg-white rounded-[40px] sm:align-middle sm:max-w-lg ">
                 <div
                     class="grid flex-wrap items-center justify-center grid-cols-1 mx-auto shadow-xl lg:grid-cols-1 rounded-[40px]">
                     <div class="w-full px-8 py-5">
@@ -23,7 +23,7 @@
                         <!-- Tampilan form untuk memasukkan email -->
                         <div v-if="currentStep === 'email'">
                             <form @submit.prevent="handleResetPassword">
-                                <div class="mt-6 space-y-6 mx-6">
+                                <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
                                         <h3 class="mb-1">Email</h3>
                                         <label for="email" class="sr-only">Email</label>
@@ -45,7 +45,7 @@
                         <!-- Tampilan form untuk memasukkan OTP -->
                         <div v-else-if="currentStep === 'otp'">
                             <form @submit.prevent="handleVerifyOTP">
-                                <div class="mt-6 space-y-6 mx-6">
+                                <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
                                         <h3 class="mb-1">OTP</h3>
                                         <label for="otp" class="sr-only">OTP</label>
@@ -67,7 +67,7 @@
                         <!-- Tampilan form untuk memasukkan password baru -->
                         <div v-else-if="currentStep === 'newPassword'">
                             <form @submit.prevent="handleSetNewPassword">
-                                <div class="mt-6 space-y-6 mx-6">
+                                <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
                                         <h3 class="mb-1">Password Baru</h3>
                                         <label for="newPassword" class="sr-only">Password Baru</label>

@@ -14,20 +14,20 @@
                             <div class="py-3">
                                 <span for="nama" class="font-semibold">Nama</span>
                                 <input required type="text" name="nama" id="nama"
-                                    class="block w-full px-3 py-1 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan Nama" v-model="nama" />
                             </div>
                             <div class="py-3">
                                 <span for="tamu" class="font-semibold">Jumlah Tamu</span>
                                 <input required type="bolean" name="tamu" id="tamu"
-                                    class="block w-full px-3 py-1 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Masukan Jumlah Tamu" v-model="no_telp" />
+                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    placeholder="Masukan Jumlah Tamu" v-model="tamu" />
                             </div>
                             <div class="py-3">
                                 <span for="janji" class="font-semibold">Ada Janji?</span>
                                 <select required name="janji" id="janji"
-                                    class="block w-full px-3 py-1 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Pilih" v-model="instansi">
+                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    placeholder="Pilih" v-model="janji">
                                     <option value="Instansi A">Ada</option>
                                     <option value="Instansi B">Tiada</option>
                                     <option value="Instansi C">Semoga Ada</option>
@@ -39,23 +39,27 @@
                             <div class="py-3">
                                 <span for="no_telp" class="font-semibold">No Telp</span>
                                 <input required type="bolean" name="no_telp" id="no_telp"
-                                    class="block w-full px-3 py-1 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan No Telp" v-model="no_telp" />
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
                                 <select required name="ditemui" id="ditemui"
-                                    class="block w-full px-3 py-1 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Pilih Nama Yang Ditemui" v-model="instansi">
-                                    <option value="Instansi A">Saipul</option>
-                                    <option value="Instansi B">Rojali</option>
-                                    <option value="Instansi C">Mahmud</option>
+                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    placeholder="Pilih Nama Yang Ditemui" v-model="ditemui">
+                                    <option value="Opsi A">Ahmad</option>
+                                    <option value="Opsi B">Abdul</option>
+                                    <option value="Opsi C">Burhan</option>
+                                    <option value="Opsi D">Basori</option>
+                                    <option value="Opsi E">Caca</option>
+                                    <option value="Opsi F">David</option>
+                                    <option value="Opsi G">Eko</option>
                                 </select>
                             </div>
                             <div class="py-3">
                                 <span for="file" class="font-semibold">Upload file</span>
                                 <input required type="file" name="file" id="file"
-                                    class="block w-full px-3 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                    class="block w-full px-3 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan No Telp" />
                             </div>
                         </div>
@@ -66,7 +70,7 @@
                             <span for="keterangan" class="font-semibold">Keterangan</span>
                             <textarea name="keterangan" id="keterangan"
                                 class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                placeholder="Masukkan keterangan"></textarea>
+                                placeholder="Masukkan keterangan"  v-model="keterangan"></textarea>
                         </div>
                     </div>
 
