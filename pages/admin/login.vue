@@ -26,16 +26,16 @@
               <div class="lg:mx-6 md:mx-2 mt-6 space-y-6">
                 <div>
                   <span class="">Email</span>
-                  <input required for="email" type="text" name="email" id="email"
+                  <input required for="email" type="text" name="email" id="email" v-model="email"
                     class="block w-full px-3 py-1 my-2 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Masukkan Email" v-model="email" />
+                    placeholder="Masukkan Email"/>
                 </div>
                 <div>
                   <h3 class="">Sandi</h3>
                   <div class="relative">
-                    <input required for="password" :type="showPassword ? 'text' : 'password'" name="password" id="password"
+                    <input required for="password" :type="showPassword ? 'text' : 'password'" name="password" id="password" v-model="password"
                       class="block w-full px-3 py-1 my-2 text-base text-neutral-600 bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                      placeholder="Masukkan Sandi" v-model="password" />
+                      placeholder="Masukkan Sandi"/>
                     <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                       @click="togglePasswordVisibility">
                       <i :class="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
@@ -63,11 +63,13 @@
   </section>
 </template>
 
+
 <script>
+import axios from '~/plugins/axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
-import { useLoginStore } from "~/stores/login"; // Impor store login
+import { useLoginStore } from "~/stores/login"; // Import your store
 
 export default {
   setup() {
@@ -75,31 +77,40 @@ export default {
     const password = ref('');
     const showPassword = ref(false);
     const router = useRouter();
-    const loginStore = useLoginStore(); // Gunakan store login
+    const loginStore = useLoginStore();  // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
       const loginData = {
         email: email.value,
         password: password.value,
       };
+      
 
-      // Panggil action loginUser dari store login
-      loginStore.loginUser(loginData)
-        .then(() => {
-          // Jika login berhasil, navigasi ke halaman dashboard
-          router.push('/dashboard');
+      try {
+        const response = await loginStore.loginUser(loginData); // Use store action to login
 
-          // Tambahkan logika lain jika perlu
-        })
-        .catch((error) => {
-          // Tangani kesalahan jika login gagal
-          console.error('Login failed:', error);
-          // Tampilkan pesan kesalahan kepada pengguna jika diperlukan
+        // Navigasi ke halaman dashboard setelah login berhasil
+        router.push('/admin/dashboard');
+
+        Swal.fire({
+          icon: 'success',
+          title: '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
+          showConfirmButton: false,
+          timer: 2000,
+          didClose: () => {
+            // Optionally perform any action after the alert is closed
+          },
         });
+
+        return response;
+      } catch (error) {
+        // Handle error here if needed
+        console.error("Failed to login", error);
+      }
     };
 
     return {
@@ -112,7 +123,86 @@ export default {
   },
 };
 </script>
+
   
 <style scoped>
 @import '@fortawesome/fontawesome-free/css/all.css';
 </style>
+
+
+
+
+
+
+<!-- <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
+import axios from 'axios'; 
+// import { useLoginStore } from "~/stores/login"; 
+
+export default {
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const showPassword = ref(false);
+    const router = useRouter();
+    // const loginStore = useLoginStore();  
+
+    const togglePasswordVisibility = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    const handleLogin = async () => {
+      const loginData = {
+        email: email.value,
+        password: password.value,
+      };
+
+      axios.post('/login', loginData)
+        .then((response) => {
+          console.log('Login successful:', response.data);
+          localStorage.setItem('token', response.data.token)
+          // Navigasi ke halaman dashboard setelah login berhasil
+
+          router.push('/dashboard');
+
+          Swal.fire({
+            icon: 'success',
+            title: '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
+            showConfirmButton: false,
+            timer: 2000,
+            didClose: () => {
+              // Optionally perform any action after the alert is closed
+            },
+          });
+        })
+        .catch((error) => {
+          if (error.response) {
+            // Objek error.response ada, kita dapat membaca propertinya
+            console.error('Login failed. Server response:', error.response);
+            console.error('Error message:', error.response.data);
+          } else {
+            // Objek error.response tidak ada, mungkin masalah koneksi atau server mati
+            console.error('Login failed. Unable to connect to the server.');
+          }
+          Swal.fire({
+            icon: 'error',
+            title: '<span style="font-size: 40px; font-weight: bold; color: red; padding-top: 5px;"> Login Failed! </span>',
+            html: '<div style="padding-bottom: 10px; font-weight: bold;">Invalid email or password. Please try again</div>',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Try Again!',
+          });
+        });
+    };
+
+    return {
+      email,
+      password,
+      showPassword,
+      togglePasswordVisibility,
+      handleLogin,
+    };
+  },
+};
+</script> -->

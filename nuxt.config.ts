@@ -2,6 +2,10 @@
 import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
   pages: true,
+  devServer: {
+    port: 3000, 
+    //3140,3000
+  },
   ssr: false,
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
