@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#E4262C] w-full h-min absolute top-0">
+  <div class="bg-[#E4262C] w-full h-min fixed z-20 top-0">
     <div class="py-5 grid place-content-end px-4 text-white">
       {{ formattedDate }}
     </div>

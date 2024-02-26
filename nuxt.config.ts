@@ -3,6 +3,12 @@ import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
   pages: true,
   ssr: false,
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.NUXT_PUBLIC_API_BASEL,
+    },
+  },
+  plugins: ["~/plugins/axios.js"],
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@nuxt/image"],
@@ -23,22 +29,6 @@ export default defineNuxtConfig({
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
-    },
-  },
-  image: {
-    provider: "ipx",
-    format: ["webp"],
-    presets: {
-      default: {
-        modifiers: {
-          format: "webp",
-          loading: "lazy",
-          quality: "100",
-        },
-      },
-      svg: {
-        modifiers: { format: "svg", loading: "lazy", quality: "100" },
-      },
     },
   },
 });

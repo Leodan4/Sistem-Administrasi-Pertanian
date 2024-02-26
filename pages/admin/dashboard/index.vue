@@ -2,6 +2,7 @@
 <template>
   <MainLayout>
     <div class="w-full mt-20 text-white px-8">
+      <!-- End Header -->
       <div
         class="bg-[#E4262C] rounded-xl h-[90px] px-6 flex py-4 justify-between relative w-full"
       >
@@ -12,10 +13,90 @@
           <p class="text-sm tracking-wide">Halo, Sugeng!</p>
         </div>
         <div class="lg:block hidden">
-          <NuxtImg
+          <img
             class="absolute bottom-0 right-6 h-[130px]"
             src="/dashboard/welcome_dashboard.svg"
           />
+        </div>
+      </div>
+      <!-- Header -->
+      <div class="grid md:grid-cols-3 grid-cols-1 mt-10 gap-3 md:gap-6">
+        <div
+          class="bg-white border-2 flex space-x-4 border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+        >
+          <div
+            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <UsersIcon class="fill-blue-500" width="30" height="30" />
+          </div>
+          <div class="flex flex-col flex-grow">
+            <h3 class="font-bold text-2xl text-black">30</h3>
+            <span class="text-gray-500 text-sm tracking-wide"
+              >Pengunjung Tamu Umum</span
+            >
+          </div>
+        </div>
+        <div
+          class="bg-white border-2 flex space-x-4 border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+        >
+          <div
+            class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center"
+          >
+            <BsBoxSeamIcon class="fill-red-500" width="33" height="33" />
+          </div>
+          <div class="flex flex-col flex-grow">
+            <h3 class="font-bold text-2xl text-black">41</h3>
+            <span class="text-gray-500 text-sm tracking-wide"
+              >Pengunjung Layanan Kirim</span
+            >
+          </div>
+        </div>
+        <div
+          class="bg-white border-2 flex space-x-4 border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+        >
+          <div
+            class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center"
+          >
+            <ChartIcon class="fill-green-500" width="30" height="30" />
+          </div>
+          <div class="flex flex-col flex-grow">
+            <h3 class="font-bold text-2xl text-black">76</h3>
+            <span class="text-gray-500 text-sm tracking-wide"
+              >Total Pengunjung</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row mt-10 gap-4 md:gap-5">
+        <div
+          class="bg-white border-2 flex flex-grow space-x-4 border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+        >
+          <div
+            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <UsersIcon class="fill-blue-500" width="30" height="30" />
+          </div>
+          <div class="flex flex-col flex-grow">
+            <h3 class="font-bold text-2xl text-black">30</h3>
+            <span class="text-gray-500 text-sm tracking-wide"
+              >Pengunjung Tamu Umum</span
+            >
+          </div>
+        </div>
+        <div
+          class="bg-white border-2 flex space-x-4 min-w-max border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+        >
+          <div
+            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <UsersIcon class="fill-blue-500" width="30" height="30" />
+          </div>
+          <div class="flex flex-col flex-grow">
+            <h3 class="font-bold text-2xl text-black">30</h3>
+            <span class="text-gray-500 text-sm tracking-wide"
+              >Pengunjung Tamu Umum</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -24,4 +105,50 @@
 
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
+import BsBoxSeamIcon from "~/assets/icon/BsBoxSeam.svg?component";
+import UsersIcon from "~/assets/icon/users-group-outline.svg?component";
+import ChartIcon from "~/assets/icon/chart-outline.svg?component";
+
+const chartOptions = {
+  chart: {
+    id: "basic-line",
+    toolbar: {
+      ...toolbar,
+      tools: {
+        download:
+          '<img src="/dashboard/Vector.svg" class="h-5 w-5" alt="FlowBite Logo" />',
+        selection: true,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false | '<img src="/static/icons/reset.png" width="20">',
+        customIcons: [],
+      },
+    },
+  },
+  xaxis: {
+    categories: [
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+      "Minggu",
+    ],
+  },
+  colors: ["#E4262C", "#3F83F8"],
+};
+
+const series = [
+  {
+    name: "Layanan Kirim",
+    data: [30, 40, 45, 50, 49, 60, 70],
+  },
+  {
+    name: "Tamu umum",
+    data: [10, 20, 30, 60, 90, 80, 70],
+  },
+];
 </script>

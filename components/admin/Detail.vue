@@ -19,19 +19,19 @@
           <tr class="px-2 py-4">
             <td><span class="px-2">1.</span>Nama</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.nama }}</td>
+            <td>{{ props.data.tamu.nama_tamu }}</td>
           </tr>
           <tr class="px-2 py-6">
             <td><span class="px-2">2.</span>No Telp</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.noTelp }}</td>
+            <td>{{ props.data.tamu.no_tlp }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">3.</span>Janji</td>
             <td class="px-4">:</td>
             <td>{{ props.data.janji }}</td>
           </tr>
-          <tr class="py-6">
+          <tr v-if="type === 'karyawan'" class="py-6">
             <td><span class="px-2">4.</span>Asal Instansi</td>
             <td class="px-4">:</td>
             <td>{{ props.data.asalInstansi }}</td>
@@ -39,17 +39,18 @@
           <tr class="py-6">
             <td><span class="px-2">5.</span>Jumlah Tamu</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.jumlahTamu }}</td>
+            <td>{{ props.data.jumlah_tamu }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2 min-w-16">6.</span>Orang yang Ditemui</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.orangDitemui }}</td>
-          </tr>
-          <tr class="py-6">
-            <td><span class="px-2">7.</span>Status</td>
-            <td class="px-4">:</td>
-            <td>{{ props.data.status }}</td>
+            <td>
+              {{
+                type === "karyawan"
+                  ? props.data.guru.nama_guru
+                  : props.data.siswa.nama_siswa
+              }}
+            </td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">8.</span>Keterangan</td>
@@ -61,7 +62,7 @@
             <td class="px-4">:</td>
             <td class="py-6">
               <div class="flex items-start justify-start">
-                <NuxtImg
+                <img
                   class="max-w-full max-h-[220px] object-contain"
                   src="/assets/bg-login.png"
                 />
@@ -76,5 +77,5 @@
 
 <script setup>
 const router = useRouter();
-const props = defineProps(["data", "params"]);
+const props = defineProps(["data", "params", "type"]);
 </script>

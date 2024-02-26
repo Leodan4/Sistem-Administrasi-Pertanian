@@ -1,28 +1,28 @@
 import { defineStore } from "pinia";
-import axios from "../plugins/axios";
-
-const $axios = axios().provide.axios;
 
 export const useGeneralStore = defineStore("general", {
   state: () => ({
-    name: "",
-    data: null,
+    isLoading: false,
     detailData: null,
+    error: {
+      status: null,
+      message: null,
+    },
   }),
   persist: true,
   actions: {
-    Hello(name) {
-      this.name = name;
-      return "Hello" + this.name;
-    },
-
     async detail(value) {
       this.detailData = value;
     },
 
-    async getApiPokemon(type) {
-      let res = await $axios.get(`/`);
-      this.data = res;
+    setIsLoadling(value) {
+      this.isLoading = value;
+    },
+    setError(code, message) {
+      this.error = {
+        status: code,
+        message: message,
+      };
     },
   },
 });

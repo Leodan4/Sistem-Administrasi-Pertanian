@@ -1,6 +1,6 @@
 <template>
   <MainLayout>
-    <Detail :data="$generalStore.detailData" :params="route.params.id" />
+    <Detail type="siswa" :data="$generalStore.detailData" :params="route.params.id" />
   </MainLayout>
 </template>
 

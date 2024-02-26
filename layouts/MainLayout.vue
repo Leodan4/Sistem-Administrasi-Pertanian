@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen w-screen bg-[#F6F7FF] relative">
+  <div class="relative">
     <TopNav></TopNav>
-    <div class="flex w-full h-full">
+    <div class="flex min-h-screen min-w-screen bg-[#F6F7FF]">
       <SideNav />
-      <div class="z-10 mt-[64px] flex-grow overflow-auto">
+      <div class="z-10 mt-[64px] flex-grow overflow-auto sm:ml-[250px]">
         <slot />
       </div>
     </div>
