@@ -52,6 +52,7 @@
 
           <div class="md:w-4/12 lg:w-2/12">
             <vue-date-picker
+              @update:model-value="handleFilterChange"
               model-type="yyyy-MM-dd"
               :enable-time-picker="false"
               class="custom-date-picker"
@@ -360,7 +361,7 @@ const handleFilterChange = debounce(async () => {
   } catch (error) {
     console.log(error);
   }
-}, 700);
+}, 600);
 
 onMounted(async () => {
   try {

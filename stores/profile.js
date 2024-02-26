@@ -10,7 +10,12 @@ export const useProfileStore = defineStore("profile", {
   persist: true,
   actions: {
     async getUserLogin() {
-      const res = a;
+      const res = await $axios.get("/api/profile");
+      console.log(res);
+      this.data = res.data;
     },
+    // async editProfile(payload) {
+    //   const post = await $axios.post("/api/edit_profile", )
+    // }
   },
 });

@@ -10,9 +10,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   axios.interceptors.request.use(
     (config) => {
       useGeneralStore().setIsLoadling(true);
-      // if (['post', 'put', 'patch', 'delete'].includes(config.method)) {
-      //   config.data = { data: { ...encrypt(JSON.parse(JSON.stringify(config.data))) } }
-      // }
+      let token = localStorage.getItem("token");
+      console.log(token);
+
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+
       return config;
     },
 

@@ -138,10 +138,11 @@ import Keamanan from "~/assets/icon/MdOutlinePassword.svg?component";
 import Pengaturan from "~/assets/icon/user-settings-outline.svg?component";
 
 const activeTab = ref("pengaturan");
-const nama = ref(null);
-const telp = ref(null);
-const email = ref(null);
-const jabatan = ref(null);
+const { $profileStore } = useNuxtApp();
+const nama = ref($profileStore.data.nama_admin);
+const telp = ref($profileStore.data.no_tlp);
+const email = ref($profileStore.data.email);
+const jabatan = ref($profileStore.data.role);
 const showPassword = ref(false);
 const password = ref(null);
 
