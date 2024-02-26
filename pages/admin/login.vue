@@ -25,19 +25,17 @@
             <form @submit.prevent="handleLogin">
               <div class="lg:mx-6 md:mx-2 mt-6 space-y-6">
                 <div>
-                  <h3 class="mb-1">Email</h3>
-                  <label for="email" class="sr-only">Email</label>
-                  <input required type="text" name="email" id="email"
-                    class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Masukkan Email" v-model="email" />
+                  <span class="">Email</span>
+                  <input required for="email" type="text" name="email" id="email" v-model="email"
+                    class="block w-full px-3 py-1 my-2 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                    placeholder="Masukkan Email"/>
                 </div>
                 <div>
-                  <h3 class="mb-1">Sandi</h3>
-                  <label for="password" class="sr-only">Password</label>
+                  <h3 class="">Sandi</h3>
                   <div class="relative">
-                    <input required :type="showPassword ? 'text' : 'password'" name="password" id="password"
-                      class="block w-full px-3 py-1 text-base text-neutral-600 bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                      placeholder="Masukkan Sandi" v-model="password" />
+                    <input required for="password" :type="showPassword ? 'text' : 'password'" name="password" id="password" v-model="password"
+                      class="block w-full px-3 py-1 my-2 text-base text-neutral-600 bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                      placeholder="Masukkan Sandi"/>
                     <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                       @click="togglePasswordVisibility">
                       <i :class="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
@@ -65,13 +63,13 @@
   </section>
 </template>
 
+
 <script>
-import axios from "../plugins/axios";
+import axios from '~/plugins/axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuth } from "~/stores/auth";
-import { defineStore } from "pinia";
 import Swal from 'sweetalert2';
+import { useLoginStore } from "~/stores/login"; // Import your store
 
 export default {
   setup() {
@@ -79,34 +77,89 @@ export default {
     const password = ref('');
     const showPassword = ref(false);
     const router = useRouter();
-
-    const auth_data = computed(() => {
-      useAuth().isAuth_data = true
-    })
+    const loginStore = useLoginStore();  // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+      const loginData = {
+        email: email.value,
+        password: password.value,
+      };
+      
+
+      try {
+        const response = await loginStore.loginUser(loginData); // Use store action to login
+
+        // Navigasi ke halaman dashboard setelah login berhasil
+        router.push('/admin/dashboard');
+
+        Swal.fire({
+          icon: 'success',
+          title: '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
+          showConfirmButton: false,
+          timer: 2000,
+          didClose: () => {
+            // Optionally perform any action after the alert is closed
+          },
+        });
+
+        return response;
+      } catch (error) {
+        // Handle error here if needed
+        console.error("Failed to login", error);
+      }
+    };
+
+    return {
+      email,
+      password,
+      showPassword,
+      togglePasswordVisibility,
+      handleLogin,
+    };
+  },
+};
+</script>
+
+  
+<style scoped>
+@import '@fortawesome/fontawesome-free/css/all.css';
+</style>
+
+
+
+
+
+
+<!-- <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
+import axios from 'axios'; 
+// import { useLoginStore } from "~/stores/login"; 
+
+export default {
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const showPassword = ref(false);
+    const router = useRouter();
+    // const loginStore = useLoginStore();  
+
+    const togglePasswordVisibility = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    const handleLogin = async () => {
       const loginData = {
         email: email.value,
         password: password.value,
       };
 
-
-      const defaultUrl = process.env.API_BASE;
-
-      const api = axios.create({
-        baseURL: defaultUrl,
-        // headers: {
-        //   common: {
-        //     Authorization: Bearer ${localStorage.getItem("token")},
-        //   },
-        // },
-      });
-
-      api.post('/login/', loginData)
+      axios.post('/login', loginData)
         .then((response) => {
           console.log('Login successful:', response.data);
           localStorage.setItem('token', response.data.token)
@@ -118,7 +171,7 @@ export default {
             icon: 'success',
             title: '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
             showConfirmButton: false,
-            timer: 2000, // Auto-close the alert after 2 seconds
+            timer: 2000,
             didClose: () => {
               // Optionally perform any action after the alert is closed
             },
@@ -152,8 +205,4 @@ export default {
     };
   },
 };
-</script>
-  
-<style scoped>
-@import '@fortawesome/fontawesome-free/css/all.css';
-</style>
+</script> -->

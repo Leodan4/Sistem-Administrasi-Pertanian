@@ -15,22 +15,21 @@
                                 <span for="nama" class="font-semibold">Nama</span>
                                 <input required type="text" name="nama" id="nama"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Masukan Nama" v-model="nama" />
+                                    placeholder="Masukan Nama" v-model="nama_tamu" />
                             </div>
                             <div class="py-3">
                                 <span for="tamu" class="font-semibold">Jumlah Tamu</span>
-                                <input required type="bolean" name="tamu" id="tamu"
+                                <input required type="number" name="tamu" id="tamu"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Masukan Jumlah Tamu" v-model="tamu" />
+                                    placeholder="Masukan Jumlah Tamu" v-model="jumlah_tamu" />
                             </div>
                             <div class="py-3">
                                 <span for="janji" class="font-semibold">Ada Janji?</span>
                                 <select required name="janji" id="janji"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Pilih" v-model="janji">
-                                    <option value="Instansi A">Ada</option>
-                                    <option value="Instansi B">Tiada</option>
-                                    <option value="Instansi C">Semoga Ada</option>
+                                    <option value="Ada">Ada</option>
+                                    <option value="Tidak Ada">Tiada</option>
                                 </select>
                             </div>
                         </div>
@@ -38,27 +37,22 @@
                         <div class="w-full">
                             <div class="py-3">
                                 <span for="no_telp" class="font-semibold">No Telp</span>
-                                <input required type="bolean" name="no_telp" id="no_telp"
+                                <input required type="tel" name="no_telp" id="no_telp"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Masukan No Telp" v-model="no_telp" />
+                                    placeholder="Masukan No Telp" v-model="no_tlp" />
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
                                 <select required name="ditemui" id="ditemui"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Pilih Nama Yang Ditemui" v-model="ditemui">
-                                    <option value="Opsi A">Ahmad</option>
-                                    <option value="Opsi B">Abdul</option>
-                                    <option value="Opsi C">Burhan</option>
-                                    <option value="Opsi D">Basori</option>
-                                    <option value="Opsi E">Caca</option>
-                                    <option value="Opsi F">David</option>
-                                    <option value="Opsi G">Eko</option>
+                                    placeholder="Pilih Nama Yang Ditemui" v-model="id_siswa">
+                                    <option value="12345678-1234-1234-1234-123456789abc">Haikal Adibasta</option>
+                                    <option value="87654321-4321-4321-4321-987654321cba">Atsal Faiz Pramatya</option>
                                 </select>
                             </div>
                             <div class="py-3">
-                                <span for="file" class="font-semibold">Upload file</span>
-                                <input required type="file" name="file" id="file"
+                                <span for="foto" class="font-semibold">Upload foto</span>
+                                <input required type="file" name="foto" id="foto" @change="handleFileChange"
                                     class="block w-full px-3 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan No Telp" />
                             </div>
@@ -70,16 +64,14 @@
                             <span for="keterangan" class="font-semibold">Keterangan</span>
                             <textarea name="keterangan" id="keterangan"
                                 class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                placeholder="Masukkan keterangan"  v-model="keterangan"></textarea>
+                                placeholder="Masukkan keterangan" v-model="status"></textarea>
                         </div>
                     </div>
 
                     <div class="flex justify-end mt-5">
-                        <button class=" text-white py-2 px-10 rounded-lg bg-[#E4262C]">Simpan</button>
+                        <button @click="saveData" class=" text-white py-2 px-10 rounded-lg bg-[#E4262C]">Simpan</button>
                     </div>
                 </div>
-
-
 
             </div>
 
@@ -88,5 +80,48 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import Swal from 'sweetalert2';
+import { useForm_SiswaStore } from "~/stores/form_siswa";
 
+export default {
+  setup() {
+    const nama_tamu = ref('');
+    const no_tlp = ref('');
+    const id_siswa = ref('');
+    const janji = ref('');
+    const jumlah_tamu = ref(0); // Menggunakan angka untuk jumlah tamu
+    const status = ref('');
+    const foto = ref(null);
+    const Form_SiswaStore = useForm_SiswaStore();
+
+    const handleFileChange = (event) => {
+      foto.value = event.target.files[0];
+    };
+
+    const saveData = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('nama_tamu', nama_tamu.value);
+        formData.append('no_tlp', no_tlp.value);
+        formData.append('id_siswa', id_siswa.value);
+        formData.append('janji', janji.value);
+        formData.append('jumlah_tamu', jumlah_tamu.value.toString()); // Ubah ke string karena FormData hanya menerima string atau Blob
+        formData.append('status', status.value);
+        formData.append('foto', foto.value);
+
+        await Form_SiswaStore.transaksiSiswa(formData);
+        console.log('Data saved successfully');
+        Swal.fire('Success', 'Data saved successfully', 'success');
+        // Redirect or show success message here
+      } catch (error) {
+        console.error('Failed to save data:', error);
+        Swal.fire('Error', 'Failed to save data', 'error');
+      }
+    };
+
+    return { nama_tamu, no_tlp, id_siswa, janji, jumlah_tamu, status, foto, handleFileChange, saveData };
+  }
+}
 </script>
+
