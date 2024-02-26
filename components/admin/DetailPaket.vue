@@ -56,7 +56,7 @@
             <td class="px-4">:</td>
             <td class="py-6">
               <div class="flex items-start justify-start">
-                <NuxtImg
+                <img
                   class="max-w-full max-h-[220px] object-contain"
                   src="/assets/bg-login.png"
                 />

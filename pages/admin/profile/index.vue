@@ -6,7 +6,7 @@
       <div
         class="bg-white w-full md:w-[300px] h-min md:h-[400px] flex flex-col space-y-7 items-center justify-center rounded-lg border border-[#E9EDF5] p-4"
       >
-        <NuxtImg
+        <img
           class="md:w-40 md:h-40 w-[100px] h-[100px] rounded-full self-center cursor-pointer"
           src="/assets/bg-login.png"
           alt="Rounded avatar"
@@ -34,7 +34,7 @@
       </div>
       <div
         v-if="activeTab === 'pengaturan'"
-        class="bg-white w-full md:w-[444px] h-full flex flex-col md:h-[400px] overflow-y-auto rounded-lg border border-[#E9EDF5] p-4"
+        class="bg-white w-full md:w-[444px] h-full flex flex-col md:h-[400px] rounded-lg border border-[#E9EDF5] p-4"
       >
         <div class="flex flex-col space-y-2">
           <div>

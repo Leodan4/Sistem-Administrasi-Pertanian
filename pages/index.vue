@@ -1,17 +1,21 @@
 <template>
-  <div>{{ $generalStore.data }}</div>
+  <div>
+    {{ $generalStore.isLoading ? "Loading.." : $dashboardSiswaStore.data }}
+  </div>
 </template>
 
 <script setup>
-const { $generalStore } = useNuxtApp();
+const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
 
 onMounted(async () => {
   try {
-    const res = await $generalStore.getApiPokemon();
+    await $dashboardSiswaStore.getAllSiswa();
   } catch (error) {
     console.log(error);
   }
 });
+
+definePageMeta({ middleware: "auth" });
 </script>
 
 <style lang="scss" scoped></style>

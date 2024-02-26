@@ -4,7 +4,7 @@
     data-drawer-toggle="default-sidebar"
     aria-controls="default-sidebar"
     type="button"
-    class="fixed sm:hidden top-3 left-5 z-10 flex p-2 items-center max-w-min hover:bg-red-300 justify-center"
+    class="fixed sm:hidden top-3 left-5 z-20 flex p-2 items-center max-w-min hover:bg-red-300 justify-center"
   >
     <svg
       class="w-6 h-6 font-bold fill-white"
@@ -23,7 +23,7 @@
   <aside
     id="default-sidebar"
     aria-label="Sidebar"
-    class="bg-white h-screen min-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 absolute sm:static top-0 flex-col"
+    class="bg-white min-h-screen min-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 fixed top-0 left-0 flex-col"
   >
     <div class="flex justify-center font-bold text-xl mb-7">Logo</div>
     <div class="flex flex-col space-y-4 flex-grow">
@@ -44,7 +44,7 @@
       <div
         class="flex items-center w-full space-x-2 justify-center lg:justify-normal"
       >
-        <NuxtImg
+        <img
           @click="router.push('/admin/profile')"
           class="w-12 h-12 rounded-full self-center cursor-pointer"
           src="/dashboard/test_image.png"
