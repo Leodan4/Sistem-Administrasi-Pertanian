@@ -2,15 +2,14 @@
 <template>
   <MainLayout>
     <div class="w-full my-8 px-8">
-      <!-- Filter -->
-      <div v-if="$generalStore.isLoading">Loading...</div>
-      <div v-else>
+      <div>
         <div
           class="flex justify-center md:justify-normal items-center space-x-2 md:space-x-0"
         >
           <div class="flex items-center space-x-2 md:space-x-4 md:flex-grow">
             <select
               v-model="limit"
+              @change="handleFilterChange"
               name="showData"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg py-[6px] focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
               id="showData"
@@ -41,6 +40,7 @@
               </div>
               <input
                 v-model="search"
+                @input="handleFilterChange"
                 type="text"
                 id="default-search"
                 class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
@@ -52,7 +52,7 @@
 
           <div class="md:w-4/12 lg:w-2/12">
             <vue-date-picker
-              model-type="dd-MM-yyyy"
+              model-type="yyyy-MM-dd"
               :enable-time-picker="false"
               class="custom-date-picker"
               placeholder="Pilih Tanggal"
@@ -63,7 +63,17 @@
         </div>
         <!-- End Filter -->
         <!-- Table -->
+        <div class="mt-6" v-if="$generalStore.isLoading">
+          <div class="animate-pulse">
+            <div class="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+          </div>
+        </div>
         <div
+          v-if="!$generalStore.isLoading"
           class="mt-6 overflow-x-auto overflow-y-visible sm:rounded-lg border h-min"
         >
           <table
@@ -286,9 +296,20 @@
 
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 
-const date = ref();
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
+const date = ref(formatDate(new Date()));
 
 const search = ref(null);
 const limit = ref(5);
@@ -305,53 +326,41 @@ const handleDetail = (item, index) => {
   router.push(`${route.fullPath}/${index}`);
 };
 
-const tableData = ref([
-  {
-    nama: "Atsal Faiz",
-    noTelp: "0889790990",
-    janji: "Ada",
-    asalInstansi: "SMK Telkom Malang",
-    jumlahTamu: 3,
-    orangDitemui: "Raffi Joeta",
-    status: "Proses",
-    keterangan: "Sesuai dengan janji",
-  },
-  {
-    nama: "Budi Setiawan",
-    noTelp: "0812345678",
-    janji: "Tidak Ada",
-    asalInstansi: "Universitas ABC",
-    jumlahTamu: 2,
-    orangDitemui: "Ani Susanti",
-    status: "Gagal",
-    keterangan: "Tidak ada pemberitahuan sebelumnya",
-  },
-  {
-    nama: "Citra Dewi",
-    noTelp: "0856789012",
-    janji: "Ada",
-    asalInstansi: "Politeknik XYZ",
-    jumlahTamu: 5,
-    orangDitemui: "Darma Pratama",
-    status: "Selesai",
-    keterangan: "Semua berjalan lancar",
-  },
-
-  // ... (objek-objek lainnya)
-]);
-
 const changePage = async (page) => {
   try {
     await $dashboardSiswaStore.getAllSiswa(
       page,
       limit.value,
       search.value,
-      date
+      date.value
     );
   } catch (error) {
     console.log(error);
   }
 };
+
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
+
+const handleFilterChange = debounce(async () => {
+  try {
+    await $dashboardSiswaStore.getAllSiswa(
+      $dashboardSiswaStore.pagination.currentPage,
+      limit.value,
+      search.value,
+      date.value
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}, 700);
 
 onMounted(async () => {
   try {

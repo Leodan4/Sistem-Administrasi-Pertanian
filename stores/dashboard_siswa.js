@@ -19,9 +19,9 @@ export const useDashboardSiswaStore = defineStore("dashboard_siswa", {
     async getAllSiswa(page = 1, perPage = 5, search = null, date = null) {
       const params = {
         page,
-        per_page: perPage,
+        limit: perPage,
         search,
-        date,
+        startDate: date,
       };
       const res = await $axios.get("/transaksi_siswa/get", { params });
       this.pagination = res.data.pagination;

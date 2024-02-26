@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      baseURL: process.env.NUXT_PUBLIC_API_BASEL,
+      baseURL: process.env.NUXT_PUBLIC_API_BASE,
     },
   },
   plugins: ["~/plugins/axios.js"],
