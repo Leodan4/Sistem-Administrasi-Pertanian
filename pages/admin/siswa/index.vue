@@ -352,7 +352,7 @@ const debounce = (func, delay) => {
 const handleFilterChange = debounce(async () => {
   try {
     await $dashboardSiswaStore.getAllSiswa(
-      $dashboardSiswaStore.pagination.currentPage,
+      1,
       limit.value,
       search.value,
       date.value
