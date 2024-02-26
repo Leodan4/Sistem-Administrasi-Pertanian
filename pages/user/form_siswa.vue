@@ -46,8 +46,9 @@
                                 <select required name="ditemui" id="ditemui"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Pilih Nama Yang Ditemui" v-model="id_siswa">
-                                    <option value="12345678-1234-1234-1234-123456789abc">Haikal Adibasta</option>
-                                    <option value="87654321-4321-4321-4321-987654321cba">Atsal Faiz Pramatya</option>
+                                    <option v-for="daftarSiswa in $formSiswaStore.daftarSiswa.data" :key="daftarSiswa.id_siswa" :value="daftarSiswa.id_siswa">
+                                       {{ daftarSiswa.nama_siswa }}
+                                    </option>
                                 </select>
                             </div>
                             <div class="py-3">
@@ -64,7 +65,7 @@
                             <span for="keterangan" class="font-semibold">Keterangan</span>
                             <textarea name="keterangan" id="keterangan"
                                 class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                placeholder="Masukkan keterangan" v-model="status"></textarea>
+                                placeholder="Masukkan keterangan" v-model="keterangan"></textarea>
                         </div>
                     </div>
 
@@ -80,48 +81,52 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
-import { useForm_SiswaStore } from "~/stores/form_siswa";
 
 export default {
-  setup() {
-    const nama_tamu = ref('');
-    const no_tlp = ref('');
-    const id_siswa = ref('');
-    const janji = ref('');
-    const jumlah_tamu = ref(0); // Menggunakan angka untuk jumlah tamu
-    const status = ref('');
-    const foto = ref(null);
-    const Form_SiswaStore = useForm_SiswaStore();
+    setup() {
+        const nama_tamu = ref('');
+        const no_tlp = ref('');
+        const id_siswa = ref(''); // Pastikan nilai ini sesuai dengan nilai yang benar
+        const janji = ref('');
+        const jumlah_tamu = ref('');
+        const keterangan = ref('');
+        const foto = ref(null);
+        const { $formSiswaStore } = useNuxtApp();
 
-    const handleFileChange = (event) => {
-      foto.value = event.target.files[0];
-    };
+        const handleFileChange = (event) => {
+            foto.value = event.target.files[0];
+        };
 
-    const saveData = async () => {
-      try {
-        const formData = new FormData();
-        formData.append('nama_tamu', nama_tamu.value);
-        formData.append('no_tlp', no_tlp.value);
-        formData.append('id_siswa', id_siswa.value);
-        formData.append('janji', janji.value);
-        formData.append('jumlah_tamu', jumlah_tamu.value.toString()); // Ubah ke string karena FormData hanya menerima string atau Blob
-        formData.append('status', status.value);
-        formData.append('foto', foto.value);
+        const saveData = async () => {
+            try {
+                const formData = new FormData();
+                formData.append('nama_tamu', nama_tamu.value);
+                formData.append('no_tlp', no_tlp.value);
+                formData.append('id_siswa', id_siswa.value); // Pastikan nilai ini sesuai dengan nilai yang benar
+                formData.append('janji', janji.value);
+                formData.append('jumlah_tamu', jumlah_tamu.value.toString());
+                formData.append('keterangan', keterangan.value);
+                formData.append('foto', foto.value);
 
-        await Form_SiswaStore.transaksiSiswa(formData);
-        console.log('Data saved successfully');
-        Swal.fire('Success', 'Data saved successfully', 'success');
-        // Redirect or show success message here
-      } catch (error) {
-        console.error('Failed to save data:', error);
-        Swal.fire('Error', 'Failed to save data', 'error');
-      }
-    };
+                const response = await Form_SiswaStore.transaksiSiswa(formData);
+                console.log('Data saved successfully');
+                Swal.fire('Success', 'Data saved successfully', 'success');
+                // Redirect or show success message here
+            } catch (error) {
+                console.error('Failed to save data:', error);
+                Swal.fire('Error', 'Failed to save data', 'error');
+            }
+        };
 
-    return { nama_tamu, no_tlp, id_siswa, janji, jumlah_tamu, status, foto, handleFileChange, saveData };
-  }
+        onMounted(() => {
+            $formSiswaStore.fetchDataSiswa();
+        });
+
+        // return { nama_tamu, no_tlp, id_siswa, janji, jumlah_tamu, keterangan, foto, handleFileChange, saveData, daftarSiswa };
+    }
 }
 </script>
+
 

@@ -69,7 +69,6 @@ import axios from '~/plugins/axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
-import { useLoginStore } from "~/stores/login"; // Import your store
 
 export default {
   setup() {
@@ -77,7 +76,7 @@ export default {
     const password = ref('');
     const showPassword = ref(false);
     const router = useRouter();
-    const loginStore = useLoginStore();  // Initialize your store
+    const { $loginStore } = useNuxtApp();  // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
@@ -91,7 +90,7 @@ export default {
       
 
       try {
-        const response = await loginStore.loginUser(loginData); // Use store action to login
+        const response = await $loginStore.loginUser(loginData); // Use store action to login
 
         // Navigasi ke halaman dashboard setelah login berhasil
         router.push('/admin/dashboard');
