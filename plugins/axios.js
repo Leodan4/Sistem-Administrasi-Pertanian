@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useGeneralStore } from "~/stores/general";
-
 export default defineNuxtPlugin((nuxtApp) => {
   axios.defaults.baseURL = process.env.API_BASE;
 
@@ -9,10 +8,14 @@ export default defineNuxtPlugin((nuxtApp) => {
   // axios.defaults.withCredentials = true4
   axios.interceptors.request.use(
     (config) => {
+      useGeneralStore().setError(null, null);
       useGeneralStore().setIsLoadling(true);
-      // if (['post', 'put', 'patch', 'delete'].includes(config.method)) {
-      //   config.data = { data: { ...encrypt(JSON.parse(JSON.stringify(config.data))) } }
-      // }
+      let token = localStorage.getItem("token");
+
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+
       return config;
     },
 
@@ -23,19 +26,18 @@ export default defineNuxtPlugin((nuxtApp) => {
   axios.interceptors.response.use(
     (response) => {
       useGeneralStore().setIsLoadling(false);
-      useGeneralStore().setError(null, null);
       return response;
     },
     function (err) {
       return new Promise(function () {
-        if (err) {
-          console.log("Test 123");
-          useGeneralStore().setIsLoadling(false);
-          useGeneralStore().setError(
-            err.response.status,
-            err.response.data.message
-          );
+        useGeneralStore().setIsLoadling(false);
+        if (err.response.status === 401) {
+          localStorage.removeItem("token");
         }
+        useGeneralStore().setError(
+          err.response.status,
+          err.response.data.message
+        );
       });
     }
   );

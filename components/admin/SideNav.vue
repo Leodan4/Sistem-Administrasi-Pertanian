@@ -23,7 +23,7 @@
   <aside
     id="default-sidebar"
     aria-label="Sidebar"
-    class="bg-white min-h-screen min-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 fixed top-0 left-0 flex-col"
+    class="bg-white min-h-screen max-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 fixed top-0 left-0 flex-col"
   >
     <div class="flex justify-center font-bold text-xl mb-7">Logo</div>
     <div class="flex flex-col space-y-4 flex-grow">
@@ -40,10 +40,8 @@
         navigate="/admin/layanan"
       />
     </div>
-    <div class="bg-gray-100 h-20 flex px-4 items-center">
-      <div
-        class="flex items-center w-full space-x-2 justify-center lg:justify-normal"
-      >
+    <div class="bg-gray-100 w-full h-20 flex px-4 items-center">
+      <div class="flex items-center w-full space-x-2 justify-center">
         <img
           @click="router.push('/admin/profile')"
           class="w-12 h-12 rounded-full self-center cursor-pointer"
@@ -52,10 +50,11 @@
         avatar"
         />
         <div class="flex flex-col items-start justify-center">
-          <h4 class="text-sm">Atsal Faiz</h4>
-          <p class="text-sm">Atsalfaiz@gmail.com</p>
+          <button @click="router.push('/admin/profile')" class="text-sm">
+            {{ $profileStore.data.nama_admin }}
+          </button>
         </div>
-        <div class="cursor-pointer flex pl-4">
+        <div class="cursor-pointer flex pl-4" @click="logout">
           <LogoutIcon />
         </div>
       </div>
@@ -69,7 +68,13 @@ import LogoutIcon from "../../assets/icon/logout.svg?component";
 const router = useRouter();
 import { initFlowbite } from "flowbite";
 
-onMounted(() => {
+const { $profileStore } = useNuxtApp();
+const logout = () => {
+  $profileStore.logout();
+  router.push("/admin/login");
+};
+onMounted(async () => {
+  await $profileStore.getUserLogin();
   initFlowbite();
 });
 </script>

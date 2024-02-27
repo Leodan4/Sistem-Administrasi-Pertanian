@@ -16,19 +16,47 @@ export const useDashboardSiswaStore = defineStore("dashboard_siswa", {
   }),
   persist: true,
   actions: {
-    async getAllSiswa(page = 1, perPage = 5, search = null, date = null) {
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
+    async getAllSiswa(
+      page = 1,
+      perPage = 5,
+      search = null,
+      date = this.formatDate(new Date())
+    ) {
       const params = {
         page,
-        per_page: perPage,
+        limit: perPage,
         search,
-        date,
+        startDate: date,
       };
-      const res = await $axios.get("/transaksi_siswa/get", { params });
-      this.pagination = res.data.pagination;
-      const { currentPage, totalPages } = this.pagination;
-      this.pagination.hasNext = currentPage < totalPages;
-      this.pagination.hasPrev = currentPage > 1;
-      this.data = res.data.data;
+      this.data = null;
+      return new Promise(async (resolve, reject) => {
+        const res = await $axios
+          .get("/transaksi_siswa/get", { params })
+          .then((response) => {
+            this.data = response.data.data;
+            this.pagination = response.data.pagination;
+            const { currentPage, totalPages } = this.pagination;
+            this.pagination.hasNext = currentPage < totalPages;
+            this.pagination.hasPrev = currentPage > 1;
+            resolve(response);
+            return response;
+          })
+          .catch((error) => {
+            console.log("ini error");
+            reject(error);
+          });
+      });
     },
   },
 });
