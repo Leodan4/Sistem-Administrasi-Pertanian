@@ -25,8 +25,7 @@
                             <form @submit.prevent="handleResetPassword">
                                 <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
-                                        <h3 class="mb-1">Email</h3>
-                                        <label for="email" class="sr-only">Email</label>
+                                        <span class="mb-1">Email</span>
                                         <input required type="email" name="email" id="email"
                                             class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                             placeholder="Masukkan Email" v-model="email" />
@@ -42,38 +41,24 @@
                             </form>
                         </div>
 
-                        <!-- Tampilan form untuk memasukkan OTP -->
-                        <div v-else-if="currentStep === 'otp'">
-                            <form @submit.prevent="handleVerifyOTP">
-                                <div class="mt-6 space-y-6 mx-0 md:mx-6">
-                                    <div>
-                                        <h3 class="mb-1">OTP</h3>
-                                        <label for="otp" class="sr-only">OTP</label>
-                                        <input required type="text" name="otp" id="otp"
-                                            class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                            placeholder="Masukkan OTP" v-model="otp" />
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col mt-4 lg:space-y-2 py-6">
-                                    <button type="submit" name="verifyOTP"
-                                        class="flex items-center text-base justify-center mx-20 py-2 font-medium text-center text-white transition duration-500 ease-in-out transform bg-[#E4262C] rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 lg:w-auto">
-                                        Verifikasi OTP
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
                         <!-- Tampilan form untuk memasukkan password baru -->
-                        <div v-else-if="currentStep === 'newPassword'">
+                        <div v-if="currentStep === 'newPassword'">
                             <form @submit.prevent="handleSetNewPassword">
                                 <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
-                                        <h3 class="mb-1">Password Baru</h3>
-                                        <label for="newPassword" class="sr-only">Password Baru</label>
+                                        <span class="mb-1">Sandi Baru</span>
                                         <input required type="password" name="newPassword" id="newPassword"
                                             class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                            placeholder="Masukkan Password Baru" v-model="newPassword" />
+                                            placeholder="Masukkan Sandi Baru" v-model="newPassword" />
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 space-y-6 mx-0 md:mx-6">
+                                    <div>
+                                        <h3 class="mb-1">Konfirmasi Sandi</h3>
+                                        <input required type="password" name="confirmPassword" id="confirmPassword"
+                                            class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                            placeholder="Konfirmasi Sandi Baru" v-model="confirmPassword" />
                                     </div>
                                 </div>
 
@@ -102,21 +87,18 @@
 <script>
 import axios from "../plugins/axios";
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useGeneralStore } from "~/stores/general"; // Importing the Pinia store
 import Swal from 'sweetalert2';
 
 
 export default {
     setup() {
         const email = ref('');
-        const router = useRouter();
-        const generalStore = useGeneralStore(); // Accessing the Pinia store
-
-        // Variabel reaktif untuk mengontrol tampilan form lupa kata sandi
-        const currentStep = ref('email');
-        const otp = ref('');
         const newPassword = ref('');
+        const confirmPassword = ref('');
+        const router = useRouter();
+        const { $forgetPasswordStore } = useNuxtApp(); // Accessing the Pinia store
+
+        const currentStep = ref('email');
 
         const handleResetPassword = async () => {
             const resetData = {
@@ -124,11 +106,8 @@ export default {
             };
 
             try {
-                // Kirim email dengan permintaan reset password
-                // await axios.post('/reset-password/', resetData);
-
-                // Pindah ke langkah selanjutnya
-                currentStep.value = 'otp';
+                const response = await $forgetPasswordStore.resetPassword(resetData);
+                console.log('New password set successfully');
             } catch (error) {
                 console.error('Error occurred while sending reset email:', error);
                 // Tampilkan pesan kesalahan kepada pengguna
@@ -140,51 +119,14 @@ export default {
             }
         };
 
-        const handleVerifyOTP = async () => {
-            const otpData = {
-                email: email.value,
-                otp: otp.value,
-            };
-
-            try {
-                // Kirim permintaan verifikasi OTP ke backend
-                const response = await axios.post('/verify-otp/', otpData);
-
-                // Tanggapan dari backend akan memberikan informasi apakah OTP valid atau tidak
-                if (response.data.valid) {
-                    // OTP valid, lanjutkan ke langkah selanjutnya atau lakukan tindakan yang sesuai
-                    console.log('OTP is valid');
-                } else {
-                    // OTP tidak valid, tampilkan pesan kesalahan kepada pengguna
-                    console.error('Invalid OTP');
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Invalid OTP. Please enter a valid OTP.',
-                    });
-                }
-            } catch (error) {
-                console.error('Error occurred while verifying OTP:', error);
-                // Tampilkan pesan kesalahan kepada pengguna
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to verify OTP. Please try again later.',
-                });
-            }
-        };
-
         const handleSetNewPassword = async () => {
             const newPasswordData = {
-                email: email.value,
                 newPassword: newPassword.value,
+                confirmPassword: confirmPassword.value,
             };
 
             try {
-                // Kirim permintaan untuk menyetel password baru ke backend
-                await axios.post('/set-new-password/', newPasswordData);
-                
-                // Password berhasil disetel, mungkin Anda ingin melakukan sesuatu di sini
+                const response = await $forgetPasswordStore.setNewPassword(newPasswordData);
                 console.log('New password set successfully');
             } catch (error) {
                 console.error('Error occurred while setting new password:', error);
@@ -197,14 +139,17 @@ export default {
             }
         };
 
+        const navigateTo = (path) => {
+            router.push(path);
+        };
+
         return {
             email,
-            currentStep,
-            otp,
             newPassword,
+            currentStep,
             handleResetPassword,
-            handleVerifyOTP,
             handleSetNewPassword,
+            navigateTo,
         };
     },
 };

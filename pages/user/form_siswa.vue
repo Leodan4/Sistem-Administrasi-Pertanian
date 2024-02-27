@@ -43,13 +43,7 @@
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
-                                <select required name="ditemui" id="ditemui"
-                                    class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Pilih Nama Yang Ditemui" v-model="id_siswa">
-                                    <option v-for="daftarSiswa in $formSiswaStore.daftarSiswa.data" :key="daftarSiswa.id_siswa" :value="daftarSiswa.id_siswa">
-                                       {{ daftarSiswa.nama_siswa }}
-                                    </option>
-                                </select>
+                                <Multiselect v-model="id_siswa" id="ditemui" :options="filteredSiswa" label="nama_siswa" valueProp="id_siswa" :searchable="true" />
                             </div>
                             <div class="py-3">
                                 <span for="foto" class="font-semibold">Upload foto</span>
@@ -83,6 +77,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
+import Multiselect from '@vueform/multiselect'
 
 export default {
     setup() {
@@ -94,11 +89,18 @@ export default {
         const keterangan = ref('');
         const foto = ref(null);
         const { $formSiswaStore } = useNuxtApp();
-
         const handleFileChange = (event) => {
             foto.value = event.target.files[0];
         };
-
+        // Computed property to filter options based on user input
+        const filteredSiswa = computed(() => {
+            if (!nama_tamu.value)
+                return $formSiswaStore.daftarSiswa.data;
+            const query = nama_tamu.value.toLowerCase();
+            return $formSiswaStore.daftarSiswa.data.filter(daftarSiswa => {
+                return daftarSiswa.nama_siswa.toLowerCase().includes(query);
+            });
+        });
         const saveData = async () => {
             try {
                 const formData = new FormData();
@@ -109,24 +111,38 @@ export default {
                 formData.append('jumlah_tamu', jumlah_tamu.value.toString());
                 formData.append('keterangan', keterangan.value);
                 formData.append('foto', foto.value);
-
-                const response = await Form_SiswaStore.transaksiSiswa(formData);
+                const response = await $formSiswaStore.transaksiSiswa(formData);
                 console.log('Data saved successfully');
                 Swal.fire('Success', 'Data saved successfully', 'success');
                 // Redirect or show success message here
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Failed to save data:', error);
                 Swal.fire('Error', 'Failed to save data', 'error');
             }
         };
-
         onMounted(() => {
             $formSiswaStore.fetchDataSiswa();
         });
-
-        // return { nama_tamu, no_tlp, id_siswa, janji, jumlah_tamu, keterangan, foto, handleFileChange, saveData, daftarSiswa };
-    }
+        return {
+            nama_tamu,
+            no_tlp,
+            id_siswa,
+            janji,
+            jumlah_tamu,
+            keterangan,
+            foto,
+            handleFileChange,
+            saveData,
+            daftarSiswa: $formSiswaStore.daftarSiswa.data,
+            filteredSiswa,
+        };
+    },
+    components: {
+        Multiselect,
+    },
 }
 </script>
+<style src="@vueform/multiselect/themes/default.css"></style>   
 
 
