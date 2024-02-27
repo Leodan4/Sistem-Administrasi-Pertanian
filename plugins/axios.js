@@ -9,6 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // axios.defaults.withCredentials = true4
   axios.interceptors.request.use(
     (config) => {
+      useGeneralStore().setError(null, null);
       useGeneralStore().setIsLoadling(true);
       let token = localStorage.getItem("token");
 
@@ -26,7 +27,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   axios.interceptors.response.use(
     (response) => {
       useGeneralStore().setIsLoadling(false);
-      useGeneralStore().setError(null, null);
       return response;
     },
     function (err) {

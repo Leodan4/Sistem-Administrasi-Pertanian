@@ -97,7 +97,9 @@
                   !$dashboardSiswaStore.data
                 "
               >
-                <td class="text-center py-4" colspan="7">Data Not Found</td>
+                <td class="text-center py-4" colspan="7">
+                  {{ $generalStore.error.message }}
+                </td>
               </tr>
               <tr
                 v-else

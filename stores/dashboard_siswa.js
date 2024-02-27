@@ -39,12 +39,24 @@ export const useDashboardSiswaStore = defineStore("dashboard_siswa", {
         search,
         startDate: date,
       };
-      const res = await $axios.get("/transaksi_siswa/get", { params });
-      this.pagination = res.data.pagination;
-      const { currentPage, totalPages } = this.pagination;
-      this.pagination.hasNext = currentPage < totalPages;
-      this.pagination.hasPrev = currentPage > 1;
-      this.data = res.data.data;
+      this.data = null;
+      return new Promise(async (resolve, reject) => {
+        const res = await $axios
+          .get("/transaksi_siswa/get", { params })
+          .then((response) => {
+            this.pagination = response.data.pagination;
+            const { currentPage, totalPages } = this.pagination;
+            this.pagination.hasNext = currentPage < totalPages;
+            this.pagination.hasPrev = currentPage > 1;
+            this.data = response.data.data;
+            resolve(response);
+            return response;
+          })
+          .catch((error) => {
+            console.log("ini error");
+            reject(error);
+          });
+      });
     },
   },
 });

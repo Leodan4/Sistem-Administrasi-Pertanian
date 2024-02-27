@@ -11,7 +11,6 @@ export const useProfileStore = defineStore("profile", {
   actions: {
     async getUserLogin() {
       const res = await $axios.get("/api/profile");
-      console.log(res);
       this.data = res.data;
     },
     // async editProfile(payload) {
