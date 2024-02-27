@@ -93,8 +93,8 @@
             <tbody class="divide-y">
               <tr
                 v-if="
-                  $generalStore.error.status !== null ||
-                  !$dashboardSiswaStore.data
+                  !$dashboardSiswaStore.data ||
+                  $generalStore.error.status !== null
                 "
               >
                 <td class="text-center py-4" colspan="7">
@@ -374,7 +374,6 @@ const handleFilterChange = debounce(async () => {
 
 onMounted(async () => {
   try {
-    initFlowbite();
     await $dashboardSiswaStore.getAllSiswa();
   } catch (error) {
     console.log(error);

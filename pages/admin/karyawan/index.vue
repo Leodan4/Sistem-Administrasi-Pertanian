@@ -372,7 +372,6 @@ const handleFilterChange = debounce(async () => {
 
 onMounted(async () => {
   try {
-    initFlowbite();
     await $dashboardSiswaStore.getAllSiswa();
   } catch (error) {
     console.log(error);

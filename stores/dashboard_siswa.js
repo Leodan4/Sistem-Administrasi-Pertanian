@@ -44,11 +44,11 @@ export const useDashboardSiswaStore = defineStore("dashboard_siswa", {
         const res = await $axios
           .get("/transaksi_siswa/get", { params })
           .then((response) => {
+            this.data = response.data.data;
             this.pagination = response.data.pagination;
             const { currentPage, totalPages } = this.pagination;
             this.pagination.hasNext = currentPage < totalPages;
             this.pagination.hasPrev = currentPage > 1;
-            this.data = response.data.data;
             resolve(response);
             return response;
           })

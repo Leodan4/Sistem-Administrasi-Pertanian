@@ -444,7 +444,6 @@ const tableData = ref([
 
 onMounted(async () => {
   try {
-    initFlowbite();
     await $dashboardSiswaStore.getAllSiswa();
   } catch (error) {
     console.log(error);

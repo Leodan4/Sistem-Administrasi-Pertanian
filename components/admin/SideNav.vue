@@ -54,7 +54,7 @@
             {{ $profileStore.data.nama_admin }}
           </button>
         </div>
-        <div class="cursor-pointer flex pl-4">
+        <div class="cursor-pointer flex pl-4" @click="logout">
           <LogoutIcon />
         </div>
       </div>
@@ -69,7 +69,10 @@ const router = useRouter();
 import { initFlowbite } from "flowbite";
 
 const { $profileStore } = useNuxtApp();
-
+const logout = () => {
+  $profileStore.logout();
+  router.push("/admin/login");
+};
 onMounted(async () => {
   await $profileStore.getUserLogin();
   initFlowbite();

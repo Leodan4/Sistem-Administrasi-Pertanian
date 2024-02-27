@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useGeneralStore } from "~/stores/general";
-
 export default defineNuxtPlugin((nuxtApp) => {
   axios.defaults.baseURL = process.env.API_BASE;
 
@@ -32,6 +31,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     function (err) {
       return new Promise(function () {
         useGeneralStore().setIsLoadling(false);
+        if (err.response.status === 401) {
+          localStorage.removeItem("token");
+        }
         useGeneralStore().setError(
           err.response.status,
           err.response.data.message

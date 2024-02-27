@@ -14,8 +14,6 @@ onMounted(async () => {
     console.log(error);
   }
 });
-
-definePageMeta({ middleware: "auth" });
 </script>
 
 <style lang="scss" scoped></style>
