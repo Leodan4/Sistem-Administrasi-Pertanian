@@ -11,7 +11,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     (config) => {
       useGeneralStore().setIsLoadling(true);
       let token = localStorage.getItem("token");
-      console.log(token);
 
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
@@ -32,14 +31,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
     function (err) {
       return new Promise(function () {
-        if (err) {
-          console.log("Test 123");
-          useGeneralStore().setIsLoadling(false);
-          useGeneralStore().setError(
-            err.response.status,
-            err.response.data.message
-          );
-        }
+        useGeneralStore().setIsLoadling(false);
+        useGeneralStore().setError(
+          err.response.status,
+          err.response.data.message
+        );
       });
     }
   );

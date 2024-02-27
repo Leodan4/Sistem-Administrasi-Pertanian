@@ -16,7 +16,23 @@ export const useDashboardSiswaStore = defineStore("dashboard_siswa", {
   }),
   persist: true,
   actions: {
-    async getAllSiswa(page = 1, perPage = 5, search = null, date = null) {
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
+    async getAllSiswa(
+      page = 1,
+      perPage = 5,
+      search = null,
+      date = this.formatDate(new Date())
+    ) {
       const params = {
         page,
         limit: perPage,

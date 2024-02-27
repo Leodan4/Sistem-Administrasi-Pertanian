@@ -91,10 +91,13 @@
               </tr>
             </thead>
             <tbody class="divide-y">
-              <tr v-if="$generalStore.error.status !== null">
-                <td class="text-center py-4" colspan="7">
-                  {{ $generalStore.error.message }}
-                </td>
+              <tr
+                v-if="
+                  $generalStore.error.status !== null ||
+                  !$dashboardSiswaStore.data
+                "
+              >
+                <td class="text-center py-4" colspan="7">Data Not Found</td>
               </tr>
               <tr
                 v-else
@@ -146,7 +149,14 @@
         </div>
         <!-- End Table -->
         <!-- Pagination -->
-        <div class="flex mt-8 items-center justify-between">
+        <div
+          class="flex mt-8 items-center justify-between"
+          v-if="
+            $dashboardSiswaStore.data &&
+            !$generalStore.isLoading &&
+            $generalStore.error.status === null
+          "
+        >
           <div>
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
@@ -164,10 +174,7 @@
               Entries
             </span>
           </div>
-          <nav
-            v-if="$generalStore.error.status === null"
-            aria-label="Page navigation"
-          >
+          <nav aria-label="Page navigation">
             <ul class="flex items-center -space-x-px h-8 text-sm">
               <li>
                 <button
