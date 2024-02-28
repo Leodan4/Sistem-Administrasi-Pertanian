@@ -115,7 +115,7 @@
           type="button"
           class="place-self-end bg-[#E4262C] text-white py-2 px-6 rounded-lg mt-10"
         >
-          Edit
+          Save
         </button>
       </div>
       <div
@@ -147,7 +147,7 @@
           type="button"
           class="place-self-end bg-[#E4262C] text-white py-2 px-6 rounded-lg mt-10"
         >
-          Edit
+          Save
         </button>
       </div>
     </div>
