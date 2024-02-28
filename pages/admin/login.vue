@@ -43,13 +43,13 @@
                   </div>
                 </div>
                 <div class="text-xs text-gray-400 flex justify-end">
-                  <button @click="navigateTo('/admin/forget_password')" id="lupaKataSandiButton" class="bg-transparent border-none hover:text-red-500">
+                  <button @click="navigateTo('/admin/forget_password')" type="button" id="lupaKataSandiButton" class="bg-transparent border-none hover:text-red-500">
                     <h3>Lupa Kata Sandi <hr><hr> </h3>
                   </button>
                 </div>
 
                 <div class="flex flex-col lg:space-y-2 py-2">
-                  <button type="button" name="login"
+                  <button type="submit" name="login"
                     class="flex items-center text-base justify-center mx-14 py-2 font-medium text-center text-white transition duration-500 ease-in-out transform bg-[#E4262C] rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 lg:w-auto">
                     Login
                   </button>
