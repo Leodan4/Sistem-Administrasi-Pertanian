@@ -43,14 +43,15 @@
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
-                                <Multiselect v-model="id_siswa" id="ditemui" :options="filteredSiswa" label="nama_siswa" valueProp="id_siswa" :searchable="true" />
+                                <Multiselect v-model="id_siswa" id="ditemui" :options="filteredSiswa" label="nama_siswa"
+                                    valueProp="id_siswa" :searchable="true" />
                             </div>
                             <div class="py-3">
                                 <span for="foto" class="font-semibold">Upload foto</span>
                                 <input required type="file" name="foto" id="foto" @change="handleFileChange"
                                     class="block w-full px-3 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan No Telp" />
-                            </div>
+                            </div>      
                         </div>
                     </div>
 
@@ -58,9 +59,10 @@
                         <div class="py-3">
                             <span for="keterangan" class="font-semibold">Keterangan</span>
                             <textarea name="keterangan" id="keterangan"
-                                class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 
+                                rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                 placeholder="Masukkan keterangan" v-model="keterangan"></textarea>
-                        </div>
+                        </div>  
                     </div>
 
                     <div class="flex justify-end mt-5">
@@ -94,12 +96,7 @@ export default {
         };
         // Computed property to filter options based on user input
         const filteredSiswa = computed(() => {
-            if (!nama_tamu.value)
-                return $formSiswaStore.daftarSiswa.data;
-            const query = nama_tamu.value.toLowerCase();
-            return $formSiswaStore.daftarSiswa.data.filter(daftarSiswa => {
-                return daftarSiswa.nama_siswa.toLowerCase().includes(query);
-            });
+            return $formSiswaStore.daftarSiswa.data;
         });
         const saveData = async () => {
             try {
