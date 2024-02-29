@@ -176,6 +176,9 @@ const showPassword = ref(false);
 const editProfil = async (type) => {
   await $profileStore.editProfile(payload, type);
   await $profileStore.getUserLogin();
+  useNuxtApp().$toast.success(`Berhasil Mengedit Profile`, {
+    autoClose: 2000,
+  });
 };
 
 const setActiveTab = (tab) => {
