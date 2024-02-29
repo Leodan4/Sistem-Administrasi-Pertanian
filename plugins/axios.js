@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useGeneralStore } from "~/stores/general";
-
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default defineNuxtPlugin((nuxtApp) => {
   axios.defaults.baseURL = process.env.API_BASE;
@@ -40,6 +41,11 @@ export default defineNuxtPlugin((nuxtApp) => {
           err.response.status,
           err.response.data.message
         );
+        if (err && err.config.method !== "get") {
+          toast.error(err.response.data.message, {
+            autoClose: 1000,
+          });
+        }
       });
     }
   );

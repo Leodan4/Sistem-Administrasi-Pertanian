@@ -95,11 +95,18 @@
 
                 <div class="flex flex-col lg:space-y-2 py-2">
                   <button
+                    :disabled="$generalStore.isLoading"
                     type="submit"
                     name="login"
+                    :class="$generalStore.isLoading && 'opacity-80'"
                     class="flex items-center text-base justify-center mx-14 py-2 font-medium text-center text-white transition duration-500 ease-in-out transform bg-[#E4262C] rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 lg:w-auto"
                   >
-                    Login
+                    <span v-if="$generalStore.isLoading" class="mr-2">
+                      <i class="animate-spin mr-1 fas fa-spinner"></i>
+                    </span>
+                    {{
+                      $generalStore.isLoading ? "Tunggu Sebentar.." : "Login"
+                    }}
                   </button>
                 </div>
               </div>
@@ -112,10 +119,10 @@
 </template>
 
 <script>
-import axios from "~/plugins/axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import Swal from "sweetalert2";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   setup() {
@@ -123,7 +130,7 @@ export default {
     const password = ref("");
     const showPassword = ref(false);
     const router = useRouter();
-    const { $loginStore, $profileStore } = useNuxtApp(); // Initialize your store
+    const { $loginStore, $profileStore, $generalStore } = useNuxtApp(); // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
@@ -140,18 +147,18 @@ export default {
         // Use store action to login
         await $profileStore.getUserLogin();
         // Navigasi ke halaman dashboard setelah login berhasil
-        router.replace("/admin/dashboard");
-
-        Swal.fire({
-          icon: "success",
-          title:
-            '<span style="font-size: 40px; font-weight: bold; color: green;"> Welcome Back! </span>',
-          showConfirmButton: false,
-          timer: 2000,
-          didClose: () => {
-            // Optionally perform any action after the alert is closed
-          },
+        await new Promise((resolve) => {
+          router.afterEach(resolve);
+          router.replace("/admin/dashboard");
         });
+
+        // Setelah navigasi selesai, tampilkan notifikasi
+        useNuxtApp().$toast.success(
+          `Selamat Datang ${$profileStore.data.nama_admin}`,
+          {
+            autoClose: 2000,
+          }
+        );
 
         return response;
       } catch (error) {
