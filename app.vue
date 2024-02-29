@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div
+    <!-- <div
       v-if="loading"
       class="fixed overflow-hidden flex justify-center items-center h-full w-full z-50 bg-black-900/30"
     >
@@ -78,7 +78,7 @@
           />
         </circle>
       </svg>
-    </div>
+    </div> -->
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -86,18 +86,18 @@
 </template>
 
 <script setup lang="ts">
-const nuxtApp = useNuxtApp();
-const loading = ref(false
+// const nuxtApp = useNuxtApp();
+// const loading = ref(false
 
-);
+// );
 
-nuxtApp.hook("page:start", () => {
-  loading.value = true;
-});
+// nuxtApp.hook("page:start", () => {
+//   loading.value = true;
+// });
 
-nuxtApp.hook("page:finish", () => {
-  loading.value = false;
-});
+// nuxtApp.hook("page:finish", () => {
+//   loading.value = false;
+// });
 </script>
 
 <style>

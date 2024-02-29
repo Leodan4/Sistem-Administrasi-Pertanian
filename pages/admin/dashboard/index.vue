@@ -67,35 +67,30 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row mt-10 gap-4 md:gap-5">
+      <div class="flex flex-col md:flex-row my-10 gap-4 md:gap-5">
         <div
-          class="bg-white border-2 flex flex-grow space-x-4 border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+          class="bg-white border-2 flex border-[#E9EDF5] p-2 rounded-lg shadow-sm"
         >
-          <div
-            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center"
-          >
-            <UsersIcon class="fill-blue-500" width="30" height="30" />
-          </div>
-          <div class="flex flex-col flex-grow">
-            <h3 class="font-bold text-2xl text-black">30</h3>
-            <span class="text-gray-500 text-sm tracking-wide"
-              >Pengunjung Tamu Umum</span
-            >
-          </div>
+          <apexchart
+            type="line"
+            class="text-black w-full"
+            :options="chartOptions"
+            height="350"
+            :series="series"
+          ></apexchart>
         </div>
         <div
-          class="bg-white border-2 flex space-x-4 min-w-max border-[#E9EDF5] rounded-lg p-4 shadow-sm items-center"
+          class="bg-white border-2 flex border-[#E9EDF5] rounded-lg p-2 shadow-sm items-center justify-center"
         >
-          <div
-            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center"
-          >
-            <UsersIcon class="fill-blue-500" width="30" height="30" />
-          </div>
-          <div class="flex flex-col flex-grow">
-            <h3 class="font-bold text-2xl text-black">30</h3>
-            <span class="text-gray-500 text-sm tracking-wide"
-              >Pengunjung Tamu Umum</span
-            >
+          <div id="chart">
+            <apexchart
+              type="pie"
+              width="350"
+              height="350"
+              class="text-black"
+              :options="chartPie"
+              :series="series2"
+            ></apexchart>
           </div>
         </div>
       </div>
@@ -111,12 +106,13 @@ import ChartIcon from "~/assets/icon/chart-outline.svg?component";
 
 const chartOptions = {
   chart: {
+    width: "50%",
     id: "basic-line",
     toolbar: {
       ...toolbar,
       tools: {
         download:
-          '<img src="/dashboard/Vector.svg" class="h-5 w-5" alt="FlowBite Logo" />',
+          '<img src="/dashboard/Vector.svg" class="h-5 w-5" alt="Dowload Logo" />',
         selection: true,
         zoom: false,
         zoomin: false,
@@ -151,4 +147,59 @@ const series = [
     data: [10, 20, 30, 60, 90, 80, 70],
   },
 ];
+
+const chartPie = {
+  chart: {
+    width: 380,
+    type: "pie",
+    toolbar: {
+      show: true,
+      tools: {
+        download:
+          '<img src="/dashboard/Vector.svg" class="h-5 w-5" alt="Dowload Logo" />',
+        selection: true,
+        zoom: true,
+        zoomin: true,
+        zoomout: true,
+        pan: true,
+        reset: true | '<img src="/static/icons/reset.png" width="20">',
+        customIcons: [],
+      },
+      export: {
+        csv: {
+          filename: undefined,
+          columnDelimiter: ",",
+          headerCategory: "category",
+          headerValue: "value",
+          dateFormatter(timestamp) {
+            return new Date(timestamp).toDateString();
+          },
+        },
+        svg: {
+          filename: undefined,
+        },
+        png: {
+          filename: undefined,
+        },
+      },
+      autoSelected: "zoom",
+    },
+  },
+  labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+  responsive: [
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200,
+        },
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+};
+
+const series2 = [44, 55, 13, 43, 22];
 </script>

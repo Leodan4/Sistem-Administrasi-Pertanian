@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useGeneralStore } from "~/stores/general";
+
+
 export default defineNuxtPlugin((nuxtApp) => {
   axios.defaults.baseURL = process.env.API_BASE;
 
