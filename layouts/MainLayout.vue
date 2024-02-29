@@ -13,5 +13,8 @@
 <script setup>
 import TopNav from "../components/admin/TopNav.vue";
 import SideNav from "../components/admin/SideNav.vue";
-const route = useRoute();
+
+onMounted(async () => {
+  initFlowbite();
+});
 </script>

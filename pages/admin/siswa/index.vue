@@ -98,7 +98,11 @@
                 "
               >
                 <td class="text-center py-4" colspan="7">
-                  {{ $generalStore.error.message }}
+                  {{
+                    $generalStore.error.message
+                      ? $generalStore.error.message
+                      : "Data Masih Belum Ada"
+                  }}
                 </td>
               </tr>
               <tr

@@ -3,16 +3,21 @@ import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
   pages: true,
   devServer: {
-    port: 3000, 
-    //3140,3000
+    port: 3000,
   },
   ssr: false,
   runtimeConfig: {
     public: {
       baseURL: process.env.NUXT_PUBLIC_API_BASE,
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE,
     },
   },
-  plugins: ["~/plugins/axios.js"],
+  plugins: [
+    { src: "~/plugins/axios" },
+    { src: "~/plugins/stores" },
+    { src: "~/plugins/apexchart" },
+    { src: "~/plugins/vuedatepicker" },
+  ],
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@nuxt/image"],

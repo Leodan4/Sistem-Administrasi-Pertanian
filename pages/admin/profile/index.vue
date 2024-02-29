@@ -28,7 +28,7 @@
       >
         <img
           class="md:w-40 md:h-40 w-[100px] h-[100px] rounded-full self-center cursor-pointer"
-          src="/assets/bg-login.png"
+          :src="imageUrl + $profileStore.data.foto"
           alt="Rounded avatar"
         />
         <div
@@ -161,6 +161,7 @@ import Pengaturan from "~/assets/icon/user-settings-outline.svg?component";
 
 const activeTab = ref(1);
 const { $profileStore } = useNuxtApp();
+const { imageUrl } = useRuntimeConfig().public;
 
 const payload = reactive({
   nama_admin: $profileStore.data.nama_admin,
@@ -172,17 +173,12 @@ const payload = reactive({
 
 const showPassword = ref(false);
 
-onMounted(async () => {
-  try {
-    await $profileStore.getUserLogin();
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 const editProfil = async (type) => {
   await $profileStore.editProfile(payload, type);
   await $profileStore.getUserLogin();
+  useNuxtApp().$toast.success(`Berhasil Mengedit Profile`, {
+    autoClose: 2000,
+  });
 };
 
 const setActiveTab = (tab) => {
