@@ -173,14 +173,6 @@ const payload = reactive({
 
 const showPassword = ref(false);
 
-onMounted(async () => {
-  try {
-    await $profileStore.getUserLogin();
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 const editProfil = async (type) => {
   await $profileStore.editProfile(payload, type);
   await $profileStore.getUserLogin();
