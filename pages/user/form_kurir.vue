@@ -15,7 +15,7 @@
                                 <span for="nama" class="font-semibold">Nama Pengirim</span>
                                 <input required type="text" name="nama" id="nama"
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                    placeholder="Masukan Nama" v-model="nama_tamu" />
+                                    placeholder="Masukan Nama" v-model="nama_pengirim" />
                             </div>
                             <div class="py-3">
                                 <span for="no_telp" class="font-semibold">No Telp</span>
@@ -43,7 +43,6 @@
                             
                         </div>
 
-                        
                     </div>
 
                     <div class="flex justify-end mt-10">
@@ -63,7 +62,7 @@ import Multiselect from '@vueform/multiselect'
 
 export default {
     setup() {
-        const nama_tamu = ref('');
+        const nama_pengirim = ref('');
         const no_tlp = ref('');
         const id_siswa = ref(''); 
         const id_guru = ref('');
@@ -85,7 +84,7 @@ export default {
         const saveData = async () => {
             try {
                 const formData = new FormData();
-                formData.append('nama_tamu', nama_tamu.value);
+                formData.append('nama_pengirim', nama_pengirim.value);
                 formData.append('no_tlp', no_tlp.value);
                 formData.append('id_siswa', id_siswa.value); 
                 formData.append('id_guru', id_guru.value);
@@ -105,12 +104,11 @@ export default {
             $formSiswaStore.fetchDataSiswa();
         });
         return {
-            nama_tamu,
+            nama_pengirim,
             no_tlp,
             id_siswa,
-            janji,
-            jumlah_tamu,
-            keterangan,
+            id_guru,
+            asal_instansi,
             foto,
             handleFileChange,
             saveData,
