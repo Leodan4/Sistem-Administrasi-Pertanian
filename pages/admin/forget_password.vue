@@ -42,7 +42,7 @@
                         </div>
 
                         <!-- Tampilan form untuk memasukkan password baru -->
-                        <div v-if="currentStep === 'newPassword'">
+                        <div v-else-if="currentStep === 'newPassword'">
                             <form @submit.prevent="handleSetNewPassword">
                                 <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
