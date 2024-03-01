@@ -4,6 +4,9 @@
             <div class="flex justify-end">
                 <img src="/form/tlkm.svg">
             </div>
+            <div >
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+            </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">
                 <h1 class="mx-10 py-10 text-center text-2xl md:text-3xl font-semibold">Form Pengisian Kurir</h1>
@@ -65,20 +68,15 @@ export default {
         const nama_pengirim = ref('');
         const no_tlp = ref('');
         const id_siswa = ref(''); 
-        const id_guru = ref('');
         const asal_instansi = ref('');
         const foto = ref(null);
-        const { $formSiswaStore } = useNuxtApp();
+        const { $formKurirStore } = useNuxtApp();
         const handleFileChange = (event) => {
             foto.value = event.target.files[0];
         };
         // Computed property to filter options based on user input
-        const filteredSiswa = computed(() => {
-            return $formSiswaStore.daftarSiswa.data;
-        });
-
-        const filteredGuru = computed(() => {
-            return $formGuruStore.daftarGuru.data;
+        const filteredMoklet = computed(() => {
+            return $formKurirStore.daftarMoklet.data;
         });
 
         const saveData = async () => {
@@ -90,7 +88,7 @@ export default {
                 formData.append('id_guru', id_guru.value);
                 formData.append('asal_instansi', asal_instansi.value);
                 formData.append('foto', foto.value);
-                const response = await $formSiswaStore.transaksiSiswa(formData);
+                const response = await $formKurirStore.transaksiSiswa(formData);
                 console.log('Data saved successfully');
                 Swal.fire('Success', 'Data saved successfully', 'success');
                 // Redirect or show success message here
@@ -101,19 +99,18 @@ export default {
             }
         };
         onMounted(() => {
-            $formSiswaStore.fetchDataSiswa();
+            $formKurirStore.fetchDataMoklet();
         });
         return {
             nama_pengirim,
             no_tlp,
             id_siswa,
-            id_guru,
             asal_instansi,
             foto,
             handleFileChange,
             saveData,
-            daftarSiswa: $formSiswaStore.daftarSiswa.data,
-            filteredSiswa,
+            daftarMoklet: $formKurirStore.daftarMoklet,
+            filteredMoklet,
         };
     },
     components: {

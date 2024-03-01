@@ -32,7 +32,7 @@
                 <div class="flex flex-col justify-center gap-5 md:gap-16 my-10 mx-20 md:mx-40 md:flex-row">
                     <div
                         class="flex flex-col justify-center w-full h-[500px] md:h-[600px] bg-white rounded-xl border-t-8 shadow-lg border-t-[#E4262C] ">
-                        <img src="/wellcompage/siswa.svg" class="w-96 h-96 py-4 md:py-14 px-8 md:px-16">
+                        <img src="/wellcompage/well 3.svg" class="w-96 h-96 py-4 md:py-20 px-8 md:px-20">
                         <h1 class="flex justify-center font-bold text-xl md:text-2xl md:py-2">Siswa</h1>
                         <p class="flex justify-center font-semibold text-sm md:text-md md:py-2">Buat janjian dengan siswa
                             siswi!</p>
@@ -44,7 +44,7 @@
 
                     <div
                         class="flex flex-col justify-center w-full h-[500px] md:h-[600px] bg-white rounded-xl border-t-8 shadow-lg border-t-[#E4262C] ">
-                        <img src="/wellcompage/guru.svg" class="w-96 h-96 py-4 md:py-20 px-10  md:px-24">
+                        <img src="/wellcompage/well 2.svg" class="w-96 h-96 py-4 md:py-20 px-8 md:px-20">
                         <h1 class="flex justify-center font-bold text-xl md:text-2xl">Guru/Karyawan</h1>
                         <p class="flex justify-center text-center font-semibold text-sm md:text-md px-8 py-3">Buat janjian dengan Guru
                             atau Karyawan!</p>
@@ -56,7 +56,7 @@
 
                     <div
                         class="flex flex-col justify-center w-full h-[500px] md:h-[600px] bg-white rounded-xl border-t-8 shadow-lg border-t-[#E4262C] ">
-                        <img src="/wellcompage/kurir.svg" class="w-96 h-96 py-8 px-8 md:py-20 md:px-10">
+                        <img src="/wellcompage/well.svg" class="w-96 h-96 py-4 md:py-20 px-8 md:px-20">
                         <h1 class="flex justify-center font-bold text-xl md:text-2xl pt-5 pb-3">Layanan Kirim</h1>
                         <p class="flex justify-center font-semibold text-sm md:text-md  py-2">Titip barang anda di pos
                             satpam!</p>

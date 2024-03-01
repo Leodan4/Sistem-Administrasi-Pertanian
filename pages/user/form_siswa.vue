@@ -4,6 +4,9 @@
             <div class="flex justify-end">
                 <img src="/form/tlkm.svg">
             </div>
+            <div >
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+            </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">
                 <h1 class="mx-10 py-10 text-center text-2xl md:text-3xl font-semibold">Form Pengisian Siswa</h1>
@@ -100,10 +103,6 @@ export default {
         });
         const saveData = async () => {
             try {
-                if (jumlah_tamu.value <= 0) {
-                    Swal.fire('Error', 'Jumlah Tamu harus lebih besar dari 0', 'error');
-                    return; // Menghentikan proses penyimpanan data
-                }
 
                 const formData = new FormData();
                 formData.append('nama_tamu', nama_tamu.value);
