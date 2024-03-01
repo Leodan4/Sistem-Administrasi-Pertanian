@@ -34,7 +34,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     function (err) {
       return new Promise(function () {
         useGeneralStore().setIsLoadling(false);
-        if (err.response.status === 401) {
+        if (err.response.status === 401 || err.response.status === 500) {
           localStorage.removeItem("token");
         }
         useGeneralStore().setError(
@@ -43,7 +43,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         );
         if (err && err.config.method !== "get") {
           toast.error(err.response.data.message, {
-            autoClose: 1000,
+            autoClose: 2000,
           });
         }
       });

@@ -5,21 +5,21 @@ import { useFormGuruStore } from "~/stores/form_guru";
 import { useLoginStore } from "~/stores/login";
 import { useForgetPasswordStore } from "~/stores/forget_password";
 import { useProfileStore } from "~/stores/profile";
-
-
+import { useDashboardKaryawanStore } from "~/stores/dashboard_karyawan";
 
 export default defineNuxtPlugin((NuxtApp) => {
   return {
     provide: {
       generalStore: useGeneralStore(),
       dashboardSiswaStore: useDashboardSiswaStore(),
-      formSiswaStore : useFormSiswaStore(),
-      loginStore : useLoginStore(),
-      forgetPasswordStore : useForgetPasswordStore(),
       formSiswaStore: useFormSiswaStore(),
-      formGuruStore : useFormGuruStore(),
+      loginStore: useLoginStore(),
+      forgetPasswordStore: useForgetPasswordStore(),
+      formSiswaStore: useFormSiswaStore(),
+      formGuruStore: useFormGuruStore(),
       loginStore: useLoginStore(),
       profileStore: useProfileStore(),
+      dashboardKaryawanStore: useDashboardKaryawanStore(),
     },
   };
 });

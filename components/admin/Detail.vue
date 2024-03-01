@@ -5,7 +5,7 @@
     >
       <div class="absolute bottom-4 right-10">
         <button
-          class="bg-[#E4262C] px-4 text-white py-2 rounded-lg"
+          class="bg-[rgb(228,38,44)] px-4 text-white py-2 rounded-lg"
           @click="router.back()"
         >
           Back
@@ -34,7 +34,7 @@
           <tr v-if="type === 'karyawan'" class="py-6">
             <td><span class="px-2">4.</span>Asal Instansi</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.asalInstansi }}</td>
+            <td>{{ props.data.asal_instansi }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">5.</span>Jumlah Tamu</td>
