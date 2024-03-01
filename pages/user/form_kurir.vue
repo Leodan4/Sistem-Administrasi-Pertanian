@@ -28,8 +28,8 @@
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
-                                <Multiselect v-model="id_guru" id="ditemui" :options="filteredGuru" label="nama_guru"
-                                    valueProp="id_guru" :searchable="true" />
+                                <Multiselect v-model="id_moklet" id="ditemui" :options="filteredMoklet" label="nama_guru"
+                                    valueProp="id_moklet" :searchable="true" />
                             </div>
                             <div class="py-3">
                                 <span for="instansi" class="font-semibold">Asal Instansi</span>
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="flex justify-end mt-10">
-                        <button class=" text-white py-2 px-10 rounded-lg bg-[#E4262C]">Simpan</button>
+                        <button @click="saveData" class=" text-white py-2 px-10 rounded-lg bg-[#E4262C]">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@ export default {
     setup() {
         const nama_pengirim = ref('');
         const no_tlp = ref('');
-        const id_siswa = ref(''); 
+        const id_moklet = ref(''); 
         const asal_instansi = ref('');
         const foto = ref(null);
         const { $formKurirStore } = useNuxtApp();
@@ -84,11 +84,11 @@ export default {
                 const formData = new FormData();
                 formData.append('nama_pengirim', nama_pengirim.value);
                 formData.append('no_tlp', no_tlp.value);
-                formData.append('id_siswa', id_siswa.value); 
-                formData.append('id_guru', id_guru.value);
+                formData.append('id_moklet', id_moklet.value); 
+                // formData.append('id_guru', id_guru.value);
                 formData.append('asal_instansi', asal_instansi.value);
                 formData.append('foto', foto.value);
-                const response = await $formKurirStore.transaksiSiswa(formData);
+                const response = await $formKurirStore.transaksiKurir(formData);
                 console.log('Data saved successfully');
                 Swal.fire('Success', 'Data saved successfully', 'success');
                 // Redirect or show success message here
@@ -104,7 +104,7 @@ export default {
         return {
             nama_pengirim,
             no_tlp,
-            id_siswa,
+            id_moklet,
             asal_instansi,
             foto,
             handleFileChange,
