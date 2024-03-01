@@ -4,6 +4,9 @@
             <div class="flex justify-end">
                 <img src="/form/tlkm.svg">
             </div>
+            <div >
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+            </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">
                 <h1 class="mx-10 py-10 text-center text-2xl md:text-3xl font-semibold">Form Pengisian Guru & Karyawan</h1>
@@ -55,7 +58,7 @@
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Pilih" v-model="janji">
                                     <option value="Ada">Ada</option>
-                                    <option value="Tidak Ada">Tiada</option>
+                                    <option value="Tidak Ada">Tidak Ada</option>
                                     <!-- <option value="Opsi C">Semoga Ada</option> -->
                                 </select>
                             </div>

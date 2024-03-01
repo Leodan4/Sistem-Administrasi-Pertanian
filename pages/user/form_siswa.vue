@@ -4,6 +4,9 @@
             <div class="flex justify-end">
                 <img src="/form/tlkm.svg">
             </div>
+            <div >
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+            </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">
                 <h1 class="mx-10 py-10 text-center text-2xl md:text-3xl font-semibold">Form Pengisian Siswa</h1>
@@ -29,7 +32,7 @@
                                     class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Pilih" v-model="janji">
                                     <option value="Ada">Ada</option>
-                                    <option value="Tidak Ada">Tiada</option>
+                                    <option value="Tidak Ada">Tidak Ada</option>
                                 </select>
                             </div>
                         </div>
@@ -51,7 +54,7 @@
                                 <input required type="file" name="foto" id="foto" @change="handleFileChange"
                                     class="block w-full px-3 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                     placeholder="Masukan No Telp" />
-                            </div>      
+                            </div>
                         </div>
                     </div>
 
@@ -62,7 +65,7 @@
                                 class="w-full h-40 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 
                                 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                                 placeholder="Masukkan keterangan" v-model="keterangan"></textarea>
-                        </div>  
+                        </div>
                     </div>
 
                     <div class="flex justify-end mt-5">
@@ -100,10 +103,11 @@ export default {
         });
         const saveData = async () => {
             try {
+
                 const formData = new FormData();
                 formData.append('nama_tamu', nama_tamu.value);
                 formData.append('no_tlp', no_tlp.value);
-                formData.append('id_siswa', id_siswa.value); // Pastikan nilai ini sesuai dengan nilai yang benar
+                formData.append('id_siswa', id_siswa.value);
                 formData.append('janji', janji.value);
                 formData.append('jumlah_tamu', jumlah_tamu.value.toString());
                 formData.append('keterangan', keterangan.value);

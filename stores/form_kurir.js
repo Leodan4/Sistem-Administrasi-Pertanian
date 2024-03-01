@@ -2,10 +2,9 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const useFormKurirStore = defineStore("form_guru", {
+export const useFormKurirStore = defineStore("form_kurir", {
   state: () => ({
-    daftarGuru: [],
-    daftarSiswa: [],
+    daftarMoklet: [],
   }),
   actions: {
     async transaksiKurir(formData) {
@@ -18,25 +17,16 @@ export const useFormKurirStore = defineStore("form_guru", {
         throw error;
       }
     },
-    async fetchDataGuru(daftarGuru) {
+    async fetchDataMoklet(daftarMoklet) {
       try {
-        const response = await axios.get('/guru/get');
+        const response = await axios.get('/transaksi_kurir/getMoklet');
         // Simpan data siswa ke dalam state daftarSiswa
-        this.daftarGuru = response.data;
+        this.daftarMoklet = response.data;
       } catch (error) {
         console.error('Failed to fetch data guru:', error);
         throw error;
       }
     },
-    async fetchDataSiswa(daftarSiswa) {
-        try {
-          const response = await axios.get('/siswa/get');
-          // Simpan data siswa ke dalam state daftarSiswa
-          this.daftarSiswa = response.data;
-        } catch (error) {
-          console.error('Failed to fetch data guru:', error);
-          throw error;
-        }
-      },
+
   },
 });
