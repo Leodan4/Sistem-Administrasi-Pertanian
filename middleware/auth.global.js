@@ -28,6 +28,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo("/admin/login");
   }
 
+  if (verifiedToken && requiresAuth) {
+    useNuxtApp().$profileStore.getUserLogin();
+  }
+
   if (to.path === "/" && verifiedToken) {
     return navigateTo("/admin/dashboard");
   }

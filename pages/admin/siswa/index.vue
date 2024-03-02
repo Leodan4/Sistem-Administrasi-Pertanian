@@ -259,52 +259,6 @@
       </div>
     </div>
   </MainLayout>
-  <!-- modal -->
-  <div
-    v-if="modalVerifikasi"
-    class="absolute top-0 left-0 flex items-center justify-center right-0 z-50 bottom-0 h-screen w-screen"
-  >
-    <div
-      class="bg-white z-50 w-[428px] h-min flex flex-col space-y-6 rounded-xl px-6 py-6"
-    >
-      <div class="flex justify-between h-min">
-        <span class="text-2xl font-bold">Verifikasi</span>
-        <div
-          @click="modalVerifikasi = false"
-          class="relative top-0 cursor-pointer"
-        >
-          <img class="" width="25" src="/dashboard/close-outline.svg" />
-        </div>
-      </div>
-      <form class="min-w-full flex flex-col">
-        <div class="flex flex-col pt-4 space-y-3">
-          <label
-            for="countries"
-            class="block font-bold text-md text-gray-900 dark:text-white"
-            >Kode Verifikasi</label
-          >
-          <input
-            type="text"
-            id="default-search"
-            class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-            placeholder="Masukan Kode Verifikasi"
-            required
-            maxlength="4"
-          />
-        </div>
-        <button
-          type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-10 rounded-lg mt-10"
-        >
-          Simpan
-        </button>
-      </form>
-    </div>
-  </div>
-  <div
-    v-if="modalVerifikasi"
-    class="bg-black absolute top-0 left-0 right-0 bottom-0 opacity-60 z-40 h-screen w-screen"
-  ></div>
   <!-- End modal -->
 </template>
 
@@ -333,7 +287,6 @@ const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
 const router = useRouter();
 const route = useRoute();
 
-const modalVerifikasi = ref(false);
 
 const handleDetail = (item, index) => {
   $generalStore.detail(item);

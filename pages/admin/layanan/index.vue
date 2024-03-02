@@ -3,14 +3,14 @@
   <MainLayout>
     <div class="w-full my-8 px-8">
       <!-- Filter -->
-      <div v-if="$generalStore.isLoading">Loading...</div>
-      <div v-else>
+      <div>
         <div
           class="flex justify-center md:justify-normal items-center space-x-2 md:space-x-0"
         >
           <div class="flex items-center space-x-2 md:space-x-4 md:flex-grow">
             <select
               v-model="limit"
+              @change="handleFilterChange"
               name="showData"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg py-[6px] focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
               id="showData"
@@ -41,6 +41,7 @@
               </div>
               <input
                 v-model="search"
+                @input="handleFilterChange"
                 type="text"
                 id="default-search"
                 class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
@@ -52,7 +53,8 @@
 
           <div class="md:w-4/12 lg:w-2/12">
             <vue-date-picker
-              model-type="dd-MM-yyyy"
+              @update:model-value="handleFilterChange"
+              model-type="yyyy-MM-dd"
               :enable-time-picker="false"
               class="custom-date-picker"
               placeholder="Pilih Tanggal"
@@ -63,7 +65,17 @@
         </div>
         <!-- End Filter -->
         <!-- Table -->
+        <div class="mt-6" v-if="$generalStore.isLoading">
+          <div class="animate-pulse">
+            <div class="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+          </div>
+        </div>
         <div
+          v-if="!$generalStore.isLoading"
           class="mt-6 overflow-x-auto overflow-y-visible sm:rounded-lg border h-min"
         >
           <table
@@ -73,51 +85,41 @@
               <tr class="bg-white border-b">
                 <th class="px-3 py-4">Nama</th>
                 <th class="px-3 py-4">No Telp</th>
-                <th class="px-3 py-4">Janji</th>
                 <th class="px-3 py-4">Asal Intansi</th>
-                <th class="px-3 py-4">Jumlah Tamu</th>
-                <th class="px-3 py-4">Orang yang ditemui</th>
+                <th class="px-3 py-4">Nama Penerima</th>
+                <th class="px-3 py-4">No Telp Penerima</th>
+                <th class="px-3 py-4">Tanggal Dititipkan</th>
                 <th class="px-3 py-4">Status</th>
                 <th class="px-3 py-4">Aksi</th>
               </tr>
             </thead>
             <tbody class="divide-y">
               <tr
+                v-if="
+                  !$dashboardSiswaStore.data ||
+                  $generalStore.error.status !== null
+                "
+              >
+                <td class="text-center py-4" colspan="7">
+                  {{
+                    $generalStore.error.message
+                      ? $generalStore.error.message
+                      : "Data Masih Belum Ada"
+                  }}
+                </td>
+              </tr>
+              <tr
+                v-else
                 v-for="(item, index) in tableData"
                 :key="index"
                 class="hover:bg-gray-50 bg-white"
               >
                 <td class="px-3 py-4">{{ item.nama }}</td>
                 <td class="px-3 py-4">{{ item.noTelp }}</td>
-                <td class="px-3 py-4">
-                  <div
-                    :class="{
-                      'bg-green-100': item.janji === 'Ada',
-                      'bg-red-100': item.janji === 'Tidak Ada',
-                    }"
-                    class="max-w-min px-3 flex items-center py-1 rounded-[4px] justify-center space-x-2"
-                  >
-                    <div
-                      :class="{
-                        'bg-green-600': item.janji === 'Ada',
-                        'bg-red-600': item.janji === 'Tidak Ada',
-                      }"
-                      class="rounded-[3px] min-w-2 min-h-2"
-                    ></div>
-                    <div
-                      :class="{
-                        'text-green-500': item.janji === 'Ada',
-                        'text-red-500 min-w-16': item.janji === 'Tidak Ada',
-                      }"
-                      class="font-bold"
-                    >
-                      {{ item.janji }}
-                    </div>
-                  </div>
-                </td>
-                <td class="px-3 py-4">{{ item.asalInstansi }}</td>
-                <td class="px-3 py-4">{{ item.jumlahTamu }}</td>
-                <td class="px-3 py-4">{{ item.orangDitemui }}</td>
+                <td class="px-3 py-4">{{ item.asal_instansi }}</td>
+                <td class="px-3 py-4">{{ item.tanggal_dititipkan }}</td>
+                <td class="px-3 py-4">{{ item.tamu.nama_tamu }}</td>
+                <td class="px-3 py-4">{{ item.tamu.no_tlp }}</td>
                 <td class="px-3 py-4">
                   <div
                     :class="{
@@ -171,7 +173,7 @@
                             <div>Verifikasi</div>
                           </div>
                           <div
-                            @click="handleDetail(item, index)"
+                            @click="handleDetail(item, item.id_transaksiKurir)"
                             class="flex space-x-2 items-center cursor-pointer"
                           >
                             <img
@@ -226,31 +228,41 @@
         </div>
         <!-- End Table -->
         <!-- Pagination -->
-        <div class="flex mt-8 items-center justify-between">
+        <div
+          class="flex mt-8 items-center justify-between"
+          v-if="
+            $dashboardLayananStore.data &&
+            !$generalStore.isLoading &&
+            $generalStore.error.status === null
+          "
+        >
           <div>
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
-              <!-- current -->
-              <span class="font-semibold text-gray-900 dark:text-white">1</span>
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                $dashboardLayananStore.pagination.currentPage
+              }}</span>
               to
-              <!-- total page -->
-              <span class="font-semibold text-gray-900 dark:text-white"
-                >10</span
-              >
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                $dashboardLayananStore.pagination.currentPage * limit
+              }}</span>
               of
-              <!-- total data -->
-              <span class="font-semibold text-gray-900 dark:text-white"
-                >100</span
-              >
+              <span class="font-semibold text-gray-900 dark:text-white">{{
+                $dashboardLayananStore.pagination.totalItems
+              }}</span>
               Entries
             </span>
           </div>
-
           <nav aria-label="Page navigation">
             <ul class="flex items-center -space-x-px h-8 text-sm">
               <li>
-                <a
-                  href="#"
+                <button
+                  :disabled="!$dashboardLayananStore.pagination.hasPrev"
+                  @click="
+                    changePage(
+                      $dashboardLayananStore.pagination.currentPage - 1
+                    )
+                  "
                   class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   <span class="sr-only">Previous</span>
@@ -269,47 +281,34 @@
                       d="M5 1 1 5l4 4"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
+              <!-- Render the pagination links based on totalPages -->
+              <template
+                v-for="page in $dashboardLayananStore.pagination.totalPages"
+              >
+                <li>
+                  <button
+                    @click="changePage(page)"
+                    :class="{
+                      'z-10 flex items-center justify-center px-3 h-8 leading-tight text-red-600 border border-red-300 bg-red-50 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white':
+                        page === $dashboardLayananStore.pagination.currentPage,
+                      'flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white':
+                        page !== $dashboardLayananStore.pagination.currentPage,
+                    }"
+                  >
+                    {{ page }}
+                  </button>
+                </li>
+              </template>
               <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >1</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >2</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-red-600 border border-red-300 bg-red-50 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                  >3</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >4</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >5</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
+                <button
+                  :disabled="!$dashboardLayananStore.pagination.hasNext"
+                  @click="
+                    changePage(
+                      $dashboardLayananStore.pagination.currentPage + 1
+                    )
+                  "
                   class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   <span class="sr-only">Next</span>
@@ -328,7 +327,7 @@
                       d="m1 9 4-4-4-4"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
@@ -390,15 +389,62 @@
 import MainLayout from "~/layouts/MainLayout.vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 
-const date = ref();
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
+const date = ref(formatDate(new Date()));
 
 const search = ref(null);
 const limit = ref(5);
 
-const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
+const { $generalStore, $dashboardLayananStore } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
+const changePage = async (page) => {
+  try {
+    await $dashboardLayananStore.getAllLayanan(
+      page,
+      limit.value,
+      search.value,
+      date.value
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
+
+const handleFilterChange = debounce(async () => {
+  try {
+    await $dashboardLayananStore.getAllLayanan(
+      1,
+      limit.value,
+      search.value,
+      date.value
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}, 600);
 
 const modalVerifikasi = ref(false);
 
@@ -407,44 +453,9 @@ const handleDetail = (item, index) => {
   router.push(`${route.fullPath}/${index}`);
 };
 
-const tableData = ref([
-  {
-    nama: "Atsal Faiz",
-    noTelp: "0889790990",
-    janji: "Ada",
-    asalInstansi: "SMK Telkom Malang",
-    jumlahTamu: 3,
-    orangDitemui: "Raffi Joeta",
-    status: "Proses",
-    keterangan: "Sesuai dengan janji",
-  },
-  {
-    nama: "Budi Setiawan",
-    noTelp: "0812345678",
-    janji: "Tidak Ada",
-    asalInstansi: "Universitas ABC",
-    jumlahTamu: 2,
-    orangDitemui: "Ani Susanti",
-    status: "Gagal",
-    keterangan: "Tidak ada pemberitahuan sebelumnya",
-  },
-  {
-    nama: "Citra Dewi",
-    noTelp: "0856789012",
-    janji: "Ada",
-    asalInstansi: "Politeknik XYZ",
-    jumlahTamu: 5,
-    orangDitemui: "Darma Pratama",
-    status: "Selesai",
-    keterangan: "Semua berjalan lancar",
-  },
-
-  // ... (objek-objek lainnya)
-]);
-
 onMounted(async () => {
   try {
-    await $dashboardSiswaStore.getAllSiswa();
+    await $dashboardLayananStore.getAllLayanan();
   } catch (error) {
     console.log(error);
   }

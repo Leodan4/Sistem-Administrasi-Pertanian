@@ -48,7 +48,7 @@
           :class="{ 'opacity-0': loadingImage }"
           @load="handleImageLoad"
           @error="handleImageError"
-          :src="imageUrl + $profileStore.data.foto"
+          :src="imageUrl + $profileStore.data?.foto"
           alt="Rounded
         avatar"
         />
@@ -73,7 +73,7 @@
         </div>
         <div class="flex flex-col items-start justify-center">
           <button @click="router.push('/admin/profile')" class="text-sm">
-            {{ $profileStore.data.nama_admin }}
+            {{ $profileStore.data?.nama_admin }}
           </button>
         </div>
         <div class="cursor-pointer flex pl-4" @click="logout">
