@@ -1,6 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
+  app: {
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      title: "Digest",
+      link: [{ rel: "icon", type: "image/x-icon", href: "/digest.svg" }],
+    },
+  },
   pages: true,
   devServer: {
     port: 3000,
