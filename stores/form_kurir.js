@@ -21,10 +21,10 @@ export const useFormKurirStore = defineStore("form_kurir", {
       try {
         const response = await axios.get('/transaksi_kurir/getMoklet');
         // Simpan data siswa ke dalam state daftarSiswa
-        this.daftarMoklet = response.data;
+        this.daftarMoklet = response.data.data.nama_siswa + response.data.data.nama_guru;
         // console.log(response.data.data.guru)
       } catch (error) {
-        console.error('Failed to fetch data guru:', error);
+        console.error('Failed to fetch data Moklet', error);
         throw error;
       }
     },
