@@ -71,7 +71,6 @@ import Swal from 'sweetalert2';
 
 export default {
     setup() {
-        const email = ref('');
         const newPassword = ref('');
         const confirmPassword = ref('');
         const router = useRouter();
@@ -107,13 +106,13 @@ export default {
             }
         };
 
-        const navigateTo = (path) => {
-            router.push(path);
-        };
+        // const navigateTo = (path) => {
+        //     router.push(path);
+        // };
 
         return {
-            email,
             newPassword,
+            confirmPassword,
             handleSetNewPassword,
             navigateTo,
         };
