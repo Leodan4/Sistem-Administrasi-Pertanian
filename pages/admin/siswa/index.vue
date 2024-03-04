@@ -98,11 +98,14 @@
                 "
               >
                 <td class="text-center py-4" colspan="7">
-                  {{
-                    $generalStore.error.message
-                      ? $generalStore.error.message
-                      : "Data Masih Belum Ada"
-                  }}
+                  <div v-if="$generalStore.error.message">
+                    {{ $generalStore.error.message }}
+                  </div>
+                  <div v-else class="animate-pulse">
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                  </div>
                 </td>
               </tr>
               <tr
@@ -286,7 +289,6 @@ const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
-
 
 const handleDetail = (item, index) => {
   $generalStore.detail(item);

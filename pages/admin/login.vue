@@ -121,8 +121,6 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 
 export default {
   setup() {
@@ -130,7 +128,7 @@ export default {
     const password = ref("");
     const showPassword = ref(false);
     const router = useRouter();
-    const { $loginStore, $profileStore, $generalStore } = useNuxtApp(); // Initialize your store
+    const { $loginStore, $profileStore } = useNuxtApp(); // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;

@@ -79,6 +79,7 @@
         </circle>
       </svg>
     </div> -->
+    <NuxtLoadingIndicator color="#E4262C" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
