@@ -301,7 +301,7 @@ const handleDetail = (item, index) => {
 
 const changePage = async (page) => {
   try {
-    await $dashboardKaryawanStore.getAllGuru(
+    await $dashboardKaryawanStore.getAllKaryawan(
       page,
       limit.value,
       search.value,
