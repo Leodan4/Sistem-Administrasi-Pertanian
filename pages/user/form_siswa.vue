@@ -5,7 +5,7 @@
                 <img src="/form/tlkm.svg">
             </div>
             <div >
-                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20 hover:text-red-600"> Back </button>
             </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">

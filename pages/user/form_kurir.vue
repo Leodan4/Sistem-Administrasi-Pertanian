@@ -5,7 +5,7 @@
                 <img src="/form/tlkm.svg">
             </div>
             <div >
-                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20"> Back </button>
+                <button @click="navigateTo('/user/welcoming')" class="font-bold text-xl px-20 hover:text-red-600"> Back </button>
             </div>
 
             <div class="flex flex-col items-center mx-5 md:mx-60">
@@ -28,7 +28,7 @@
                             </div>
                             <div class="py-3">
                                 <span for="ditemui" class="font-semibold">Orang Yang Ditemui</span>
-                                <Multiselect v-model="id_moklet" id="ditemui" :options="filteredMoklet" label="nama_guru"
+                                <Multiselect v-model="id_moklet" id="ditemui" :options="filteredMoklet" label="nama"
                                     valueProp="id_moklet" :searchable="true" />
                             </div>
                             <div class="py-3">
@@ -76,7 +76,7 @@ export default {
         };
         // Computed property to filter options based on user input
         const filteredMoklet = computed(() => {
-            return $formKurirStore.daftarMoklet.data;
+            return $formKurirStore.daftarMoklet;
         });
 
         const saveData = async () => {
@@ -85,7 +85,6 @@ export default {
                 formData.append('nama_pengirim', nama_pengirim.value);
                 formData.append('no_tlp', no_tlp.value);
                 formData.append('id_moklet', id_moklet.value); 
-                // formData.append('id_guru', id_guru.value);
                 formData.append('asal_instansi', asal_instansi.value);
                 formData.append('foto', foto.value);
                 const response = await $formKurirStore.transaksiKurir(formData);
