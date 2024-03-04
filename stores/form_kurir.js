@@ -22,6 +22,7 @@ export const useFormKurirStore = defineStore("form_kurir", {
         const response = await axios.get('/transaksi_kurir/getMoklet');
         // Simpan data siswa ke dalam state daftarSiswa
         this.daftarMoklet = response.data;
+        // console.log(response.data.data.guru)
       } catch (error) {
         console.error('Failed to fetch data guru:', error);
         throw error;
