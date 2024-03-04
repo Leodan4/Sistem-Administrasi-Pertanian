@@ -6,6 +6,7 @@ export const useForgetPasswordStore = defineStore("forgetpassword", {
     email: "",
     newPassword: "",
     confirmPassword: "",
+    token: "",
     error: null, // Simpan informasi kesalahan
   }),
   persist: true,
@@ -38,6 +39,7 @@ export const useForgetPasswordStore = defineStore("forgetpassword", {
           {
             newPassword: newPasswordData.newPassword,
             confirmPassword: newPasswordData.confirmPassword,
+            token: newPasswordData.token
           }
         );
 

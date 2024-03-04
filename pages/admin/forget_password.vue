@@ -76,14 +76,14 @@ export default {
             try {
                 const response = await $forgetPasswordStore.resetPassword(resetData);
                 console.log('New password set successfully');
+                useNuxtApp().$toast.success(
+                    `Periksa email anda`,
+                    {
+                        autoClose: 2000,
+                    }
+                );
             } catch (error) {
                 console.error('Error occurred while sending reset email:', error);
-                // Tampilkan pesan kesalahan kepada pengguna
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to send reset email. Please try again later.',
-                });
             }
         };
 

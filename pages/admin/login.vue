@@ -43,7 +43,7 @@
                   <span class="">Email</span>
                   <input
                     required
-                    for="email"
+                    for="email"   
                     type="text"
                     name="email"
                     id="email"

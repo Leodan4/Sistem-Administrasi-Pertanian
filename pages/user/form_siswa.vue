@@ -114,12 +114,15 @@ export default {
                 formData.append('foto', foto.value);
                 const response = await $formSiswaStore.transaksiSiswa(formData);
                 console.log('Data saved successfully');
-                Swal.fire('Success', 'Data saved successfully', 'success');
-                // Redirect or show success message here
+                useNuxtApp().$toast.success(
+                    `Berhasil menyimpan data`,
+                    {
+                        autoClose: 2000,
+                    }
+                );
             }
             catch (error) {
                 console.error('Failed to save data:', error);
-                Swal.fire('Error', 'Failed to save data', 'error');
             }
         };
         onMounted(() => {
