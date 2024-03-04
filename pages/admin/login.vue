@@ -144,8 +144,6 @@ export default {
 
       try {
         const response = await $loginStore.loginUser(loginData);
-        // Use store action to login
-        await $profileStore.getUserLogin();
         // Navigasi ke halaman dashboard setelah login berhasil
         await new Promise((resolve) => {
           router.afterEach(resolve);

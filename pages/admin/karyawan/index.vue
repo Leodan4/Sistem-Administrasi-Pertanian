@@ -84,6 +84,7 @@
               <tr class="bg-white border-b">
                 <th class="px-3 py-4">Nama</th>
                 <th class="px-3 py-4">No Telp</th>
+                <th class="px-3 py-4">Asal Instansi</th>
                 <th class="px-3 py-4">Janji</th>
                 <th class="px-3 py-4">Jumlah Tamu</th>
                 <th class="px-3 py-4">Orang yang ditemui</th>
@@ -94,7 +95,7 @@
               <tr
                 v-if="
                   $generalStore.error.status !== null ||
-                  !$dashboardSiswaStore.data
+                  !$dashboardKaryawanStore.data
                 "
               >
                 <td class="text-center py-4" colspan="7">
@@ -107,12 +108,13 @@
               </tr>
               <tr
                 v-else
-                v-for="(item, index) in $dashboardSiswaStore.data"
+                v-for="(item, index) in $dashboardKaryawanStore.data"
                 :key="index"
                 class="hover:bg-gray-50 bg-white"
               >
                 <td class="px-3 py-4">{{ item.tamu.nama_tamu }}</td>
                 <td class="px-3 py-4">{{ item.tamu.no_tlp }}</td>
+                <td class="px-3 py-4">{{ item.asal_instansi }}</td>
                 <td class="px-3 py-4">
                   <div
                     :class="{
@@ -140,10 +142,10 @@
                   </div>
                 </td>
                 <td class="px-3 py-4">{{ item.jumlah_tamu }}</td>
-                <td class="px-3 py-4">{{ item.siswa.nama_siswa }}</td>
+                <td class="px-3 py-4">{{ item.guru.nama_guru }}</td>
                 <td class="px-3 py-4">
                   <div
-                    @click="handleDetail(item, item.id_transaksiSiswa)"
+                    @click="handleDetail(item, item.id_transaksiGuru)"
                     class="flex space-x-2 items-center cursor-pointer"
                   >
                     <img class="w-6" src="/dashboard/AiOutlineInfoCircle.svg" />
@@ -158,7 +160,7 @@
         <div
           class="flex mt-8 items-center justify-between"
           v-if="
-            $dashboardSiswaStore.data &&
+            $dashboardKaryawanStore.data &&
             !$generalStore.isLoading &&
             $generalStore.error.status === null
           "
@@ -167,15 +169,15 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage
+                $dashboardKaryawanStore.pagination.currentPage
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage * limit
+                $dashboardKaryawanStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.totalItems
+                $dashboardKaryawanStore.pagination.totalItems
               }}</span>
               Entries
             </span>
@@ -184,9 +186,11 @@
             <ul class="flex items-center -space-x-px h-8 text-sm">
               <li>
                 <button
-                  :disabled="!$dashboardSiswaStore.pagination.hasPrev"
+                  :disabled="!$dashboardKaryawanStore.pagination.hasPrev"
                   @click="
-                    changePage($dashboardSiswaStore.pagination.currentPage - 1)
+                    changePage(
+                      $dashboardKaryawanStore.pagination.currentPage - 1
+                    )
                   "
                   class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
@@ -210,16 +214,16 @@
               </li>
               <!-- Render the pagination links based on totalPages -->
               <template
-                v-for="page in $dashboardSiswaStore.pagination.totalPages"
+                v-for="page in $dashboardKaryawanStore.pagination.totalPages"
               >
                 <li>
                   <button
                     @click="changePage(page)"
                     :class="{
                       'z-10 flex items-center justify-center px-3 h-8 leading-tight text-red-600 border border-red-300 bg-red-50 hover:bg-red-100 hover:text-red-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white':
-                        page === $dashboardSiswaStore.pagination.currentPage,
+                        page === $dashboardKaryawanStore.pagination.currentPage,
                       'flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white':
-                        page !== $dashboardSiswaStore.pagination.currentPage,
+                        page !== $dashboardKaryawanStore.pagination.currentPage,
                     }"
                   >
                     {{ page }}
@@ -228,9 +232,11 @@
               </template>
               <li>
                 <button
-                  :disabled="!$dashboardSiswaStore.pagination.hasNext"
+                  :disabled="!$dashboardKaryawanStore.pagination.hasNext"
                   @click="
-                    changePage($dashboardSiswaStore.pagination.currentPage + 1)
+                    changePage(
+                      $dashboardKaryawanStore.pagination.currentPage + 1
+                    )
                   "
                   class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
@@ -259,52 +265,7 @@
       </div>
     </div>
   </MainLayout>
-  <!-- modal -->
-  <div
-    v-if="modalVerifikasi"
-    class="absolute top-0 left-0 flex items-center justify-center right-0 z-50 bottom-0 h-screen w-screen"
-  >
-    <div
-      class="bg-white z-50 w-[428px] h-min flex flex-col space-y-6 rounded-xl px-6 py-6"
-    >
-      <div class="flex justify-between h-min">
-        <span class="text-2xl font-bold">Verifikasi</span>
-        <div
-          @click="modalVerifikasi = false"
-          class="relative top-0 cursor-pointer"
-        >
-          <img class="" width="25" src="/dashboard/close-outline.svg" />
-        </div>
-      </div>
-      <form class="min-w-full flex flex-col">
-        <div class="flex flex-col pt-4 space-y-3">
-          <label
-            for="countries"
-            class="block font-bold text-md text-gray-900 dark:text-white"
-            >Kode Verifikasi</label
-          >
-          <input
-            type="text"
-            id="default-search"
-            class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-            placeholder="Masukan Kode Verifikasi"
-            required
-            maxlength="4"
-          />
-        </div>
-        <button
-          type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-10 rounded-lg mt-10"
-        >
-          Simpan
-        </button>
-      </form>
-    </div>
-  </div>
-  <div
-    v-if="modalVerifikasi"
-    class="bg-black absolute top-0 left-0 right-0 bottom-0 opacity-60 z-40 h-screen w-screen"
-  ></div>
+
   <!-- End modal -->
 </template>
 
@@ -328,12 +289,10 @@ const date = ref(formatDate(new Date()));
 const search = ref(null);
 const limit = ref(5);
 
-const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
+const { $generalStore, $dashboardKaryawanStore } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
-
-const modalVerifikasi = ref(false);
 
 const handleDetail = (item, index) => {
   $generalStore.detail(item);
@@ -342,7 +301,7 @@ const handleDetail = (item, index) => {
 
 const changePage = async (page) => {
   try {
-    await $dashboardSiswaStore.getAllSiswa(
+    await $dashboardKaryawanStore.getAllGuru(
       page,
       limit.value,
       search.value,
@@ -365,7 +324,7 @@ const debounce = (func, delay) => {
 
 const handleFilterChange = debounce(async () => {
   try {
-    await $dashboardSiswaStore.getAllSiswa(
+    await $dashboardKaryawanStore.getAllKaryawan(
       1,
       limit.value,
       search.value,
@@ -378,7 +337,7 @@ const handleFilterChange = debounce(async () => {
 
 onMounted(async () => {
   try {
-    await $dashboardSiswaStore.getAllSiswa();
+    await $dashboardKaryawanStore.getAllKaryawan();
   } catch (error) {
     console.log(error);
   }

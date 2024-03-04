@@ -14,6 +14,7 @@ export const useProfileStore = defineStore("profile", {
       this.data = res.data;
     },
     async logout() {
+      this.data = null;
       localStorage.removeItem("token");
     },
     async editProfile(payload, type) {

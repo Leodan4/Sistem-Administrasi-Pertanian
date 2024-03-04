@@ -25,7 +25,9 @@
     aria-label="Sidebar"
     class="bg-white min-h-screen max-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 fixed top-0 left-0 flex-col"
   >
-    <div class="flex justify-center font-bold text-xl mb-7">Logo</div>
+    <div class="flex justify-center font-bold text-xl mb-7">
+      <img src="/digest.svg" alt="" class="w-10" />
+    </div>
     <div class="flex flex-col space-y-4 flex-grow">
       <MenuItem menuText="Beranda" icon="Home" navigate="/admin/dashboard" />
       <MenuItem
@@ -48,7 +50,7 @@
           :class="{ 'opacity-0': loadingImage }"
           @load="handleImageLoad"
           @error="handleImageError"
-          :src="imageUrl + $profileStore.data.foto"
+          :src="imageUrl + $profileStore.data?.foto"
           alt="Rounded
         avatar"
         />
@@ -73,7 +75,7 @@
         </div>
         <div class="flex flex-col items-start justify-center">
           <button @click="router.push('/admin/profile')" class="text-sm">
-            {{ $profileStore.data.nama_admin }}
+            {{ $profileStore.data?.nama_admin }}
           </button>
         </div>
         <div class="cursor-pointer flex pl-4" @click="logout">

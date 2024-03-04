@@ -11,9 +11,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   // axios.defaults.withCredentials = true4
   axios.interceptors.request.use(
     (config) => {
+      let token = localStorage.getItem("token");
       useGeneralStore().setError(null, null);
       useGeneralStore().setIsLoadling(true);
-      let token = localStorage.getItem("token");
 
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
@@ -35,6 +35,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       return new Promise(function () {
         useGeneralStore().setIsLoadling(false);
         if (err.response.status === 401) {
+          //localhost:3000/
+          http: console.log(err.response);
+          console.log(err.response.status);
           localStorage.removeItem("token");
         }
         useGeneralStore().setError(
@@ -43,7 +46,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         );
         if (err && err.config.method !== "get") {
           toast.error(err.response.data.message, {
-            autoClose: 1000,
+            autoClose: 2000,
           });
         }
       });
