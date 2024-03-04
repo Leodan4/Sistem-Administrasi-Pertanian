@@ -96,7 +96,7 @@
             <tbody class="divide-y">
               <tr
                 v-if="
-                  !$dashboardSiswaStore.data ||
+                  !$dashboardLayananStore.data ||
                   $generalStore.error.status !== null
                 "
               >
@@ -110,16 +110,28 @@
               </tr>
               <tr
                 v-else
-                v-for="(item, index) in tableData"
+                v-for="(item, index) in $dashboardLayananStore.data"
                 :key="index"
                 class="hover:bg-gray-50 bg-white"
               >
-                <td class="px-3 py-4">{{ item.nama }}</td>
-                <td class="px-3 py-4">{{ item.noTelp }}</td>
+                <td class="px-3 py-4">
+                  {{
+                    item.yangDiterima.nama ? item.yangDiterima.nama : "waiting"
+                  }}
+                </td>
+                <td class="px-3 py-4">
+                  {{
+                    item.yangDiterima.no_tlp
+                      ? item.yangDiterima.no_tlp
+                      : "waiting"
+                  }}
+                </td>
                 <td class="px-3 py-4">{{ item.asal_instansi }}</td>
-                <td class="px-3 py-4">{{ item.tanggal_dititipkan }}</td>
                 <td class="px-3 py-4">{{ item.tamu.nama_tamu }}</td>
                 <td class="px-3 py-4">{{ item.tamu.no_tlp }}</td>
+                <td class="px-3 py-4">
+                  {{ formatDate(item.tanggal_dititipkan) }}
+                </td>
                 <td class="px-3 py-4">
                   <div
                     :class="{

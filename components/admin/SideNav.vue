@@ -26,7 +26,7 @@
     class="bg-white min-h-screen max-w-[250px] overflow-y-auto pt-20 flex transition-transform -translate-x-full sm:translate-x-0 rounded-r-xl z-40 fixed top-0 left-0 flex-col"
   >
     <div class="flex justify-center font-bold text-xl mb-7">
-      <img src="/digest.svg" alt="" class="w-10" />
+      <img src="/digest2.svg" alt="" class="w-[100px]" />
     </div>
     <div class="flex flex-col space-y-4 flex-grow">
       <MenuItem menuText="Beranda" icon="Home" navigate="/admin/dashboard" />
