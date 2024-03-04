@@ -170,11 +170,14 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage
+                ($dashboardSiswaStore.pagination.currentPage - 1) * limit + 1
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage * limit
+                $dashboardSiswaStore.pagination.currentPage * limit >
+                $dashboardSiswaStore.pagination.totalItems
+                  ? $dashboardSiswaStore.pagination.totalItems
+                  : $dashboardSiswaStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{

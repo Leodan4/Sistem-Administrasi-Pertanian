@@ -172,11 +172,14 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardKaryawanStore.pagination.currentPage
+                ($dashboardKaryawanStore.pagination.currentPage - 1) * limit + 1
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardKaryawanStore.pagination.currentPage * limit
+                $dashboardKaryawanStore.pagination.currentPage * limit >
+                $dashboardKaryawanStore.pagination.totalItems
+                  ? $dashboardKaryawanStore.pagination.totalItems
+                  : $dashboardKaryawanStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{
