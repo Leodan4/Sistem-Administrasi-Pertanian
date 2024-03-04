@@ -26,18 +26,34 @@
                                 <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
                                         <span class="mb-1">Sandi Baru</span>
-                                        <input required type="password" name="newPassword" id="newPassword"
-                                            class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                            placeholder="Masukkan Sandi Baru" v-model="newPassword" />
+                                        <div class="relative">
+                                            <input required :type="showNewPassword ? 'text' : 'password'"
+                                                name="newPassword" id="newPassword"
+                                                class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                                placeholder="Masukkan Sandi Baru" v-model="newPassword" />
+                                            <button type="button"
+                                                class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                                @click="togglePasswordVisibility">
+                                                <i :class="showNewPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="mt-6 space-y-6 mx-0 md:mx-6">
                                     <div>
                                         <h3 class="mb-1">Konfirmasi Sandi</h3>
-                                        <input required type="password" name="confirmPassword" id="confirmPassword"
-                                            class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                                            placeholder="Konfirmasi Sandi Baru" v-model="confirmPassword" />
+                                        <div class="relative">
+                                            <input required :type="showPassword ? 'text' : 'password'"
+                                                name="confirmPassword" id="confirmPassword"
+                                                class="block w-full px-3 py-1 text-base bg-gray-50 placeholder-gray-300 transition duration-500 ease-in-out transform border-2 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                                                placeholder="Konfirmasi Sandi Baru" v-model="confirmPassword" />
+                                            <button type="button"
+                                                class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                                @click="toggleKonfirmVisibility">
+                                                <i :class="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -73,46 +89,56 @@ export default {
     setup() {
         const newPassword = ref('');
         const confirmPassword = ref('');
-        const router = useRouter();
+        const route = useRoute();
+        const token = route.query.token;
+        const showPassword = ref(false);
+        const showNewPassword = ref(false);
         const { $forgetPasswordStore } = useNuxtApp(); // Accessing the Pinia store
+
+        console.log(token)
+
+
+        const togglePasswordVisibility = () => {
+            showNewPassword.value = !showNewPassword.value;
+        };
+
+        const toggleKonfirmVisibility = () => {
+            showPassword.value = !showPassword.value;
+        };
 
         const handleSetNewPassword = async () => {
             // Pastikan confirmPassword sama dengan newPassword
             if (newPassword.value !== confirmPassword.value) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Konfirmasi sandi tidak cocok dengan sandi baru. Silakan coba lagi.',
-                });
                 return; // Hentikan eksekusi jika tidak cocok
             }
 
             const newPasswordData = {
                 newPassword: newPassword.value,
                 confirmPassword: confirmPassword.value,
+                token: token,
             };
 
             try {
                 const response = await $forgetPasswordStore.setNewPassword(newPasswordData);
                 console.log('New password set successfully');
+                useNuxtApp().$toast.success(
+                    `Ubah sandi berhasil`,
+                    {
+                        autoClose: 2000,
+                    }
+                );
             } catch (error) {
                 console.error('Error occurred while setting new password:', error);
-                // Tampilkan pesan kesalahan kepada pengguna
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to set new password. Please try again later.',
-                });
             }
         };
-
-        // const navigateTo = (path) => {
-        //     router.push(path);
-        // };
 
         return {
             newPassword,
             confirmPassword,
+            showPassword,
+            showNewPassword,
+            togglePasswordVisibility,
+            toggleKonfirmVisibility,
             handleSetNewPassword,
             navigateTo,
         };
