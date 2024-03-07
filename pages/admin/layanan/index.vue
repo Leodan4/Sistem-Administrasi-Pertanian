@@ -129,9 +129,9 @@
                       : "waiting"
                   }}
                 </td>
-                <td class="px-3 py-4">{{ item.asal_instansi }}</td>
-                <td class="px-3 py-4">{{ item.tamu.nama_tamu }}</td>
-                <td class="px-3 py-4">{{ item.tamu.no_tlp }}</td>
+                <td class="px-3 py-4">{{ item?.asal_instansi }}</td>
+                <td class="px-3 py-4">{{ item.tamu?.nama_tamu }}</td>
+                <td class="px-3 py-4">{{ item.tamu?.no_tlp }}</td>
                 <td class="px-3 py-4">
                   {{ formatDate(item.tanggal_dititipkan) }}
                 </td>
@@ -389,7 +389,7 @@
         </div>
         <button
           type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-10 rounded-lg mt-10"
+          class="place-self-end bg-[#C53030] text-white py-2 px-10 rounded-lg mt-10"
         >
           Simpan
         </button>

@@ -1,4 +1,5 @@
 import { verifyAuth } from "~/lib/auth";
+import { useProfileStore } from "~/stores/profile";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const token = localStorage.getItem("token");
@@ -28,7 +29,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo("/admin/login");
   }
 
-  if (verifiedToken && requiresAuth) {
+  if (verifiedToken && requiresAuth && !useProfileStore().$state.IsSave) {
     useNuxtApp().$profileStore.getUserLogin();
   }
 

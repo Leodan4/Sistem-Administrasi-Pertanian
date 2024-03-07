@@ -4,13 +4,15 @@
     <div class="w-full mt-20 text-white px-8">
       <!-- End Header -->
       <div
-        class="bg-[#E4262C] rounded-xl h-[90px] px-6 flex py-4 justify-between relative w-full"
+        class="bg-[#C53030] rounded-xl h-[90px] px-6 flex py-4 justify-between relative w-full"
       >
         <div class="flex flex-col justify-between">
           <h4 class="md:text-xl text-sm tracking-normal md:tracking-wide">
-            Selamat Datang Di Website Buku Tamu!
+            Selamat Datang di Website Digest!
           </h4>
-          <p class="text-sm tracking-wide">Halo, Sugeng!</p>
+          <p class="text-sm tracking-wide">
+            Halo, {{ $profileStore.data?.nama_admin }}!
+          </p>
         </div>
         <div class="lg:block hidden">
           <img
@@ -67,10 +69,9 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row my-10 gap-4 md:gap-5">
-        <div
-          class="bg-white border-2 flex border-[#E9EDF5] p-2 rounded-lg shadow-sm"
-        >
+      <div class="flex flex-col lg:flex-row my-10 gap-6 md:gap-5">
+        <div class="bg-white p-3 roundend-lg flex flex-col lg:w-8/12 w-full">
+          <div class="text-black">Total Pengunjung</div>
           <apexchart
             type="line"
             class="text-black w-full"
@@ -79,19 +80,17 @@
             :series="series"
           ></apexchart>
         </div>
+
         <div
-          class="bg-white border-2 flex border-[#E9EDF5] rounded-lg p-2 shadow-sm items-center justify-center"
+          class="flex-grow bg-white p-3 flex items-center justify-center rounded-lg"
         >
-          <div id="chart">
-            <apexchart
-              type="pie"
-              width="350"
-              height="350"
-              class="text-black"
-              :options="chartPie"
-              :series="series2"
-            ></apexchart>
-          </div>
+          <apexchart
+            type="donut"
+            height="350"
+            class="text-black w-full"
+            :options="chartPie"
+            :series="series2"
+          ></apexchart>
         </div>
       </div>
     </div>
@@ -104,9 +103,10 @@ import BsBoxSeamIcon from "~/assets/icon/BsBoxSeam.svg?component";
 import UsersIcon from "~/assets/icon/users-group-outline.svg?component";
 import ChartIcon from "~/assets/icon/chart-outline.svg?component";
 
+const { $profileStore } = useNuxtApp();
+
 const chartOptions = {
   chart: {
-    width: "50%",
     id: "basic-line",
     toolbar: {
       ...toolbar,
@@ -134,7 +134,7 @@ const chartOptions = {
       "Minggu",
     ],
   },
-  colors: ["#E4262C", "#3F83F8"],
+  colors: ["#C53030", "#3F83F8"],
 };
 
 const series = [
@@ -151,7 +151,7 @@ const series = [
 const chartPie = {
   chart: {
     width: 380,
-    type: "pie",
+    type: "donut",
     toolbar: {
       show: true,
       tools: {
@@ -185,21 +185,9 @@ const chartPie = {
       autoSelected: "zoom",
     },
   },
-  labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-  responsive: [
-    {
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200,
-        },
-        legend: {
-          position: "bottom",
-        },
-      },
-    },
-  ],
+  colors: ["#C53030", "#3F83F8"],
+  labels: ["Layanan Kirim", "Tamu umum"],
 };
 
-const series2 = [44, 55, 13, 43, 22];
+const series2 = [30, 20];
 </script>

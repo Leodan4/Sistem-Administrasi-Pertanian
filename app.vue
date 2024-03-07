@@ -79,12 +79,13 @@
         </circle>
       </svg>
     </div> -->
-    <NuxtLoadingIndicator color="#E4262C" />
+    <NuxtLoadingIndicator color="#C53030" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
+
 
 <script setup lang="ts">
 // const nuxtApp = useNuxtApp();

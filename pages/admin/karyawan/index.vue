@@ -145,7 +145,7 @@
                   </div>
                 </td>
                 <td class="px-3 py-4">{{ item.jumlah_tamu }}</td>
-                <td class="px-3 py-4">{{ item.guru.nama_guru }}</td>
+                <td class="px-3 py-4">{{ item.guru?.nama_guru }}</td>
                 <td class="px-3 py-4">
                   <div
                     @click="handleDetail(item, item.id_transaksiGuru)"

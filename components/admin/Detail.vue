@@ -19,27 +19,27 @@
           <tr class="px-2 py-4">
             <td><span class="px-2">1.</span>Nama</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.tamu.nama_tamu }}</td>
+            <td>{{ props.data.tamu?.nama_tamu }}</td>
           </tr>
           <tr class="px-2 py-6">
             <td><span class="px-2">2.</span>No Telp</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.tamu.no_tlp }}</td>
+            <td>{{ props.data.tamu?.no_tlp }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">3.</span>Janji</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.janji }}</td>
+            <td>{{ props.data?.janji }}</td>
           </tr>
           <tr v-if="type === 'karyawan'" class="py-6">
             <td><span class="px-2">4.</span>Asal Instansi</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.asal_instansi }}</td>
+            <td>{{ props.data?.asal_instansi }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">5.</span>Jumlah Tamu</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.jumlah_tamu }}</td>
+            <td>{{ props.data?.jumlah_tamu }}</td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2 min-w-16">6.</span>Orang yang Ditemui</td>
@@ -47,15 +47,15 @@
             <td>
               {{
                 type === "karyawan"
-                  ? props.data.guru.nama_guru
-                  : props.data.siswa.nama_siswa
+                  ? props.data?.guru?.nama_guru
+                  : props.data?.siswa.nama_siswa
               }}
             </td>
           </tr>
           <tr class="py-6">
             <td><span class="px-2">8.</span>Keterangan</td>
             <td class="px-4">:</td>
-            <td>{{ props.data.keterangan }}</td>
+            <td>{{ props.data?.keterangan }}</td>
           </tr>
           <tr class="">
             <td><span class="px-2">9.</span>Foto</td>
@@ -64,7 +64,7 @@
               <div class="flex items-start justify-start">
                 <img
                   class="max-w-full max-h-[220px] object-contain"
-                  :src="imageUrl + props.data.foto"
+                  :src="imageUrl + props.data?.foto"
                   @load="handleImageLoad"
                   @error="handleImageError"
                   :class="{ 'opacity-0': loadingImage }"
@@ -101,7 +101,7 @@
 const { imageUrl } = useRuntimeConfig().public;
 
 const router = useRouter();
-const props = defineProps(["data", "params", "type"]);
+const props = defineProps(["data?", "params", "type"]);
 
 // Add a loading state for the image
 const loadingImage = ref(true);
