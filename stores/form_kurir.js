@@ -11,7 +11,6 @@ export const useFormKurirStore = defineStore("form_kurir", {
       try {
         const response = await axios.post("/transaksi_kurir/add", formData);
         console.log("Berhasil mengirimkan data", response.data);
-       
       } catch (error) {
         console.error("Gagal mengirimkan data", error);
         throw error;
@@ -21,13 +20,18 @@ export const useFormKurirStore = defineStore("form_kurir", {
       try {
         const response = await axios.get('/transaksi_kurir/getMoklet');
         // Simpan data siswa ke dalam state daftarSiswa
-        this.daftarMoklet = response.data.data.nama_siswa + response.data.data.nama_guru;
-        // console.log(response.data.data.guru)
+        this.daftarMoklet = response.data.data;
+        console.log(response.data.data)
       } catch (error) {
         console.error('Failed to fetch data Moklet', error);
         throw error;
       }
     },
-
   },
 });
+
+
+
+
+
+

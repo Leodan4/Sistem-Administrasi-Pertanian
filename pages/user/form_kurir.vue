@@ -76,8 +76,10 @@ export default {
         };
         // Computed property to filter options based on user input
         const filteredMoklet = computed(() => {
-            return $formKurirStore.daftarMoklet;
+            return $formKurirStore.daftarMoklet.nama_siswa;
         });
+
+        console.log(filteredMoklet)
 
         const saveData = async () => {
             try {
