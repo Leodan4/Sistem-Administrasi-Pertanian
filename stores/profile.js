@@ -6,20 +6,21 @@ const $axios = axios().provide.axios;
 export const useProfileStore = defineStore("profile", {
   state: () => ({
     data: null,
+    IsSave: false,
   }),
   persist: true,
   actions: {
     async getUserLogin() {
       const res = await $axios.get("/api/profile");
       this.data = res.data;
+      this.IsSave = true;
     },
     async logout() {
       this.data = null;
+      this.IsSave = false;
       localStorage.removeItem("token");
     },
     async editProfile(payload, type) {
-      console.log(payload, type);
-
       if (type === 1) {
         delete payload.password;
       }
@@ -38,7 +39,9 @@ export const useProfileStore = defineStore("profile", {
       }
 
       const res = await $axios.put("/api/edit_profile", formData);
-      console.log(res);
+      if (res.status === 200) {
+        this.IsSave = false;
+      }
     },
   },
 });

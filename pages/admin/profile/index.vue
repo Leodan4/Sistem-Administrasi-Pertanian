@@ -33,20 +33,20 @@
         />
         <div
           :class="{
-            'bg-[#E4262C] fill-white text-white': activeTab === 1,
+            'bg-[#C53030] fill-white text-white': activeTab === 1,
           }"
           @click="setActiveTab(1)"
-          class="items-center cursor-pointer justify-normal transition-colors duration-200 inline-flex ease-in-out md:min-w-full w-7/12 hover:bg-[#E4262C] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2"
+          class="items-center cursor-pointer justify-normal transition-colors duration-200 inline-flex ease-in-out md:min-w-full w-7/12 hover:bg-[#C53030] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2"
         >
           <Pengaturan />
           <p class="block sm:text-[16px] md:text-lg">Pengaturan Akun</p>
         </div>
         <div
           :class="{
-            'bg-[#E4262C] fill-white text-white': activeTab === 2,
+            'bg-[#C53030] fill-white text-white': activeTab === 2,
           }"
           @click="setActiveTab(2)"
-          class="items-center justify-normal cursor-pointer transition-colors duration-200 inline-flex ease-in-out md:min-w-full w-7/12 hover:bg-[#E4262C] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2"
+          class="items-center justify-normal cursor-pointer transition-colors duration-200 inline-flex ease-in-out md:min-w-full w-7/12 hover:bg-[#C53030] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2"
         >
           <Keamanan />
           <p class="block sm:text-[16px] md:text-lg">Keamanan</p>
@@ -113,7 +113,7 @@
         <button
           @click="editProfil(1)"
           type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-6 rounded-lg mt-10"
+          class="place-self-end bg-[#C53030] text-white py-2 px-6 rounded-lg mt-10"
         >
           Save
         </button>
@@ -145,7 +145,7 @@
         <button
           @click="editProfil(2)"
           type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-6 rounded-lg mt-10"
+          class="place-self-end bg-[#C53030] text-white py-2 px-6 rounded-lg mt-10"
         >
           Save
         </button>

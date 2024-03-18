@@ -5,7 +5,7 @@
     >
       <div class="absolute bottom-4 right-10">
         <button
-          class="bg-[#E4262C] px-4 text-white py-2 rounded-lg"
+          class="bg-[#C53030] px-4 text-white py-2 rounded-lg"
           @click="router.back()"
         >
           Back

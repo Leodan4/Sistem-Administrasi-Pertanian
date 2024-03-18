@@ -98,11 +98,14 @@
                 "
               >
                 <td class="text-center py-4" colspan="7">
-                  {{
-                    $generalStore.error.message
-                      ? $generalStore.error.message
-                      : "Data Masih Belum Ada"
-                  }}
+                  <div v-if="$generalStore.error.message">
+                    {{ $generalStore.error.message }}
+                  </div>
+                  <div v-else class="animate-pulse">
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                  </div>
                 </td>
               </tr>
               <tr
@@ -167,11 +170,14 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage
+                ($dashboardSiswaStore.pagination.currentPage - 1) * limit + 1
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardSiswaStore.pagination.currentPage * limit
+                $dashboardSiswaStore.pagination.currentPage * limit >
+                $dashboardSiswaStore.pagination.totalItems
+                  ? $dashboardSiswaStore.pagination.totalItems
+                  : $dashboardSiswaStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{
@@ -286,7 +292,6 @@ const { $generalStore, $dashboardSiswaStore } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
-
 
 const handleDetail = (item, index) => {
   $generalStore.detail(item);

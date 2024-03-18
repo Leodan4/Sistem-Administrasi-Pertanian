@@ -43,7 +43,7 @@
                   <span class="">Email</span>
                   <input
                     required
-                    for="email"   
+                    for="email"
                     type="text"
                     name="email"
                     id="email"
@@ -99,7 +99,7 @@
                     type="submit"
                     name="login"
                     :class="$generalStore.isLoading && 'opacity-80'"
-                    class="flex items-center text-base justify-center mx-14 py-2 font-medium text-center text-white transition duration-500 ease-in-out transform bg-[#E4262C] rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 lg:w-auto"
+                    class="flex items-center text-base justify-center mx-14 py-2 font-medium text-center text-white transition duration-500 ease-in-out transform bg-[#C53030] rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 lg:w-auto"
                   >
                     <span v-if="$generalStore.isLoading" class="mr-2">
                       <i class="animate-spin mr-1 fas fa-spinner"></i>
@@ -121,8 +121,6 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 
 export default {
   setup() {
@@ -130,7 +128,7 @@ export default {
     const password = ref("");
     const showPassword = ref(false);
     const router = useRouter();
-    const { $loginStore, $profileStore, $generalStore } = useNuxtApp(); // Initialize your store
+    const { $loginStore, $profileStore } = useNuxtApp(); // Initialize your store
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;

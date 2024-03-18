@@ -101,11 +101,14 @@
                 "
               >
                 <td class="text-center py-4" colspan="7">
-                  {{
-                    $generalStore.error.message
-                      ? $generalStore.error.message
-                      : "Data Masih Belum Ada"
-                  }}
+                  <div v-if="$generalStore.error.message">
+                    {{ $generalStore.error.message }}
+                  </div>
+                  <div v-else class="animate-pulse">
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                  </div>
                 </td>
               </tr>
               <tr
@@ -126,9 +129,9 @@
                       : "waiting"
                   }}
                 </td>
-                <td class="px-3 py-4">{{ item.asal_instansi }}</td>
-                <td class="px-3 py-4">{{ item.tamu.nama_tamu }}</td>
-                <td class="px-3 py-4">{{ item.tamu.no_tlp }}</td>
+                <td class="px-3 py-4">{{ item?.asal_instansi }}</td>
+                <td class="px-3 py-4">{{ item.tamu?.nama_tamu }}</td>
+                <td class="px-3 py-4">{{ item.tamu?.no_tlp }}</td>
                 <td class="px-3 py-4">
                   {{ formatDate(item.tanggal_dititipkan) }}
                 </td>
@@ -252,11 +255,14 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardLayananStore.pagination.currentPage
+                ($dashboardLayananStore.pagination.currentPage - 1) * limit + 1
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardLayananStore.pagination.currentPage * limit
+                $dashboardLayananStore.pagination.currentPage * limit >
+                $dashboardLayananStore.pagination.totalItems
+                  ? $dashboardLayananStore.pagination.totalItems
+                  : $dashboardLayananStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{
@@ -383,7 +389,7 @@
         </div>
         <button
           type="button"
-          class="place-self-end bg-[#E4262C] text-white py-2 px-10 rounded-lg mt-10"
+          class="place-self-end bg-[#C53030] text-white py-2 px-10 rounded-lg mt-10"
         >
           Simpan
         </button>

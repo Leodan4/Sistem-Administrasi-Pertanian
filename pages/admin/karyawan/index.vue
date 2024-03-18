@@ -99,11 +99,14 @@
                 "
               >
                 <td class="text-center py-4" colspan="7">
-                  {{
-                    $generalStore.error.message
-                      ? $generalStore.error.message
-                      : "Data Masih Belum Ada"
-                  }}
+                  <div v-if="$generalStore.error.message">
+                    {{ $generalStore.error.message }}
+                  </div>
+                  <div v-else class="animate-pulse">
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-300 mb-6 rounded"></div>
+                    <div class="h-4 bg-gray-200 mb-6 rounded"></div>
+                  </div>
                 </td>
               </tr>
               <tr
@@ -142,7 +145,7 @@
                   </div>
                 </td>
                 <td class="px-3 py-4">{{ item.jumlah_tamu }}</td>
-                <td class="px-3 py-4">{{ item.guru.nama_guru }}</td>
+                <td class="px-3 py-4">{{ item.guru?.nama_guru }}</td>
                 <td class="px-3 py-4">
                   <div
                     @click="handleDetail(item, item.id_transaksiGuru)"
@@ -169,11 +172,14 @@
             <span class="text-sm text-gray-700 dark:text-gray-400">
               Showing
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardKaryawanStore.pagination.currentPage
+                ($dashboardKaryawanStore.pagination.currentPage - 1) * limit + 1
               }}</span>
               to
               <span class="font-semibold text-gray-900 dark:text-white">{{
-                $dashboardKaryawanStore.pagination.currentPage * limit
+                $dashboardKaryawanStore.pagination.currentPage * limit >
+                $dashboardKaryawanStore.pagination.totalItems
+                  ? $dashboardKaryawanStore.pagination.totalItems
+                  : $dashboardKaryawanStore.pagination.currentPage * limit
               }}</span>
               of
               <span class="font-semibold text-gray-900 dark:text-white">{{
