@@ -129,10 +129,8 @@ export default {
         formData.append("asal_instansi", asal_instansi.value);
         formData.append("foto", foto.value);
         const response = await $formKurirStore.transaksiKurir(formData);
+        response;
         console.log("Data saved successfully");
-        useNuxtApp().$toast.success(`Berhasil menyimpan data`, {
-          autoClose: 2000,
-        });
       } catch (error) {
         console.error("Failed to save data:", error);
       }

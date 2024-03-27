@@ -11,8 +11,19 @@ export const useFormKurirStore = defineStore("form_kurir", {
       try {
         const response = await axios.post("/transaksi_kurir/add", formData);
         console.log("Berhasil mengirimkan data", response.data);
+          
+        if (response.data.success) {
+          useNuxtApp().$toast.success(`Berhasil menyimpan data`, {
+            autoClose: 2000,
+          });
+        } else {
+          useNuxtApp().$toast.error(`Gagal menyimpan data: ${response.data.message}`, { 
+            autoClose: 2000,
+          });
+        }
+
       } catch (error) {
-        console.error("Gagal mengirimkan data", error);
+        console.error("Gagal melakukan posting data siswa", error);
         throw error;
       }
     },
