@@ -118,16 +118,10 @@
                 class="hover:bg-gray-50 bg-white"
               >
                 <td class="px-3 py-4">
-                  {{
-                    item.yangDiterima.nama ? item.yangDiterima.nama : "waiting"
-                  }}
+                  {{ item.yangDiterima?.nama }}
                 </td>
                 <td class="px-3 py-4">
-                  {{
-                    item.yangDiterima.no_tlp
-                      ? item.yangDiterima.no_tlp
-                      : "waiting"
-                  }}
+                  {{ item.yangDiterima?.no_tlp }}
                 </td>
                 <td class="px-3 py-4">{{ item?.asal_instansi }}</td>
                 <td class="px-3 py-4">{{ item.tamu?.nama_tamu }}</td>
