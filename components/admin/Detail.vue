@@ -101,7 +101,7 @@
 const { imageUrl } = useRuntimeConfig().public;
 
 const router = useRouter();
-const props = defineProps(["data?", "params", "type"]);
+const props = defineProps(["data", "params", "type"]);
 
 // Add a loading state for the image
 const loadingImage = ref(true);

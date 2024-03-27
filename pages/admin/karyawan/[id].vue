@@ -1,6 +1,10 @@
 <template>
   <MainLayout>
-    <Detail type="karyawan" :data="$generalStore.detailData" :params="route.params.id" />
+    <Detail
+      type="karyawan"
+      :data="$generalStore.detailData"
+      :params="route.params.id"
+    />
   </MainLayout>
 </template>
 
