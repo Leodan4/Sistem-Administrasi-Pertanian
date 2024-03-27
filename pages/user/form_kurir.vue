@@ -107,20 +107,20 @@ import Swal from "sweetalert2";
 import Multiselect from "@vueform/multiselect";
 
 export default {
-  setup() {
-    const nama_pengirim = ref("");
-    const no_tlp = ref("");
-    const id_moklet = ref("");
-    const asal_instansi = ref("");
-    const foto = ref(null);
-    const { $formKurirStore } = useNuxtApp();
-    const handleFileChange = (event) => {
-      foto.value = event.target.files[0];
-    };
-    // Computed property to filter options based on user input
-    const filteredMoklet = computed(() => {
-      return $formKurirStore.daftarMoklet;
-    });
+    setup() {
+        const nama_pengirim = ref('');
+        const no_tlp = ref('');
+        const id_moklet = ref(''); 
+        const asal_instansi = ref('');
+        const foto = ref(null);
+        const { $formKurirStore } = useNuxtApp();
+        const handleFileChange = (event) => {
+            foto.value = event.target.files[0];
+        };
+        // Computed property to filter options based on user input
+        const filteredMoklet = computed(() => {
+            return $formKurirStore.daftarMoklet;
+        });
 
     const saveData = async () => {
       try {
