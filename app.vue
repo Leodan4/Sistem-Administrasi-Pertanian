@@ -86,7 +86,6 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 // const nuxtApp = useNuxtApp();
 // const loading = ref(false
