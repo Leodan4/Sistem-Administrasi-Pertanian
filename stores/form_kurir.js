@@ -16,12 +16,20 @@ export const useFormKurirStore = defineStore("form_kurir", {
         throw error;
       }
     },
-    async fetchDataMoklet(daftarMoklet) {
+    async fetchDataMoklet() {
       try {
         const response = await axios.get('/transaksi_kurir/getMoklet');
-        // Simpan data siswa ke dalam state daftarSiswa
-        this.daftarMoklet = response.data.data;
-        console.log(response.data.data)
+        // Manipulasi data Moklet di sini
+        console.log(response.data.data.data)
+        const manipulatedData = response.data.data.data.map(item => {
+          return {
+            id_moklet: item.id_siswa || item.id_guru, // Sesuaikan dengan logika Anda
+            nama_moklet: item.nama_siswa || item.nama_guru // Contoh, sesuaikan dengan data yang Anda miliki
+          };
+        });
+        // Simpan data Moklet yang sudah dimanipulasi ke dalam state daftarMoklet
+        this.daftarMoklet = manipulatedData;
+        console.log(manipulatedData);
       } catch (error) {
         console.error('Failed to fetch data Moklet', error);
         throw error;
@@ -29,9 +37,3 @@ export const useFormKurirStore = defineStore("form_kurir", {
     },
   },
 });
-
-
-
-
-
-

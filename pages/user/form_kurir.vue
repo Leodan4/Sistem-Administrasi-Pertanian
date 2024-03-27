@@ -12,12 +12,10 @@
           Back
         </button>
       </div>
-
       <div class="flex flex-col items-center mx-5 md:mx-60">
         <h1 class="mx-10 py-10 text-center text-2xl md:text-3xl font-semibold">
           Form Pengisian Kurir
         </h1>
-
         <div
           class="box-utama w-full h-[550px] md:w-[600px] bg-white rounded-xl border p-10 overflow-y-auto"
         >
@@ -54,8 +52,8 @@
                 <Multiselect
                   v-model="id_moklet"
                   id="ditemui"
-                  :options="filteredMoklet"
-                  label="nama"
+                  :options=filteredMoklet
+                  label="nama_moklet"
                   valueProp="id_moklet"
                   :searchable="true"
                 />
@@ -108,10 +106,10 @@ import Multiselect from "@vueform/multiselect";
 
 export default {
     setup() {
-        const nama_pengirim = ref('');
-        const no_tlp = ref('');
-        const id_moklet = ref(''); 
-        const asal_instansi = ref('');
+        const nama_pengirim = ref("");
+        const no_tlp = ref("");
+        const id_moklet = ref(""); 
+        const asal_instansi = ref("");
         const foto = ref(null);
         const { $formKurirStore } = useNuxtApp();
         const handleFileChange = (event) => {
