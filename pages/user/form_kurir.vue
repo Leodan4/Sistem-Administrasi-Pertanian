@@ -30,7 +30,7 @@
                   id="nama"
                   class="block w-full px-3 py-1 my-2 text-base placeholder-gray-500 transition duration-500 ease-in-out transform border-2 border-gray-200 rounded-lg focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                   placeholder="Masukan Nama"
-                  v-model="nama_pengirim"
+                  v-model="nama_tamu"
                 />
               </div>
               <div class="py-3">
@@ -106,7 +106,7 @@ import Multiselect from "@vueform/multiselect";
 
 export default {
     setup() {
-        const nama_pengirim = ref("");
+        const nama_tamu = ref("");
         const no_tlp = ref("");
         const id_moklet = ref(""); 
         const asal_instansi = ref("");
@@ -123,7 +123,7 @@ export default {
     const saveData = async () => {
       try {
         const formData = new FormData();
-        formData.append("nama_pengirim", nama_pengirim.value);
+        formData.append("nama_tamu", nama_tamu.value);
         formData.append("no_tlp", no_tlp.value);
         formData.append("id_moklet", id_moklet.value);
         formData.append("asal_instansi", asal_instansi.value);
@@ -139,7 +139,7 @@ export default {
       $formKurirStore.fetchDataMoklet();
     });
     return {
-      nama_pengirim,
+      nama_tamu,
       no_tlp,
       id_moklet,
       asal_instansi,
