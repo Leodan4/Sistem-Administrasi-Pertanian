@@ -23,7 +23,7 @@ export const useMainDashboard = defineStore("main_dashboard", {
       isLoadingPie: true,
     },
   }),
-  persist: true,
+  persist: false,
   actions: {
     async getAllDashboard() {
       this.data = null;

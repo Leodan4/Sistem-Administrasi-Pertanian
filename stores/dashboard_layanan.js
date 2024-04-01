@@ -58,5 +58,14 @@ export const useDashboardLayananStore = defineStore("dashboard_layanan", {
           });
       });
     },
+    async verifyOTP(id_transaksiKurir, inputOTP) {
+      const params = {
+        id_transaksiKurir,
+        inputOTP,
+      };
+      console.log(params);
+      const res = await $axios.post("/verify-OTP", params);
+      console.log(res);
+    },
   },
 });

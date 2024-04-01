@@ -172,7 +172,7 @@
                       <div class="bg-white rounded-lg min-w-max p-5">
                         <div class="flex flex-col space-y-5">
                           <div
-                            @click="modalVerifikasi = !modalVerifikasi"
+                            @click="handleModal(item.id_transaksiKurir)"
                             class="flex space-x-2 items-center cursor-pointer"
                           >
                             <img
@@ -373,6 +373,7 @@
             >Kode Verifikasi</label
           >
           <input
+            v-model="inputOTP"
             type="text"
             id="default-search"
             class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
@@ -382,6 +383,7 @@
           />
         </div>
         <button
+          @click="verifyOTP"
           type="button"
           class="place-self-end bg-[#C53030] text-white py-2 px-10 rounded-lg mt-10"
         >
@@ -417,11 +419,15 @@ const date = ref(formatDate(new Date()));
 
 const search = ref(null);
 const limit = ref(5);
+const inputOTP = ref(null);
+const selectedId = ref(null);
+const modalVerifikasi = ref(false);
 
 const { $generalStore, $dashboardLayananStore } = useNuxtApp();
 
 const router = useRouter();
 const route = useRoute();
+
 const changePage = async (page) => {
   try {
     await $dashboardLayananStore.getAllLayanan(
@@ -433,6 +439,15 @@ const changePage = async (page) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const verifyOTP = async () => {
+  await $dashboardLayananStore.verifyOTP(selectedId.value, inputOTP.value);
+};
+
+const handleModal = (id_transaksiKurir) => {
+  modalVerifikasi.value = true;
+  selectedId.value = id_transaksiKurir;
 };
 
 const debounce = (func, delay) => {
@@ -457,8 +472,6 @@ const handleFilterChange = debounce(async () => {
     console.log(error);
   }
 }, 600);
-
-const modalVerifikasi = ref(false);
 
 const handleDetail = (item, index) => {
   $generalStore.detail(item);
