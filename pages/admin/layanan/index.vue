@@ -442,7 +442,17 @@ const changePage = async (page) => {
 };
 
 const verifyOTP = async () => {
-  await $dashboardLayananStore.verifyOTP(selectedId.value, inputOTP.value);
+  const res = await $dashboardLayananStore.verifyOTP(
+    selectedId.value,
+    inputOTP.value
+  );
+  console.log(res);
+  if (res.success === false) {
+    useNuxtApp().$toast.error("Kode Verifikasi Salah!");
+    return;
+  }
+  useNuxtApp().$toast.error("Kode Verifikasi Berhasil!");
+  await $dashboardLayananStore.getAllLayanan();
 };
 
 const handleModal = (id_transaksiKurir) => {

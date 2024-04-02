@@ -63,9 +63,8 @@ export const useDashboardLayananStore = defineStore("dashboard_layanan", {
         id_transaksiKurir,
         inputOTP,
       };
-      console.log(params);
-      const res = await $axios.post("/verify-OTP", params);
-      console.log(res);
+      const res = await $axios.post("transaksi_kurir/verify-OTP", params);
+      return res.data;
     },
   },
 });
