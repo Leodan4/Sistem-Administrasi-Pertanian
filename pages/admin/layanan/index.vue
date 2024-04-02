@@ -384,7 +384,7 @@
         </div>
         <button
           @click="verifyOTP"
-          type="button"
+          type="submit"
           class="place-self-end bg-[#C53030] text-white py-2 px-10 rounded-lg mt-10"
         >
           Simpan
