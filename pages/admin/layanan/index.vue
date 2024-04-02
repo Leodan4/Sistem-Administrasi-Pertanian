@@ -451,7 +451,7 @@ const verifyOTP = async () => {
     useNuxtApp().$toast.error("Kode Verifikasi Salah!");
     return;
   }
-  useNuxtApp().$toast.error("Kode Verifikasi Berhasil!");
+  useNuxtApp().$toast.success("Kode Verifikasi Berhasil!");
   await $dashboardLayananStore.getAllLayanan();
 };
 
