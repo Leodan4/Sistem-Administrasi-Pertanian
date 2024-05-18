@@ -1,0 +1,57 @@
+// <-- Login -->
+
+// <script>
+// import { ref } from "vue";
+// import { useRouter } from "vue-router";
+
+// export default {
+//   setup() {
+//     const email = ref("");
+//     const password = ref("");
+//     const showPassword = ref(false);
+//     const router = useRouter();
+//     const { $loginStore, $profileStore } = useNuxtApp(); // Initialize your store
+
+//     const togglePasswordVisibility = () => {
+//       showPassword.value = !showPassword.value;
+//     };
+
+//     const handleLogin = async () => {
+//       const loginData = {
+//         email: email.value,
+//         password: password.value,
+//       };
+
+//       try {
+//         const response = await $loginStore.loginUser(loginData);
+//         // Navigasi ke halaman dashboard setelah login berhasil
+//         await new Promise((resolve) => {
+//           router.afterEach(resolve);
+//           router.replace("/admin/dashboard");
+//         });
+
+//         // Setelah navigasi selesai, tampilkan notifikasi
+//         useNuxtApp().$toast.success(
+//           `Selamat Datang ${$profileStore.data.nama_admin}`,
+//           {
+//             autoClose: 2000,
+//           }
+//         );
+
+//         return response;
+//       } catch (error) {
+//         // Handle error here if needed
+//         console.error("Failed to login", error);
+//       }
+//     };
+
+//     return {
+//       email,
+//       password,
+//       showPassword,
+//       togglePasswordVisibility,
+//       handleLogin,
+//     };
+//   },
+// };
+// </script>

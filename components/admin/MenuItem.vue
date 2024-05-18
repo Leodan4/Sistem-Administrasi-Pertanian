@@ -5,11 +5,11 @@
     <div
       :class="
         route.fullPath === navigate || route.path.includes(navigate)
-          ? 'bg-[#C53030] fill-white text-white'
+          ? 'bg-green-500 fill-white text-white'
           : ''
       "
       @click="router.push(navigate)"
-      class="items-center justify-normal cursor-pointer transition-colors duration-200 inline-flex ease-in-out min-w-full hover:bg-[#C53030] rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2 w-full"
+      class="items-center justify-normal cursor-pointer transition-colors duration-200 inline-flex ease-in-out min-w-full hover:bg-green-500 rounded-lg px-4 fill-[#888] hover:fill-white hover:text-white text-[#888988] py-3 space-x-2 w-full"
     >
       <component :is="iconComponent" class="" />
       <p class="block sm:text-[16px] md:text-lg">{{ menuText }}</p>

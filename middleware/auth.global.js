@@ -11,33 +11,33 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }));
 
   const authenticatedPaths = [
-    "/admin/dashboard",
-    "/admin/karyawan",
-    "/admin/layanan",
-    "/admin/siswa",
-    "/admin/profile",
+    // "/admin/dashboard",
+    // "/admin/karyawan",
+    // "/admin/layanan",
+    // "/admin/siswa",
+    // "/admin/profile",
   ];
   const requiresAuth = authenticatedPaths.some((path) =>
     to.path.startsWith(path)
   );
 
-  if (verifiedToken && to.path === "/admin/login") {
-    return navigateTo("/admin/dashboard");
-  }
+  // if (verifiedToken && to.path === "/login") {
+  //   return navigateTo("/admin/dashboard");
+  // }
 
   if (!verifiedToken && requiresAuth) {
-    return navigateTo("/admin/login");
+    return navigateTo("/login");
   }
 
   if (verifiedToken && requiresAuth && !useProfileStore().$state.IsSave) {
     useNuxtApp().$profileStore.getUserLogin();
   }
 
-  if (to.path === "/" && verifiedToken) {
-    return navigateTo("/admin/dashboard");
-  }
+  // if (to.path === "/" && verifiedToken) {
+  //   return navigateTo("/admin/dashboard");
+  // }
 
   if (to.path === "/" && !verifiedToken) {
-    return navigateTo("/user/welcoming");
+    return navigateTo("/login");
   }
 });

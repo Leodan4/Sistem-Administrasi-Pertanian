@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     { src: "~/plugins/stores" },
     { src: "~/plugins/apexchart" },
     { src: "~/plugins/vuedatepicker" },
+    // { src: "~/plugins/fontawesome.js"}
   ],
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },

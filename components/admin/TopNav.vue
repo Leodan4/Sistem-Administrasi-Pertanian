@@ -1,7 +1,8 @@
 <template>
-  <div class="bg-[#C53030] w-full h-min fixed z-20 top-0">
-    <div class="py-5 grid place-content-end px-4 text-white">
-      {{ formattedDate }}
+  <div class="bg-[#0E9F6E] w-full h-min fixed z-20 top-0">
+    <div class="py-4 grid px-72 text-white text-3xl font-bold">
+      <h1>Daftar Proposal Baru</h1>
+      <!-- {{ formattedDate }} -->
     </div>
   </div>
 </template>
