@@ -1,5 +1,5 @@
 <template>
-  <aside class="text-gray-600 bg-white min-h-screen w-[250px] flex z-40 fixed flex-col ">
+  <aside class="text-gray-600 bg-white min-h-screen w-[250px] flex z-40 fixed flex-col">
     <div class="flex justify-center py-8">
       <img src="" alt="Logo">
     </div>
@@ -21,39 +21,41 @@
 
     <!-- daftar dokumen -->
     <div class="menu mb-8 mx-6">
-      <h1 class="text-sm mx-2 text-gray-400 ">Daftar Dakomen</h1>
+      <h1 class="text-sm mx-2 text-gray-400">Daftar Dokumen</h1>
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'baru' }"
         @click.prevent="navigateTo('/adminBPP/baru/', 'baru')"
-        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">
-        Baru
-      </a>
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Baru</a>
+
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'tidak-valid' }"
-        @click.prevent="navigateTo('', 'tidak-valid')"
-        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak
-        Valid</a>
-      <a href="#" :class="{ 'active rounded-lg': activeMenu === 'revisi' }" @click.prevent="navigateTo('', 'revisi')"
+        @click.prevent="navigateTo('/adminBPP/tidak-valid/', 'tidak-valid')"
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak Valid</a>
+
+      <a href="#" :class="{ 'active rounded-lg': activeMenu === 'revisi' }"
+        @click.prevent="navigateTo('/adminBPP/revisi/', 'revisi')"
         class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Revisi</a>
+
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'tervalidasi' }"
-        @click.prevent="navigateTo('', 'tervalidasi')"
+        @click.prevent="navigateTo('/adminBPP/tervalidasi/', 'tervalidasi')"
         class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tervalidasi</a>
+
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'realisasi' }"
-        @click.prevent="navigateTo('', 'realisasi')"
+        @click.prevent="navigateTo('/adminBPP/realisasi/', 'realisasi')"
         class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Realisasi</a>
     </div>
 
     <!-- Lainnya -->
     <div class="menu mb-8 mx-6">
-      <h1 class="text-sm mx-2 text-gray-400 ">Lainnya</h1>
+      <h1 class="text-sm mx-2 text-gray-400">Lainnya</h1>
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'arsip-data' }"
-        @click.prevent="navigateTo('', 'arsip-data')"
-        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip
-        Data</a>
-      <a href="#" :class="{ 'active rounded-lg': activeMenu === 'help' }" @click.prevent="navigateTo('', 'help')"
+        @click.prevent="navigateTo('/adminBPP/arsip-data/', 'arsip-data')"
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip Data</a>
+
+      <a href="#" :class="{ 'active rounded-lg': activeMenu === 'help' }"
+        @click.prevent="navigateTo('/adminBPP/help/', 'help')"
         class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Help</a>
     </div>
-
   </aside>
 </template>
 
@@ -61,7 +63,7 @@
 import '@fortawesome/fontawesome-free/css/all.css'; // Import stylesheet Font Awesome
 import { initFlowbite } from "flowbite";
 import { useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 export default {
   setup() {
@@ -81,8 +83,6 @@ export default {
     const navigateTo = (path, menu) => {
       setActiveMenu(menu);
       router.push(path);
-      // Setelah merute, periksa dan perbarui activeMenu jika diperlukan
-      checkActiveMenu();
     };
 
     const checkActiveMenu = () => {
@@ -91,11 +91,27 @@ export default {
       // Periksa apakah path saat ini sesuai dengan menu yang ada
       if (currentPath === '/adminBPP/dashboard/') {
         setActiveMenu('dashboard');
-      } else if (currentPath === '/adminBPP/karyawan/') {
+      } else if (currentPath === '/adminBPP/baru/') {
         setActiveMenu('baru');
+      } else if (currentPath === '/adminBPP/tidak-valid/') {
+        setActiveMenu('tidak-valid');
+      } else if (currentPath === '/adminBPP/revisi/') {
+        setActiveMenu('revisi');
+      } else if (currentPath === '/adminBPP/tervalidasi/') {
+        setActiveMenu('tervalidasi');
+      } else if (currentPath === '/adminBPP/realisasi/') {
+        setActiveMenu('realisasi');
+      } else if (currentPath === '/adminBPP/arsip-data/') {
+        setActiveMenu('arsip-data');
+      } else if (currentPath === '/adminBPP/help/') {
+        setActiveMenu('help');
       }
-      // Tambahkan logika lain untuk menu lain jika perlu
     };
+
+    // Watch for route changes to update the active menu
+    watch(() => router.currentRoute.value.path, () => {
+      checkActiveMenu();
+    });
 
     return { activeMenu, navigateTo };
   }

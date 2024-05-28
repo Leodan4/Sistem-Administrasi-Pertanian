@@ -10,5 +10,5 @@ const route = useRoute();
 
 const { $generalStore } = useNuxtApp();
 
-import MainLayout from "~/layouts/MainLayout.vue";
+import MainLayout from "~/layouts/MainLayoutBPP.vue";
 </script>

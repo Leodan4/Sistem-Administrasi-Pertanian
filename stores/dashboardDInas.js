@@ -3,7 +3,7 @@ import axios from "../plugins/axios";
 
 const $axios = axios().provide.axios;
 
-export const useDashboardKaryawanStore = defineStore("dashboard_karyawan", {
+export const useDashboardDinasStore = defineStore("dashboardDinas", {
   state: () => ({
     data: null,
     pagination: {
@@ -27,7 +27,7 @@ export const useDashboardKaryawanStore = defineStore("dashboard_karyawan", {
 
       return [year, month, day].join("-");
     },
-    async getAllKaryawan(
+    async getAllSiswa(
       page = 1,
       perPage = 5,
       search = null,
@@ -42,7 +42,7 @@ export const useDashboardKaryawanStore = defineStore("dashboard_karyawan", {
       this.data = null;
       return new Promise(async (resolve, reject) => {
         const res = await $axios
-          .get("/transaksi_guru/get", { params })
+          .get("/transaksi_siswa/get", { params })
           .then((response) => {
             this.data = response.data.data;
             this.pagination = response.data.pagination;

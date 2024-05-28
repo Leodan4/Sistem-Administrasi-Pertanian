@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="admin/dashboard">click</a>
+    <a href="adminBPP/dashboard">click</a>
   </div>
 </template>
 

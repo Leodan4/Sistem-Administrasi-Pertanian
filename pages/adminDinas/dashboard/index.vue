@@ -1,5 +1,5 @@
 <template>
-  <MainLayoutBPP>
+  <MainLayoutDInas>
     <div class="w-full mt-20 text-black px-8">
       <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
         <thead class="bg-gray-100 border-2 border-gray-200 text-gray-500">
@@ -19,7 +19,7 @@
               <span class="bg-green-100 text-green-700 font-semibold px-4 py-1 rounded">Valid BPP</span>
             </td>
             <td class="py-2 px-4 text-center ">
-              <button class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Detail/print</button>
+              <button class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Tinjau</button>
             </td>
           </tr>
           <!-- Baris data contoh lain dapat ditambahkan di sini -->
@@ -32,11 +32,11 @@
       </div>
 
     </div>
-  </MainLayoutBPP>
+  </MainLayoutDInas>
 </template>
 
 <script setup>
-import MainLayoutBPP from "~/layouts/MainLayoutBPP.vue";
+import MainLayoutDInas from "~/layouts/MainLayoutDinas.vue";
 
 
 </script>

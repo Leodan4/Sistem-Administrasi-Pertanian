@@ -1,56 +1,44 @@
 import { defineStore } from "pinia";
-import axios from "~/plugins/axios";
+import axios from "../plugins/axios";
 
 const $axios = axios().provide.axios;
 
 export const useLoginStore = defineStore("login", {
   state: () => ({
-    email: "",
+    username: "",
     password: "",
-    token: localStorage.getItem("token") || "", // Simpan token di sini
-    error: null, // Simpan informasi kesalahan
+    token: localStorage.getItem("token") || "",
+    error: null,
   }),
   persist: true,
   actions: {
     async loginUser(loginData) {
-      console.log(loginData);
       try {
         const response = await $axios.post(
-          "/api/login",
+          "/user/login",
           {
-            email: loginData.email,
+            username: loginData.username,
             password: loginData.password,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
           }
         );
 
-        // Asumsikan token dikembalikan dalam respons data
-        const token = response.data.token;
-
-        // Periksa apakah token ada
-        if (token) {
-          // Simpan token ke state dan local storage
+        if (response && response.data && response.data.data && response.data.data.token) {
+          const token = response.data.data.token;
           localStorage.setItem("token", token);
           this.$patch({ token: token, error: null });
-          console.log("Berhasil login");
+          return response.data;
         } else {
-          // Tangani respons yang tidak valid dari server
           console.error("Respon tidak valid dari server");
           this.$patch({ error: "Respon tidak valid dari server" });
+          throw new Error("Respon tidak valid dari server");
         }
       } catch (error) {
-        // Tangani respons error dari server
         console.error("Terjadi kesalahan saat login:", error);
-        // Asumsikan error.response.data berisi pesan kesalahan dari server
-        const errorMessage = error.response
+        const errorMessage = error.response && error.response.data && error.response.data.message
           ? error.response.data.message
           : "Kesalahan tidak diketahui";
         this.$patch({ error: errorMessage });
-        throw error; // Teruskan error
+        throw error;
       }
     },
   },
