@@ -1,5 +1,5 @@
 <template>
-    <aside class="text-gray-600 bg-white min-h-screen w-[250px] flex z-40 fixed flex-col">
+    <aside class="text-gray-600 bg-white min-h-screen w-[250px] border-2 flex z-40 fixed flex-col">
         <div class="flex justify-center py-8">
             <img src="" alt="Logo">
         </div>
@@ -29,7 +29,8 @@
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'tidak-sesuai' }"
                 @click.prevent="navigateTo('/adminDinas/tidak-sesuai/', 'tidak-sesuai')"
-                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak Sesuai</a>
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak
+                Sesuai</a>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'tervalidasi' }"
                 @click.prevent="navigateTo('/adminDinas/tervalidasi/', 'tervalidasi')"
@@ -45,20 +46,24 @@
             <h1 class="text-sm mx-2 text-gray-400">Lainnya</h1>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'sumber-dana' }"
-                @click.prevent="navigateTo('/adminDinas/sumber-dana/', 'umber-dana')"
-                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Sumber Dana</a>
+                @click.prevent="navigateTo('/adminDinas/sumber-dana/', 'sumber-dana')"
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Sumber
+                Dana</a>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'import-data' }"
                 @click.prevent="navigateTo('/adminDinas/import-data/', 'import-data')"
-                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Import Data</a>
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Import
+                Data</a>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'rekap-data' }"
                 @click.prevent="navigateTo('/adminDinas/rekap-data/', 'rekap-data')"
-                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Rekap Data</a>
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Rekap
+                Data</a>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'arsip-data' }"
                 @click.prevent="navigateTo('/adminDinas/arsip-data/', 'arsip-data')"
-                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip Data</a>
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip
+                Data</a>
 
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'help' }"
                 @click.prevent="navigateTo('/adminDinas/help/', 'help')"
@@ -94,27 +99,32 @@ export default {
         };
 
         const checkActiveMenu = () => {
-            // Dapatkan path saat ini dari router
             const currentPath = router.currentRoute.value.path;
-            // Periksa apakah path saat ini sesuai dengan menu yang ada
             if (currentPath === '/adminDinas/dashboard/') {
                 setActiveMenu('dashboard');
             } else if (currentPath === '/adminDinas/baru/') {
                 setActiveMenu('baru');
-            } else if (currentPath === '/adminDinas/tidak-valid/') {
-                setActiveMenu('tidak-valid');
+            } else if (currentPath === '/adminDinas/tidak-sesuai/') {
+                setActiveMenu('tidak-sesuai'); // Ensure this matches the actual route
             } else if (currentPath === '/adminDinas/revisi/') {
-                setActiveMenu('revisi');
+                setActiveMenu('revisi'); // Fix any inconsistencies here
             } else if (currentPath === '/adminDinas/tervalidasi/') {
                 setActiveMenu('tervalidasi');
             } else if (currentPath === '/adminDinas/realisasi/') {
                 setActiveMenu('realisasi');
+            } else if (currentPath === '/adminDinas/sumber-dana/') {
+                setActiveMenu('sumber-dana');
+            } else if (currentPath === '/adminDinas/import-data/') {
+                setActiveMenu('import-data');
+            } else if (currentPath === '/adminDinas/rekap-data/') {
+                setActiveMenu('rekap-data');
             } else if (currentPath === '/adminDinas/arsip-data/') {
                 setActiveMenu('arsip-data');
             } else if (currentPath === '/adminDinas/help/') {
                 setActiveMenu('help');
             }
         };
+
 
         // Watch for route changes to update the active menu
         watch(() => router.currentRoute.value.path, () => {

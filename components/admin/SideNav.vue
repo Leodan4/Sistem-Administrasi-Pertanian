@@ -1,5 +1,5 @@
 <template>
-  <aside class="text-gray-600 bg-white min-h-screen w-[250px] flex z-40 fixed flex-col">
+  <aside class="text-gray-600 bg-white min-h-screen w-[250px] border-2 flex z-40 fixed flex-col">
     <div class="flex justify-center py-8">
       <img src="" alt="Logo">
     </div>

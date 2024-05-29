@@ -3,7 +3,7 @@ import axios from "../plugins/axios";
 
 const $axios = axios().provide.axios;
 
-export const useDashboardDinasStore = defineStore("dashboardDinas", {
+export const useRealisasiDinasStore = defineStore("realisasiDinas", {
   state: () => ({
     data: null,
     pagination: {

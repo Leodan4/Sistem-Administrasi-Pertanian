@@ -2,14 +2,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export const useFormSiswaStore = defineStore("form_siswa", {
+export const useBaruBPPStore = defineStore("baruBPP", {
   state: () => ({
-    daftarSiswa: [] // Menyimpan daftar siswa
+    daftarGuru: []
   }),
   actions: {
-    async transaksiSiswa(formData) {
+    async transaksiGuru(formData) {
       try {
-        const response = await axios.post("/transaksi_siswa/add", formData);
+        const response = await axios.post("/transaksi_guru/add", formData);
         console.log("Berhasil mengirimkan data", response.data);
         
         if (response.data.success) {
@@ -27,13 +27,13 @@ export const useFormSiswaStore = defineStore("form_siswa", {
         throw error;
       }
     },
-    async fetchDataSiswa(daftarSiswa) {
+    async fetchDataGuru(daftarGuru) {
       try {
-        const response = await axios.get('/siswa/get');
+        const response = await axios.get('/guru/get');
         // Simpan data siswa ke dalam state daftarSiswa
-        this.daftarSiswa = response.data;
+        this.daftarGuru = response.data;
       } catch (error) {
-        console.error('Failed to fetch data siswa:', error);
+        console.error('Failed to fetch data guru:', error);
         throw error;
       }
     },

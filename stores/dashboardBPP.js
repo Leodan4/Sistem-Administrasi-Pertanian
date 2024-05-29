@@ -7,11 +7,11 @@ export const useDashboardBPPStore = defineStore("dashboardBPP", {
   state: () => ({
     data: null,
     pagination: {
-      currentPage: null,
-      totalItems: null,
-      totalPages: null,
-      hasNext: null,
-      hasPrev: null,
+      currentPage: 1,
+      totalItems: 0,
+      totalPages: 1,
+      hasNext: false,
+      hasPrev: false,
     },
   }),
   persist: true,
@@ -35,11 +35,23 @@ export const useDashboardBPPStore = defineStore("dashboardBPP", {
       return new Promise(async (resolve, reject) => {
         try {
           const response = await $axios.get("/doc/", { params });
-          this.data = response.data.data;
-          this.pagination = response.data.pagination;
-          const { currentPage, totalPages } = this.pagination;
-          this.pagination.hasNext = currentPage < totalPages;
-          this.pagination.hasPrev = currentPage > 1;
+          this.data = response.data.data || [];
+          if (response.data.pagination) {
+            this.pagination = {
+              ...response.data.pagination,
+              hasNext: response.data.pagination.currentPage < response.data.pagination.totalPages,
+              hasPrev: response.data.pagination.currentPage > 1,
+            };
+          } else {
+            // Fallback to default pagination if not present in response
+            this.pagination = {
+              currentPage: page,
+              totalItems: this.data.length,
+              totalPages: Math.ceil(this.data.length / perPage),
+              hasNext: page < Math.ceil(this.data.length / perPage),
+              hasPrev: page > 1,
+            };
+          }
           resolve(response);
         } catch (error) {
           console.error("Error fetching data:", error);

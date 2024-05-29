@@ -4,11 +4,20 @@ import { useProfileStore } from "~/stores/profile";
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const token = localStorage.getItem("token");
 
-  const verifiedToken =
-    token &&
-    (await verifyAuth(token).catch((err) => {
-      console.log(err);
-    }));
+  // Check if the token exists
+  if (!token) {
+    // Redirect to login page if the token is not found in localStorage
+    if (to.path !== "/login") {
+      return navigateTo("/login");
+    }
+    return;
+  }
+
+  const verifiedToken = await verifyAuth(token).catch((err) => {
+    console.log(err);
+    // Token verification failed, remove the token from localStorage
+    localStorage.removeItem("token");
+  });
 
   const authenticatedPaths = [
     "/adminBPP/dashboard",
