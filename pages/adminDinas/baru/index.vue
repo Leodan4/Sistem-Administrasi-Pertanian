@@ -51,7 +51,7 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useBaruDinasStore } from '~/stores/baruDinas';
+import { useBaruDinasStore } from '/stores/adminDinas/baruDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
 const baruStore = useBaruDinasStore();

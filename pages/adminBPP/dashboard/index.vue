@@ -1,36 +1,62 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
+import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
+import Table from "~/components/global/table.vue";
+
+const dashboardStore = useDashboardBPPStore();
+
+const tableHeader = ref([
+  "No Dokumen",
+  "Judul",
+  "Status",
+  "Aksi",
+]);
+
+const fetchDocuments = async (page = 1) => {
+  try {
+    await dashboardStore.getAllDocuments(page);
+    console.log("Documents after fetch:", documents.value);  // Log the documents after fetch
+  } catch (error) {
+    console.error('Failed to fetch documents:', error);
+  }
+};
+
+onMounted(() => {
+  fetchDocuments();
+});
+
+const documents = computed(() => dashboardStore.data);
+const pagination = computed(() => dashboardStore.pagination);
+</script>
+
+
+
 <template>
   <MainLayoutBPP>
     <div class="w-full mt-20 text-black px-8">
-      <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
-        <thead class="bg-gray-100 border-2 border-gray-200 text-gray-500">
-          <tr>
-            <th class="py-2 px-4 text-center">No Dokumen</th>
-            <th class="py-2 px-4 text-center">Judul</th>
-            <th class="py-2 px-4 text-center">Status</th>
-            <th class="py-2 px-4 text-center">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="border-2 border-gray-300">
-          <tr v-for="document in documents" :key="document.id_document">
-            <td class="py-2 px-4 text-center text-black font-bold">{{ document.no_doc }}</td>
-            <td class="py-2 px-4 text-center">{{ document.title }}</td>
-            <td class="py-2 px-4 text-center">
+      <Table :headers="tableHeader" :rows="documents">
+        <template #rows="{ rows }">
+          <tr v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
+            <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
+            <td class="py-2 px-4 text-left">{{ row?.title }}</td>
+            <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded': document.status === 'inprogres',
-                  'bg-yellow-100 text-yellow-700 font-semibold px-4 py-1 rounded': document.status === 'Pending',
-                  'bg-red-100 text-red-700 font-semibold px-4 py-1 rounded': document.status === 'Rejected',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'completed',
+                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'inprogres',
+                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'cancelled',
                 }"
               >
-                {{ document.status }}
+                {{ row?.status }}
               </span>
             </td>
-            <td class="py-2 px-4 text-center">
-              <button class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Detail</button>
+            <td class="py-2 px-4 text-left" :class="{ 'active rounded-lg': activeMenu === 'dashboard' }">
+              <button @click="navigateTo('/adminBPP/dashboard/detail', 'dashboard')" class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Detail</button>
             </td>
           </tr>
-        </tbody>
-      </table>
+        </template>
+      </Table>
 
       <div class="flex justify-end mt-8">
         <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev" class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-3 rounded-l border-2 border-gray-300">
@@ -44,29 +70,7 @@
   </MainLayoutBPP>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
-import { useDashboardBPPStore } from '~/stores/dashboardBPP';
-import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
 
-const dashboardStore = useDashboardBPPStore();
-
-const fetchDocuments = async (page = 1) => {
-  try {
-    await dashboardStore.getAllDocuments(page);
-  } catch (error) {
-    console.error('Failed to fetch documents:', error);
-  }
-};
-
-onMounted(() => {
-  fetchDocuments();
-});
-
-const documents = computed(() => dashboardStore.data);
-const pagination = computed(() => dashboardStore.pagination);
-</script>
 
 <style>
 /* Add any custom styles here */

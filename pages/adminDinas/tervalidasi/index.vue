@@ -51,7 +51,7 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useTervalidasiDinasStore } from '~/stores/tervalidasiDinas';
+import { useTervalidasiDinasStore } from '/stores/adminDinas/tervalidasiDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
 const tervalidasiStore = useTervalidasiDinasStore();

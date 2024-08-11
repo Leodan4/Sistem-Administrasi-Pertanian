@@ -5,8 +5,8 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      title: "Digest",
-      link: [{ rel: "icon", type: "image/x-icon", href: "/digest.svg" }],
+      title: "SIBP",
+      link: [{ rel: "icon", type: "image/x-icon", href: "/logo.png" }],
     },
   },
   pages: true,

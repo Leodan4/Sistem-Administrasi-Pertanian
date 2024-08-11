@@ -24,6 +24,7 @@ export const useAuth = defineStore("auth", {
         if (res.status == 200) {
           this.isAuth_data = true;
           this.user_data = res.data;
+
           return router.push("/adminBPP/dashboard");
         }
       } catch (error) {

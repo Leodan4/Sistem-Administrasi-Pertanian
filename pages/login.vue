@@ -93,6 +93,8 @@ export default {
             router.replace("/adminBPP/dashboard");
           } else if (role === "adminDinas") {
             router.replace("/adminDinas/dashboard");
+          } else if (role === "user") {
+            router.replace("/user/dashboard");
           } else {
             console.error("Role tidak valid:", role);
           }

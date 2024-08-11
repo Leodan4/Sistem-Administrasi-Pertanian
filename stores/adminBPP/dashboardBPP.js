@@ -35,6 +35,7 @@ export const useDashboardBPPStore = defineStore("dashboardBPP", {
       return new Promise(async (resolve, reject) => {
         try {
           const response = await $axios.get("/doc/", { params });
+          console.log("Data fetched:", response.data.data);  // Log the fetched data
           this.data = response.data.data || [];
           if (response.data.pagination) {
             this.pagination = {
@@ -58,6 +59,6 @@ export const useDashboardBPPStore = defineStore("dashboardBPP", {
           reject(error);
         }
       });
-    },
+    }    
   },
 });

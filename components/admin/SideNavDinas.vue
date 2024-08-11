@@ -68,6 +68,9 @@
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'help' }"
                 @click.prevent="navigateTo('/adminDinas/help/', 'help')"
                 class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Help</a>
+
+            <button @click.prevent="handleLogout"
+                class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Logout</button>
         </div>
     </aside>
 </template>
@@ -77,9 +80,16 @@ import '@fortawesome/fontawesome-free/css/all.css'; // Import stylesheet Font Aw
 import { initFlowbite } from "flowbite";
 import { useRouter } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
+import { useLoginStore } from "@/stores/login"; // Adjust the import path as needed
 
 export default {
     setup() {
+        const loginStore = useLoginStore();
+
+        const handleLogout = () => {
+            loginStore.logout();
+        };
+
         const router = useRouter();
         const activeMenu = ref('dashboard'); // Default menu yang aktif
 
@@ -125,13 +135,12 @@ export default {
             }
         };
 
-
         // Watch for route changes to update the active menu
         watch(() => router.currentRoute.value.path, () => {
             checkActiveMenu();
         });
 
-        return { activeMenu, navigateTo };
+        return { activeMenu, navigateTo, handleLogout };
     }
 };
 </script>

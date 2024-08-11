@@ -49,7 +49,7 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useRealisasiDinasStore } from '~/stores/realisasiDinas';
+import { useRealisasiDinasStore } from '/stores/adminDinas/realisasiDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
 const realisasiStore = useRealisasiDinasStore();

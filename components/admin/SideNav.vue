@@ -29,7 +29,8 @@
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'tidak-valid' }"
         @click.prevent="navigateTo('/adminBPP/tidak-valid/', 'tidak-valid')"
-        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak Valid</a>
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Tidak
+        Valid</a>
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'revisi' }"
         @click.prevent="navigateTo('/adminBPP/revisi/', 'revisi')"
@@ -50,11 +51,16 @@
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'arsip-data' }"
         @click.prevent="navigateTo('/adminBPP/arsip-data/', 'arsip-data')"
-        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip Data</a>
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Arsip
+        Data</a>
 
       <a href="#" :class="{ 'active rounded-lg': activeMenu === 'help' }"
         @click.prevent="navigateTo('/adminBPP/help/', 'help')"
         class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Help</a>
+
+      <button @click.prevent="handleLogout"
+        class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">Logout</button>
+
     </div>
   </aside>
 </template>
@@ -64,9 +70,16 @@ import '@fortawesome/fontawesome-free/css/all.css'; // Import stylesheet Font Aw
 import { initFlowbite } from "flowbite";
 import { useRouter } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
+import { useLoginStore } from "@/stores/login"; // Adjust the import path as needed
 
 export default {
   setup() {
+    const loginStore = useLoginStore();
+
+    const handleLogout = () => {
+      loginStore.logout();
+    };
+
     const router = useRouter();
     const activeMenu = ref('dashboard'); // Default menu yang aktif
 
@@ -113,7 +126,7 @@ export default {
       checkActiveMenu();
     });
 
-    return { activeMenu, navigateTo };
+    return { activeMenu, navigateTo, handleLogout };
   }
 };
 </script>

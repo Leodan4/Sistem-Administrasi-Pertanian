@@ -49,7 +49,7 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useTidakSesuaiStore } from '~/stores/tidak-sesuai';
+import { useTidakSesuaiStore } from '/stores/adminDInas/tidak-sesuai';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
 const tidakSesuaiStore = useTidakSesuaiStore();

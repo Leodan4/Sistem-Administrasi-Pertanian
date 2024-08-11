@@ -54,7 +54,7 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useDashboardDinasStore } from '~/stores/dashboardDinas';
+import { useDashboardDinasStore } from '~/stores/adminDInas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
 const dashboardStore = useDashboardDinasStore();
