@@ -1,3 +1,4 @@
+// script: upload_dokumen.js
 import { defineStore } from "pinia";
 import axios from "../plugins/axios";
 
@@ -5,13 +6,7 @@ const $axios = axios().provide.axios;
 
 export const useUploadDokumen = defineStore("form", {
     state: () => ({
-        formData: {
-            title: "",
-            bantuan_sarana: "",
-            ketahanan_pangan: "",
-            jenis_bantuan: "",
-            id_user: localStorage.getItem("userID"),
-        },
+        formData: new FormData(), 
         responseMessage: "",
         error: null,
     }),
@@ -19,7 +14,11 @@ export const useUploadDokumen = defineStore("form", {
         async submitForm() {
             try {
                 // Submit the form data to the server
-                const response = await $axios.post("/doc/addDoc", this.formData);
+                const response = await $axios.post("/doc/addDoc", this.formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
                 if (response && response.data) {
                     // Update state if the submission is successful

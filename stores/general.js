@@ -24,5 +24,9 @@ export const useGeneralStore = defineStore("general", {
         message: message,
       };
     },
+
+    resetLoading() {
+      this.isLoading = false;
+    }
   },
 });

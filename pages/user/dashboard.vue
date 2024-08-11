@@ -1,6 +1,6 @@
 <template>
     <section class="h-screen flex flex-col justify-center items-center bg-white ">
-        <AdminTopNav></AdminTopNav>
+        <Header></Header>
 
         <div class="flex justify-center items-center space-x-4">
             <div @click.prevent="navigateTo('/user/upload_dokumen/')"
@@ -46,15 +46,15 @@
 </template>
 
 <script>
-import TopNav from '~/components/admin/TopNav.vue';
 import axios from "../plugins/axios";
 import { ref, onMounted } from "vue";
+import Header from "~/components/user/header.vue";
 
 const $axios = axios().provide.axios;
 
 export default {
     components: {
-        TopNav,
+        Header,
     },
 
     setup() {

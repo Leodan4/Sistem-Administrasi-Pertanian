@@ -62,6 +62,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useLoginStore } from "@/stores/login";
+import { useGeneralStore } from "@/stores/general";
 
 export default {
   setup() {
@@ -70,6 +71,11 @@ export default {
     const showPassword = ref(false);
     const router = useRouter();
     const loginStore = useLoginStore();
+
+    const generalStore = useGeneralStore();
+
+    // Reset isLoading when the layout is mounted
+    generalStore.resetLoading();
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
