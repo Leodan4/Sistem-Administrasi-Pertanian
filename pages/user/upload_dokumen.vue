@@ -146,6 +146,7 @@ export default {
         Header
     },
     setup() {
+        const id_users = localStorage.getItem("userID");
         const title = ref("");
         const deskripsi = ref("");
         const jenis_bantuan_sarana = ref("");
@@ -163,7 +164,7 @@ export default {
 
         const handleUploadDokumen = async () => {
             // Menambahkan data teks ke FormData
-            uploadDokumen.formData.append("id_users", localStorage.getItem("userID"));
+            uploadDokumen.formData.append("id_users", id_users);
             uploadDokumen.formData.append("title", title.value);
             uploadDokumen.formData.append("deskripsi", deskripsi.value);
             uploadDokumen.formData.append("jenis_bantuan_sarana", jenis_bantuan_sarana.value);
