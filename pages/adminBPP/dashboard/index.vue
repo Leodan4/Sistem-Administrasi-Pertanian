@@ -9,12 +9,13 @@
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'completed',
-                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'inprogres',
-                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'cancelled',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'validBPP',
+                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'baru',
+                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'tidakvalid',
+                  'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'revisi',
                 }"
               >
-                {{ row?.status }}
+                {{ row?.status_baru_proposal }}
               </span>
             </td>
             <td class="py-2 px-4 text-left">

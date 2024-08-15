@@ -3,7 +3,27 @@
         <div class="modal-content">
             <h3 class="font-bold text-lg pb-4">Detail</h3>
             <form>
-                <div class="flex gap-8 justify-center items-center">
+                <div class="flex gap-8 justify-center">
+                    <div class="w-1/2">
+                        <div class="form-group">
+                            <label for="title">No Dokumen</label>
+                            <input type="text" id="title" v-model="formData.no_doc" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" id="status" v-model="formData.status" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assistance-type">Jenis Bantuan</label>
+                            <input type="text" id="assistance-type" v-model="formData.jenis_bantuan" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+                    </div>
+
                     <div class="w-1/2">
                         <div class="form-group">
                             <label for="title">Judul</label>
@@ -14,21 +34,6 @@
                         <div class="form-group">
                             <label for="date">Tanggal</label>
                             <input type="text" id="date" v-model="formData.createdAt" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
-
-                    </div>
-
-                    <div class="w-1/2">
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <input type="text" id="status" v-model="formData.status" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="assistance-type">Jenis Bantuan</label>
-                            <input type="text" id="assistance-type" v-model="formData.jenis_bantuan" readonly
                                 class="rounded-lg bg-gray-100 border border-gray-300" />
                         </div>
                     </div>
@@ -60,6 +65,7 @@ export default {
             type: Object,
             required: true,
             default: () => ({
+                no_doc: '',
                 title: '',
                 status: '',
                 date: '',

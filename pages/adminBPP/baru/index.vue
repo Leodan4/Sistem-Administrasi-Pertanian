@@ -21,6 +21,7 @@ const openModal = (row) => {
   const formattedDate = row.createdAt.split('T')[0];
 
   formData.value = {
+    no_doc: row.no_doc,
     title: row.title,
     status: row.status,
     createdAt: formattedDate,

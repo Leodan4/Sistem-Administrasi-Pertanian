@@ -43,6 +43,7 @@ import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
 import Table from "~/components/global/table.vue";
 import ModalComponent from "~/pages/adminBPP/tidak-valid/detail.vue";
 
+
 const dashboardStore = useDashboardBPPStore();
 
 const tableHeader = ref([
@@ -60,6 +61,8 @@ const openModal = (row) => {
 
   formData.value = {
     deskripsi: row.deskripsi || "-",
+    no_doc: row.no_doc,
+    title: row.title,
     status: row.status,
     createdAt: formattedDate,
     jenis_bantuan: row.jenis_bantuan,
