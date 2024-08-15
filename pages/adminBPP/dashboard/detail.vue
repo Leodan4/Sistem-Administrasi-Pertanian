@@ -1,75 +1,3 @@
-<!-- <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
-import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
-import Table from "~/components/global/table.vue";
-
-const route = useRoute();
-const dashboardStore = useDashboardBPPStore();
-
-const tableHeader = ref([
-  "Kelengkapan Dokumen",
-  "Info",
-  "Aksi",
-]);
-
-const fetchDocumentDetail = async () => {
-  try {
-    const id = route.query.id;
-    if (id) {
-      await dashboardStore.getAllDocuments(); // Get all documents first
-      const document = dashboardStore.data.find(doc => doc.id_docs === id);
-      if (document) {
-        selectedDocument.value = document;
-      }
-    }
-  } catch (error) {
-    console.error('Failed to fetch document details:', error);
-  }
-};
-
-const selectedDocument = ref({});
-
-onMounted(() => {
-  fetchDocuments();
-});
-</script>
-
-<template>
-  <MainLayoutBPP>
-    <div class="w-full mt-20 text-black px-8">
-      <Table :headers="tableHeader" :rows="[selectedDocument]">
-        <template #rows="{ rows }">
-          <tr v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
-            <td class="py-2 px-6 text-left">{{ row?.lembar_persetujuan_kepala_desa }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.lembar_persetujuan_PPL_Mantri }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.lembar_persetujuan_kecamatan }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.lembar_persetujuan_BPP }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.sk_pembentukan_kelompok }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.keanggotaan_SIMHULTAN }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.Daftar_anggota_dan_ktp_anggota }}</td>
-          </tr>
-        </template>
-      </Table>
-
-      /// Area Catatan
-      <div class="my-5 w-full border rounded-lg font-bold">
-        <thead class="min-w-full bg overflow-hidden bg-gray-100 w-full border-2 border-gray-200 text-gray-500">
-          <th class="w-full text-md">Catatan</th>
-        </thead>
-        <tbody class="border-2 border-gray-300">
-          <tr>
-            <td>And here's some amazing content. It's very engaging. Right?</td>
-          </tr>
-        </tbody>
-      </div>
-    </div>
-  </MainLayoutBPP>
-</template> -->
-
-
-
 <template>
   <MainLayoutBPP>
     <div class="w-full mt-20 text-black px-8">
@@ -78,27 +6,47 @@ onMounted(() => {
           <tr v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
             <td class="py-2 px-6 text-left">{{ row.label }}</td>
             <td class="py-2 px-6 text-left">
-              <button 
-                @click="handleDetailClick(row.value)" 
-                class="bg-[#0E9F6E] hover:bg-green-700 text-white my-2 py-1 px-4 rounded-md"
-              >
+              <button @click="handleDetailClick(row.value)"
+                class="bg-[#0E9F6E] hover:bg-green-700 text-white my-2 py-1 px-4 rounded-md">
                 Detail
               </button>
+            </td>
+            <td class="py-2 px-6 text-left">
+              <input type="checkbox" class="custom-checkbox" :value="row.value"
+                @change="handleCheckboxChange(row.value, $event)" />
             </td>
           </tr>
         </template>
       </Table>
 
-      <div class="my-5 w-full border rounded-lg font-bold ">
-        <thead class="min-w-full bg overflow-hidden bg-gray-100 w-full border-2 border-gray-200 text-gray-500">
-          <th class="w-full text-md">Catatan</th>
-        </thead>
-        <tbody class="border-2 border-gray-300">
-          <tr>
-            <td>And here's some amazing content. It's very engaging. Right?</td>
-          </tr>
-        </tbody>
+      <div class="flex flex-col w-full pt-10">
+        <label for="status text-black font-semibold">Pilih Status</label>
+        <select name="status" id="status" class="bg-gray-100 border border-gray-300 rounded-lg">
+          <option value="" disabled selected>Pilih Jenis Bantuan</option>
+          <option value="gabang">Baru</option>
+          <option value="gudang">Valid BPP</option>
+          <option value="sumur_bor">Revisi</option>
+          <option value="saluran_irigasi">Tidak Valid</option>
+        </select>
+
       </div>
+
+      <div class="my-5 w-full border rounded-lg bg-white shadow-sm">
+        <div class="bg-gray-100 border-b-2 border-gray-200 p-3">
+          <h3 class="text-md font-semibold text-gray-600">Catatan</h3>
+        </div>
+        <div class="p-4">
+          <textarea
+            class="w-full h-24 bg-gray-50 border border-gray-300 rounded-lg p-2 text-sm text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Input text"></textarea>
+        </div>
+      </div>
+
+      <div class="flex gap-4 justify-end">
+        <button class="border-2 border-green-500 text-green-500 rounded-xl px-6 py-2">Revisi</button>
+        <button class="bg-green-500 text-white border rounded-xl px-6 py-2">Lanjutkan</button>
+      </div>
+
     </div>
   </MainLayoutBPP>
 </template>
@@ -111,12 +59,13 @@ import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
 import Table from "~/components/global/table.vue";
 
 const route = useRoute();
-const router = useRouter(); // Initialize router
+const router = useRouter();
 const dashboardStore = useDashboardBPPStore();
 
 const tableHeader = ref([
   "Kelengkapan Dokumen",
   "Info",
+  "Aksi"
 ]);
 
 const documentDetails = ref([]);
@@ -149,7 +98,16 @@ const handleDetailClick = (filePath) => {
     window.open(filePath, '_blank');
   } else {
     console.log("Invalid file path:", filePath);
-  // Navigate or perform actions based on `value` if needed
+  }
+};
+
+const handleCheckboxChange = (value, event) => {
+  if (event.target.checked) {
+    console.log(`Checked: ${value}`);
+    // Perform actions when checked
+  } else {
+    console.log(`Unchecked: ${value}`);
+    // Perform actions when unchecked
   }
 };
 

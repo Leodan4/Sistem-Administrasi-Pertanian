@@ -18,17 +18,16 @@ const props = defineProps({
   </div>
   <div
     v-else
-    :class="size === 'small' ? 'border rounded-lg' : ''"
-    class="w-full overflow-x-auto"
+    :class="['w-full overflow-x-auto', size === 'small' ? 'border rounded-lg' : 'rounded-xl border']"
   >
-    <table class="min-w-full">
+    <table class="min-w-full rounded-xl overflow-hidden">
       <thead class="bg-slate-50 border">
         <tr>
           <th
             v-for="(header, index) in props.headers"
             :key="index"
             :class="[
-              'text-sm font-bold text-left text-gray-600',
+              'text-sm font-bold text-left text-gray-600 ',
               props.centeredHeaders?.includes(header) ? 'text-center font-bold' : ''
             ]"
           >
