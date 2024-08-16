@@ -42,7 +42,7 @@
                         </td>
                         <td class="py-2 px-4 text-center">
                             <button
-                                class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Detail/print</button>
+                                class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Lihat Rincian</button>
                         </td>
                     </tr>
                 </tbody>

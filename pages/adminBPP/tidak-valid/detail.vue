@@ -5,34 +5,38 @@
             <form>
                 <div class="flex gap-8 justify-center items-center">
                     <div class="w-1/2">
-                        <div class="form-group">
-                            <label for="title">Judul</label>
-                            <input type="text" id="title" v-model="formData.uraian" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
+        <div class="form-group">
+            <label for="document-number">No Dokumen</label>
+            <input type="text" id="document-number" v-model="formData.no_doc" readonly
+                class="rounded-lg bg-gray-100 border border-gray-300" />
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" id="status" v-model="formData.status" readonly
+                class="rounded-lg bg-gray-100 border border-gray-300" />
+        </div>
+    </div>
 
-                        <div class="form-group">
-                            <label for="date">Tanggal</label>
-                            <input type="text" id="date" v-model="formData.createdAt" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
+    <div class="w-1/2">
+        <div class="form-group">
+            <label for="title">Uraian</label>
+            <input type="text" id="title" v-model="formData.uraian" readonly
+                class="rounded-lg bg-gray-100 border border-gray-300" />
+        </div>
+        <div class="form-group">
+            <label for="date">Tanggal</label>
+            <input type="text" id="date" v-model="formData.createdAt" readonly
+                class="rounded-lg bg-gray-100 border border-gray-300" />
+        </div>
+    </div>
+</div>
 
-                    </div>
+<div class="form-group mt-4">
+    <label for="assistance-type">Jenis Bantuan</label>
+    <input type="text" id="tittle" v-model="formData.jenis_bantuan" readonly
+        class="rounded-lg bg-gray-100 border border-gray-300" />
+</div>
 
-                    <div class="w-1/2">
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <input type="text" id="status" v-model="formData.status" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="assistance-type">Jenis Bantuan</label>
-                            <input type="text" id="assistance-type" v-model="formData.jenis_bantuan" readonly
-                                class="rounded-lg bg-gray-100 border border-gray-300" />
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="description">Deskripsi</label>

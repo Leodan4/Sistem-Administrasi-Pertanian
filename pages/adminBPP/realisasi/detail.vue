@@ -54,6 +54,7 @@
 <script>
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Import plugin untuk tabel di jsPDF
+import html2canvas from 'html2canvas';
 
 export default {
     props: {
@@ -82,15 +83,6 @@ export default {
             // Buat instance jsPDF
             const pdf = new jsPDF('p', 'mm', 'a4');
             
-            // Path atau URL gambar kop surat
-            const kopImage = '/KOPPTabalong.png'; // Ganti dengan path atau URL gambar kop surat
-            
-            // Tambahkan gambar kop di bagian atas
-            pdf.addImage(kopImage, 'PNG', -10.5, 5, 230, 30); 
-
-            // Pindahkan posisi Y untuk tabel di bawah gambar kop surat
-            const startY = 40; // Sesuaikan jarak antara gambar dan tabel
-
             // Data untuk tabel
             const tableData = [
                 ['No Dokumen', this.formData.no_doc],
@@ -103,28 +95,18 @@ export default {
 
             // Tambahkan tabel ke PDF
             pdf.autoTable({
-                head: [['Kolom', 'Data yang Diperoleh']],
+                head: [['Field', 'Value']],
                 body: tableData,
-                startY: startY, // Tentukan posisi Y tabel dimulai
                 theme: 'grid', // Tema dengan garis grid
-                margin: { top: 10, right: 10, bottom: 10, left: 10 },
-                headStyles: {
-                    fillColor: [0, 100, 0], // Warna latar belakang header tabel (misalnya biru)
-                    textColor: [255, 255, 255], // Warna teks header tabel (misalnya putih)
-                    fontSize: 12, // Ukuran font header
-                }
+                margin: { top: 10, right: 10, bottom: 10, left: 10 }
             });
 
             // Simpan PDF
-            const fileName = `Data Detail Tervalidasi - ${this.formData.no_doc}.pdf`;
-
-// Simpan PDF dengan nama file yang telah ditentukan
-pdf.save(fileName);
+            pdf.save('detail.pdf');
         },
     },
 };
 </script>
-
 
 
 
