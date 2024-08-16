@@ -39,7 +39,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router'; // Import useRouter
+import { useRouter } from 'vue-router'; 
 import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
 import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
 import Table from "~/components/global/table.vue";

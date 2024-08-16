@@ -3,7 +3,7 @@ import axios from "../plugins/axios";
 
 const $axios = axios().provide.axios;
 
-export const useDashboardDinasStore = defineStore("dashboardDinas", {
+export const useDashboardDinasStore = defineStore("dashboardBPP", {
   state: () => ({
     data: null,
     pagination: {
@@ -24,7 +24,7 @@ export const useDashboardDinasStore = defineStore("dashboardDinas", {
 
       return `${year}-${month}-${day}`;
     },
-    async getAllDocuments(page = 1, perPage = 10, search = null, date = this.formatDate(new Date())) {
+    async getAllDocuments(page = 1, perPage = 5, search = null, date = this.formatDate(new Date())) {
       const params = {
         page,
         limit: perPage,
@@ -35,22 +35,23 @@ export const useDashboardDinasStore = defineStore("dashboardDinas", {
       return new Promise(async (resolve, reject) => {
         try {
           const response = await $axios.get("/doc/", { params });
-          this.data = response.data.data;
-
-          // Check if pagination exists in the response
+          console.log("Data fetched:", response.data.data);  // Log the fetched data
+          this.data = response.data.data || [];
           if (response.data.pagination) {
-            this.pagination.currentPage = response.data.pagination.currentPage || 1;
-            this.pagination.totalItems = response.data.pagination.totalItems || 0;
-            this.pagination.totalPages = response.data.pagination.totalPages || 1;
-            this.pagination.hasNext = this.pagination.currentPage < this.pagination.totalPages;
-            this.pagination.hasPrev = this.pagination.currentPage > 1;
+            this.pagination = {
+              ...response.data.pagination,
+              hasNext: response.data.pagination.currentPage < response.data.pagination.totalPages,
+              hasPrev: response.data.pagination.currentPage > 1,
+            };
           } else {
-            // Handle the case where pagination is not provided
-            this.pagination.currentPage = 1;
-            this.pagination.totalItems = 0;
-            this.pagination.totalPages = 1;
-            this.pagination.hasNext = false;
-            this.pagination.hasPrev = false;
+            // Fallback to default pagination if not present in response
+            this.pagination = {
+              currentPage: page,
+              totalItems: this.data.length,
+              totalPages: Math.ceil(this.data.length / perPage),
+              hasNext: page < Math.ceil(this.data.length / perPage),
+              hasPrev: page > 1,
+            };
           }
           resolve(response);
         } catch (error) {
@@ -58,6 +59,6 @@ export const useDashboardDinasStore = defineStore("dashboardDinas", {
           reject(error);
         }
       });
-    },
+    }    
   },
 });
