@@ -6,12 +6,12 @@ import { useDashboardBPPStore } from "~/stores/adminBPP/dashboardBPP";
 import { useBaruBPPStore } from "~/stores/adminBPP/baruBPP";
 
 // Dinas
-import { useDashboardDinasStore } from "~/stores/adminDInas/dashboardDinas";
-import { useBaruDinasStore } from "~/stores/adminDInas/baruDinas";
-import { useTidakSesuaiStore } from "~/stores/adminDInas/tidak-sesuai";
-import { useTervalidasiDinasStore } from "~/stores/adminDInas/tervalidasiDinas";
-import { useRealisasiDinasStore } from "~/stores/adminDInas/realisasiDinas"
-import { useArsipDataStore } from "~/stores/adminDInas/arsipdata-Dinas";
+import { useDashboardDinasStore } from "~/stores/adminDinas/dashboardDinas";
+import { useBaruDinasStore } from "~/stores/adminDinas/baruDinas";
+import { useTidakSesuaiStore } from "~/stores/adminDinas/tidak-sesuai";
+import { useTervalidasiDinasStore } from "~/stores/adminDinas/tervalidasiDinas";
+import { useRealisasiDinasStore } from "~/stores/adminDinas/realisasiDinas"
+import { useArsipDataStore } from "~/stores/adminDinas/arsipdata-Dinas";
 
 // User
 import { useUploadDokumen } from "~/stores/user/upload_dokumen";;

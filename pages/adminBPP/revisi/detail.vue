@@ -3,7 +3,7 @@
         <div class="modal-content">
             <h3 class="font-bold text-lg pb-4">Detail</h3>
             <form>
-                <div class="flex gap-8 justify-center items-center">
+                <div class="flex gap-8 justify-center">
                     <div class="w-1/2">
         <div class="form-group">
             <label for="document-number">No Dokumen</label>
@@ -64,7 +64,8 @@ export default {
             type: Object,
             required: true,
             default: () => ({
-                uraian: '',
+                no_doc: '',
+                title: '',
                 status: '',
                 date: '',
                 assistanceType: '',
