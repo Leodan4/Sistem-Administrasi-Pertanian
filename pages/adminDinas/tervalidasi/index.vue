@@ -20,7 +20,7 @@
             </td>
             <td class="py-2 px-4 text-start">
               <button @click="navigateToDetail(row.id_docs)" class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 mx-4 rounded-lg">Detail</button>
-              <button class="bg-white border border-[#0E9F6E] text-[#0E9F6E] py-1 px-4 rounded-lg">Realisasi</button>
+              <button @click="navigateToRealisasi(row.id_docs)" class="bg-white border border-[#0E9F6E] text-[#0E9F6E] py-1 px-4 rounded-lg">Realisasi</button>
             </td>
           </tr>
         </template>
@@ -83,6 +83,10 @@ const navigateToDetail = (id_docs) => {
   router.push({ path: '/adminDinas/tervalidasi/detail', query: { id: id_docs } });
 };
 
+
+const navigateToRealisasi = (id_docs) => {
+  router.push({ path: '/adminDinas/tervalidasi/form_realisasi', query: { id: id_docs } });
+};
 </script>
 
 <style>
