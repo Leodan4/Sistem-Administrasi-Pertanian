@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <MainLayoutDInas>
     <div class="w-full mt-20 text-black px-8">
       <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
