@@ -61,11 +61,11 @@ import { onMounted } from 'vue';
 import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
-const arsipDataStore = useDashboardDinasStore();
+const dashboardStore = useDashboardDinasStore();
 
 const fetchDocuments = async (page = 1) => {
   try {
-    await arsipDataStore.getAllDocuments(page);
+    await dashboardStore.getAllDocuments(page);
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -75,8 +75,8 @@ onMounted(() => {
   fetchDocuments();
 });
 
-const documents = computed(() => arsipDataStore.data);
-const pagination = computed(() => arsipDataStore.pagination);
+const documents = computed(() => dashboardStore.data);
+const pagination = computed(() => dashboardStore.pagination);
 </script>
 
 <style>
