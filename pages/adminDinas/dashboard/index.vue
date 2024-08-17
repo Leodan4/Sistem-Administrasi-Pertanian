@@ -41,12 +41,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router'; 
-import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
 import Table from "~/components/global/table.vue";
 
 const router = useRouter(); // Initialize router
-const dashboardStore = useDashboardBPPStore();
+const dashboardStore = useDashboardDinasStore();
 
 const tableHeader = ref([
   "No Dokumen",

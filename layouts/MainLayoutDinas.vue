@@ -2,7 +2,7 @@
   <div class="relative">
     <TopNav></TopNav>
     <div class="flex min-h-screen min-w-screen bg-[#ffffff]">
-      <SideNav />
+      <SideNavDinas />
       <div class="z-10 mt-[64px] flex-grow overflow-auto sm:ml-[250px]">
         <slot />
       </div>
@@ -12,7 +12,7 @@
 
 <script setup>
 import TopNav from "../components/admin/TopNav.vue";
-import SideNav from "../components/admin/SideNavDinas.vue";
+import SideNavDinas from "../components/admin/SideNavDinas.vue";
 
 onMounted(async () => {
   initFlowbite();

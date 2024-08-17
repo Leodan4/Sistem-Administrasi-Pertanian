@@ -19,8 +19,8 @@
 
     <div class="w-1/2">
         <div class="form-group">
-            <label for="title">Uraian</label>
-            <input type="text" id="title" v-model="formData.uraian" readonly
+            <label for="title">Judul</label>
+            <input type="text" id="title" v-model="formData.title" readonly
                 class="rounded-lg bg-gray-100 border border-gray-300" />
         </div>
         <div class="form-group">
@@ -67,7 +67,7 @@ export default {
             required: true,
             default: () => ({
                 no_doc: '',
-                uraian: '',
+                title: '',
                 status: '',
                 createdAt: '',
                 jenis_bantuan: '',
@@ -86,7 +86,7 @@ export default {
             // Data untuk tabel
             const tableData = [
                 ['No Dokumen', this.formData.no_doc],
-                ['Uraian', this.formData.uraian],
+                ['Judul', this.formData.title],
                 ['Tanggal', this.formData.createdAt],
                 ['Status', this.formData.status],
                 ['Jenis Bantuan', this.formData.jenis_bantuan],

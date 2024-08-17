@@ -30,7 +30,8 @@ const props = defineProps({
 });
 
 const handleError = () => {
-  clearError({ redirect: "/admin/dashboard" });
+  // clearError({ redirect: "/admin/dashboard" });
+  window.history.back();
 };
 </script>
 <style scoped>

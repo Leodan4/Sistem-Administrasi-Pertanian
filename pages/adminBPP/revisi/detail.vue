@@ -20,7 +20,7 @@
     <div class="w-1/2">
         <div class="form-group">
             <label for="title">Uraian</label>
-            <input type="text" id="title" v-model="formData.uraian" readonly
+            <input type="text" id="title" v-model="formData.deskripsi" readonly
                 class="rounded-lg bg-gray-100 border border-gray-300" />
         </div>
         <div class="form-group">

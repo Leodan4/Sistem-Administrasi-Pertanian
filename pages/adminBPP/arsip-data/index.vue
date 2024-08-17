@@ -155,7 +155,7 @@ const openModal = (row) => {
     formData.value = {
         no_doc: row.no_doc,
         title: row.title,
-        uraian: row.uraian || "-",
+        deskripsi: row.deskripsi || "-",
         status: row.status,
         createdAt: formattedDate,
         jenis_bantuan: row.jenis_bantuan,
@@ -205,8 +205,13 @@ onMounted(() => {
     fetchDocuments();
 });
 
-const documents = computed(() => dashboardStore.data);
+const documents = computed(() => {
+    const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_baru_proposal === 'validBPP') : [];
+    return filteredDocs.length > 0 ? filteredDocs : [];
+});
+
 const pagination = computed(() => dashboardStore.pagination);
+const hasDocuments = computed(() => documents.value.length > 0);
 </script>
 
 
@@ -235,14 +240,15 @@ const pagination = computed(() => dashboardStore.pagination);
                 <template #rows="{ rows }">
                     <tr v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
                         <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
-                        <td class="py-2 px-4 text-left">{{ row?.uraian }}</td>
+                        <td class="py-2 px-4 text-left">{{ row?.deskripsi }}</td>
                         <td class="py-2 px-4 text-left">
                             <span :class="{
-                                'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'completed',
-                                'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'inprogres',
-                                'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status === 'cancelled',
+                                'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'validBPP',
+                                'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'baru',
+                                'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'tidakvalid',
+                                'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'revisi',
                             }">
-                                {{ row?.status }}
+                                {{ row?.status_baru_proposal }}
                             </span>
                         </td>
                         <td class="py-2 px-4 text-left">
@@ -265,6 +271,4 @@ const pagination = computed(() => dashboardStore.pagination);
 
         </div>
     </MainLayoutBPP>
-</template>  
-
-
+</template>

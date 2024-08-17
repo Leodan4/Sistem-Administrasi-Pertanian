@@ -1,5 +1,5 @@
 <template>
-    <MainLayoutBPP>
+    <MainLayoutDinas>
         <div class="w-full mt-20 text-black px-8">
             <Table :headers="tableHeader" :rows="documentDetails">
                 <template #rows="{ rows }">
@@ -48,19 +48,19 @@
             </div>
 
         </div>
-    </MainLayoutBPP>
+    </MainLayoutDinas>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
-import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
+import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
 import Table from "~/components/global/table.vue";
 
 const route = useRoute();
 const router = useRouter();
-const dashboardStore = useDashboardBPPStore();
+const dashboardStore = useDashboardDinasStore();
 
 const tableHeader = ref([
     "Kelengkapan Dokumen",

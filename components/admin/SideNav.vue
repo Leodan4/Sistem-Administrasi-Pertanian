@@ -1,7 +1,7 @@
 <template>
   <aside class="text-gray-600 bg-white min-h-screen w-[250px] border-2 flex z-40 fixed flex-col">
     <div class="flex justify-center py-8">
-      <!-- <img src="public/logo.png" alt="Logo" style="width: 120px; height: auto;"> -->
+      <img src="/logo.png" alt="Logo" class="w-36">
     </div>
     <svg class="w-6 h-6 font-bold fill-white" fill="#fff" aria-hidden="true" viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg">
