@@ -1,6 +1,6 @@
 <template>
   <aside class="text-gray-600 bg-white min-h-screen w-[250px] border-2 flex z-40 fixed flex-col">
-    <div class="flex justify-center py-8">
+    <div class="flex justify-center pt-8">
       <img src="/logo.png" alt="Logo" class="w-36">
     </div>
     <svg class="w-6 h-6 font-bold fill-white" fill="#fff" aria-hidden="true" viewBox="0 0 20 20"
