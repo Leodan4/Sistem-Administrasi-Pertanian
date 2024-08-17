@@ -58,10 +58,10 @@
 <script setup>
 import { computed } from 'vue';
 import { onMounted } from 'vue';
-import { useArsipDataStore } from '/stores/adminDinas/arsipdata-Dinas';
+import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 
-const arsipDataStore = useArsipDataStore();
+const arsipDataStore = useDashboardDinasStore();
 
 const fetchDocuments = async (page = 1) => {
   try {
