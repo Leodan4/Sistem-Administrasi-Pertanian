@@ -1,68 +1,108 @@
+
 <template>
-    <MainLayoutDInas>
-        <div class="w-full mt-20 text-black px-8">
-            <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
-                <thead class="bg-gray-100 border-2 border-gray-200 text-gray-500">
-                    <tr>
-                        <th class="py-2 px-4 text-center ">No Dokumen</th>
-                        <th class="py-2 px-4 text-center ">Uraian</th>
-                        <th class="py-2 px-4 text-center ">Status</th>
-                        <th class="py-2 px-4 text-center ">Aksi</th>
-                    </tr>
-                </thead>
+    <MainLayoutDinas>
+        <section class="h-screen flex flex-col justify-center items-center bg-white">
+            <div class="flex flex-row justify-center items-center gap-10">
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
+                        <input type="text" id="no_doc" v-model="formData.no_doc" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
+                        <input id="tanggal" type="text" v-model="formData.tanggal" readonly
+                            class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Penerima</label>
+                        <input type="text" id="nama_penerima" v-model="formData.nama_penerima" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
+                        <input type="text" id="jenis_bantuan" v-model="formData.jenis_bantuan" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                </div>
 
-                <tbody class="border-2 border-gray-300">
-                    <tr v-for="document in documents" :key="document.id_document">
-                        <td class="py-2 px-4 text-center text-black font-bold">{{ document.no_doc }}</td>
-                        <td class="py-2 px-4 text-center">{{ document.note }}</td>
-                        <td class="py-2 px-4 text-center">
-                            <span :class="{
-                                'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'validBPP',
-                                'bg-yellow-100 text-yellow-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'inprogres',
-                                'bg-red-100 text-red-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'canceled',
-                            }">
-                                {{ document.status_baru_proposal }}
-                            </span>
-                        </td>
-                        <td class="py-2 px-4 text-center">
-                            <button
-                                class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 mx-4 rounded-lg">Detail</button>
-                            <button
-                                class="bg-white border border-[#0E9F6E] text-[#0E9F6E] py-1 px-4 rounded-lg">Realisasi</button>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
-
-            <div class="flex justify-end mt-8">
-                <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev"
-                    class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-3 rounded-l border-2 border-gray-300">
-                    Previous
-                </button>
-                <button @click="fetchDocuments(pagination.currentPage + 1)" :disabled="!pagination.hasNext"
-                    class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-6 rounded-r border-2 border-gray-300">
-                    Next
-                </button>
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="judul_dokumen" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
+                        <input type="text" id="judul_dokumen" v-model="formData.judul_dokumen" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penanggung_jawab" class="mb-2 text-lg font-semibold">Nama Penanggung
+                            Jawab</label>
+                        <input type="text" id="nama_penanggung_jawab" v-model="formData.nama_penanggung_jawab" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="sumber_dana" class="mb-2 text-lg font-semibold">Sumber Dana</label>
+                        <input type="text" id="sumber_dana" v-model="formData.sumber_dana" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Tugas</label>
+                        <input id="surat_tugas" type="file" @change="handleFileChange"
+                            class="rounded-lg bg-gray-50 border-2 border-gray-300" />
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </MainLayoutDInas>
+            <div class="py-6">
+                <button @click="saveFormData"
+                    class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
+            </div>
+        </section>
+    </MainLayoutDinas>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
-import { useTervalidasiDinasStore } from '/stores/adminDinas/tervalidasiDinas';
-import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
+import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
+import axios from '~/plugins/axios';
 
-const tervalidasiStore = useTervalidasiDinasStore();
+const $axios = axios().provide.axios;
 
-const fetchDocuments = async (page = 1) => {
-    try {
-        await tervalidasiStore.getAllDocuments(page);
-    } catch (error) {
-        console.error('Failed to fetch documents:', error);
+const route = useRoute();
+const dashboardStore = useDashboardDinasStore();
+
+const formData = ref({
+    no_doc: '',
+    tanggal: '',
+    nama_penerima: '',
+    jenis_bantuan: '',
+    judul_dokumen: '',
+    nama_penanggung_jawab: '',
+    sumber_dana: '',
+    surat_tugas: null
+});
+
+const fetchDocuments = async () => {
+    const id_docs = route.query.id;
+    if (id_docs) {
+        try {
+            await dashboardStore.getAllDocuments();
+            const document = dashboardStore.data.find(doc => doc.id_docs == id_docs);
+            if (document) {
+                formData.value = {
+                    no_doc: document.no_doc,
+                    tanggal: document.createdAt,
+                    nama_penerima: document.nama_penerima,
+                    jenis_bantuan: document.jenis_bantuan,
+                    judul_dokumen: document.title,
+                    nama_penanggung_jawab: document.nama_penanggung_jawab,
+                    sumber_dana: document.sumber_dana,
+                    surat_tugas: null
+                };
+            }
+        } catch (error) {
+            console.error('Failed to fetch document details:', error);
+        }
     }
 };
 
@@ -70,10 +110,25 @@ onMounted(() => {
     fetchDocuments();
 });
 
-const documents = computed(() => tervalidasiStore.data);
-const pagination = computed(() => tervalidasiStore.pagination);
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    formData.value.surat_tugas = file;
+};
+
+const saveFormData = async () => {
+    try {
+        // Add logic to save form data
+        console.log('Form Data:', formData.value);
+        // Example: Use the store to save dataF
+        // await useTervalidasiDinasStore().saveDocument(formData.value);
+    } catch (error) {
+        console.error('Failed to save form data:', error);
+    }
+};
 </script>
 
-<style>
-/* Add any custom styles here */
+<style scoped>
+.shadow-xl {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 </style>

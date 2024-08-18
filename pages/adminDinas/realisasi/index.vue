@@ -120,9 +120,9 @@ const pagination = computed(() => realisasiStore.pagination);
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
+import { useRouter } from 'vue-router';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';
 
@@ -162,9 +162,9 @@ const navigateToHasil = (id_docs) => {
 };
 
 
-const navigateToRealisasi = (id_docs) => {
-  router.push({ path: '/adminDinas/tervalidasi/form_realisasi', query: { id: id_docs } });
-};
+// const navigateToRealisasi = (id_docs) => {
+//   router.push({ path: '/adminDinas/tervalidasi/form_realisasi', query: { id: id_docs } });
+// };
 </script>
 
 <style>

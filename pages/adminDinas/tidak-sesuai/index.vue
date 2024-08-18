@@ -1,35 +1,31 @@
 <template>
   <MainLayoutDInas>
     <div class="w-full mt-20 text-black px-8">
-      <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
-        <thead class="bg-gray-100 border-2 border-gray-200 text-gray-500">
-          <tr>
-            <th class="py-2 px-4 text-center ">No Dokumen</th>
-            <th class="py-2 px-4 text-center ">Catatan Revisi</th>
-            <th class="py-2 px-4 text-center ">Status</th>
-            <th class="py-2 px-4 text-center ">Aksi</th>
+      <Table :headers="tableHeader" :rows="documents">
+        <template #rows="{ rows }">
+          <tr v-if="rows.length === 0">
+            <td colspan="4" class="py-2 px-4 text-center text-gray-500">No documents available</td>
           </tr>
-        </thead>
-
-        <tbody class="border-2 border-gray-300">
-          <tr v-for="document in documents" :key="document.id_document">
-            <td class="py-2 px-4 text-center text-black font-bold">{{ document.no_doc }}</td>
-            <td class="py-2 px-4 text-center">{{ document.title }}</td>
-            <td class="py-2 px-4 text-center">
-              <span :class="{
-                'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-lg': document.status_tidak_sesuai_proposal === 'TelahDisesuaikan',
-                'bg-red-100 text-red-700 font-semibold px-4 py-1 rounded-lg': document.status_tidak_sesuai_proposal === 'belumDisesuaikan',
-              }">
-                {{ document.status_tidak_sesuai_proposal }}
+          <tr v-else v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
+            <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
+            <td class="py-2 px-4 text-left">{{ row?.note }}</td>
+            <td class="py-2 px-4 text-left">
+              <span
+                :class="{
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_tidak_sesuai_proposal === 'TelahDisesuaikan',
+                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_tidak_sesuai_proposal === 'belumDisesuaikan',
+                }"
+              >
+                {{ row?.status_tidak_sesuai_proposal }}
               </span>
             </td>
-            <td class="py-2 px-4 text-center">
-              <button class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded-lg">Tinjau Ulang</button>
+            <td class="py-2 px-4 text-left">
+              <button @click="openModal(row)"
+                class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded-lg">Tinjau Ulang</button>
             </td>
           </tr>
-        </tbody>
-
-      </table>
+        </template>
+      </Table>
 
       <div class="flex justify-end mt-8">
         <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev"
@@ -42,21 +38,55 @@
         </button>
       </div>
 
+      <ModalComponent :isOpen="isModalOpen" :formData="formData" @close="closeModal" />
     </div>
   </MainLayoutDInas>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
-import { useTidakSesuaiStore } from '/stores/adminDInas/tidak-sesuai';
+import { ref, computed, onMounted } from 'vue';
+import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
+import ModalComponent from "~/pages/adminDinas/tidak-sesuai/detail.vue";
+import Table from '~/components/global/table.vue';
 
-const tidakSesuaiStore = useTidakSesuaiStore();
+const dashboardStore = useDashboardDinasStore();
+
+const tableHeader = ref([
+  "No Dokumen",
+  "Catatan Revisi",
+  "Status",
+  "Aksi",
+]);
+
+const isModalOpen = ref(false);
+const formData = ref({});
+
+const openModal = (row) => {
+  const formattedDate = row.createdAt.split('T')[0];
+
+  formData.value = {
+    no_doc: row.no_doc,
+    title: row.title,
+    note: row.note,
+    deskripsi: row.deskripsi,
+    status: row.status,
+    status_tidak_sesuai_proposal: row.status_tidak_sesuai_proposal,
+    createdAt: formattedDate,
+    jenis_bantuan: row.jenis_bantuan,
+    deskripsi: row.deskripsi || "-",
+  };
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
 
 const fetchDocuments = async (page = 1) => {
   try {
-    await tidakSesuaiStore.getAllDocuments(page);
+    await dashboardStore.getAllDocuments(page);
+    console.log("Documents after fetch:", documents.value);
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -66,8 +96,13 @@ onMounted(() => {
   fetchDocuments();
 });
 
-const documents = computed(() => tidakSesuaiStore.data);
-const pagination = computed(() => tidakSesuaiStore.pagination);
+const documents = computed(() => {
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_tidak_sesuai_proposal === 'TelahDisesuaikan' && 'belumDisesuaikan') : [];
+  return filteredDocs.length > 0 ? filteredDocs : [];
+});
+
+const pagination = computed(() => dashboardStore.pagination);
+const hasDocuments = computed(() => documents.value.length > 0);
 </script>
 
 <style>

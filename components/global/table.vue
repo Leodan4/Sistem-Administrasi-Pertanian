@@ -5,6 +5,7 @@ const props = defineProps({
   headers: Array,
   rows: Array,
   size: String,
+  class: String,
   centeredHeaders: Array,
 });
 </script>
