@@ -75,7 +75,7 @@ const submitForm = async () => {
             console.log(key, value);
         }
 
-        const response = await $axios.post('https://pertanian.harvestdigital.online/formhasil/addform', form, {
+        const response = await $axios.post('/formhasil/addform', form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
