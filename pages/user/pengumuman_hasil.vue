@@ -1,6 +1,6 @@
 <template>
     <section class="h-screen flex flex-col justify-center items-center bg-white">
-        <Header2></Header2>
+        <AdminTopNav></AdminTopNav>
         <div class="text-2xl font-bold mb-10">Verifikasi Lapangan</div>
 
         <div class="flex flex-row justify-center items-center gap-10 ">

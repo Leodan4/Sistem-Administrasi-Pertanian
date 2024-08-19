@@ -1,79 +1,317 @@
-<template>
-    <MainLayoutDInas>
-        <div class="w-full mt-20 text-black px-8">
-            <table class="min-w-full bg-white-800 rounded-xl overflow-hidden">
-                <thead class="bg-gray-100 border-2 border-gray-200 text-gray-500">
-                    <tr>
-                        <th class="py-2 px-4 text-center ">No Dokumen</th>
-                        <th class="py-2 px-4 text-center ">Uraian</th>
-                        <th class="py-2 px-4 text-center ">Status</th>
-                        <th class="py-2 px-4 text-center ">Aksi</th>
-                    </tr>
-                </thead>
+<!-- <script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
+import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
+import axios from '~/plugins/axios';
 
-                <tbody class="border-2 border-gray-300">
-                    <tr v-for="document in documents" :key="document.id_document">
-                        <td class="py-2 px-4 text-center text-black font-bold">{{ document.no_doc }}</td>
-                        <td class="py-2 px-4 text-center">{{ document.note }}</td>
-                        <td class="py-2 px-4 text-center">
-                            <span :class="{
-                                'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'validBPP',
-                                'bg-yellow-100 text-yellow-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'inprogres',
-                                'bg-red-100 text-red-700 font-semibold px-4 py-1 rounded-lg': document.status_baru_proposal === 'canceled',
-                            }">
-                                {{ document.status_baru_proposal }}
-                            </span>
-                        </td>
-                        <td class="py-2 px-4 text-center">
-                            <button
-                                class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 mx-4 rounded-lg">Detail</button>
-                            <button
-                                class="bg-white border border-[#0E9F6E] text-[#0E9F6E] py-1 px-4 rounded-lg">Realisasi</button>
-                        </td>
-                    </tr>
-                </tbody>
+const $axios = axios().provide.axios;
 
-            </table>
+const route = useRoute();
+const dashboardStore = useDashboardDinasStore();
 
-            <div class="flex justify-end mt-8">
-                <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev"
-                    class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-3 rounded-l border-2 border-gray-300">
-                    Previous
-                </button>
-                <button @click="fetchDocuments(pagination.currentPage + 1)" :disabled="!pagination.hasNext"
-                    class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-6 rounded-r border-2 border-gray-300">
-                    Next
-                </button>
-            </div>
+const formData = ref({
+    no_doc: '',
+    title: '',
+    surattugas: null,
+    note: '',
+    tanggal: '',
+    petugas1: '',
+    petugas2: '',
+    petugas3: '',
+    petugas4: '',
+    id_docs: '',
 
-        </div>
-    </MainLayoutDInas>
-</template>
+});
 
-<script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
-import { useTervalidasiDinasStore } from '/stores/adminDinas/tervalidasiDinas';
-import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
+const fetchDocuments = async () => {
+    const id_docs = route.query.id;
+    if (id_docs) {
+        try {
+            await dashboardStore.getAllDocuments();
+            const document = dashboardStore.data.find(doc => doc.id_docs == id_docs);
+            if (document) {
+                formData.value = {
+                    no_doc: document.no_doc,
+                    tanggal: document.createdAt,
+                    title: document.title,
+                    note: '',
+                    petugas1: '',
+                    petugas2: '',
+                    petugas3: '',
+                    petugas4: '',
+                    surattugas: null,
+                    id_docs: document.id_docs
+                };
+            }
+        } catch (error) {
+            console.error('Failed to fetch document details:', error);
+        }
+    }
+};
 
-const tervalidasiStore = useTervalidasiDinasStore();
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    formData.value.surattugas = file; // Ensure the file is correctly assigned
+};
 
-const fetchDocuments = async (page = 1) => {
+const submitForm = async () => {
+    const form = new FormData();
+    form.append('no_doc', formData.value.no_doc);
+    form.append('tanggal', formData.value.tanggal);
+    form.append('title', formData.value.title);
+    form.append('note', formData.value.note);
+    form.append('petugas1', formData.value.petugas1);
+    form.append('petugas2', formData.value.petugas2);
+    form.append('petugas3', formData.value.petugas3);
+    form.append('petugas4', formData.value.petugas4);
+    form.append('id_docs', formData.value.id_docs); 
+
+    if (formData.value.surattugas) {
+        form.append('surattugas', formData.value.surattugas); // Append the file if it exists
+    } else {
+        console.warn('No file selected for surattugas');
+    }
+
     try {
-        await tervalidasiStore.getAllDocuments(page);
+        const response = await $axios.post('/form/addform', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log('Form submitted successfully:', response.data);
+        // Add further logic here, such as redirecting the user or showing a success message
     } catch (error) {
-        console.error('Failed to fetch documents:', error);
+        console.error('Failed to submit the form:', error.response ? error.response.data : error.message);
     }
 };
 
 onMounted(() => {
     fetchDocuments();
 });
-
-const documents = computed(() => tervalidasiStore.data);
-const pagination = computed(() => tervalidasiStore.pagination);
 </script>
 
-<style>
-/* Add any custom styles here */
+<style scoped>
+.shadow-xl {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 </style>
+
+
+<template>
+    <MainLayoutDinas>
+        <section class="h-screen flex flex-col justify-center items-center bg-white">
+            <div class="flex flex-row justify-center items-center gap-10">
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
+                        <input type="text" id="no_doc" v-model="formData.no_doc" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
+                        <input id="tanggal" type="text" v-model="formData.tanggal" readonly
+                            class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Petugas 2</label>
+                        <input type="text" id="nama_penerima" v-model="formData.petugas2"
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Nama Petugas 4</label>
+                        <input type="text" id="jenis_bantuan" v-model="formData.petugas4" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="judul_dokumen" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
+                        <input type="text" id="judul_dokumen" v-model="formData.title" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penanggung_jawab" class="mb-2 text-lg font-semibold">Nama Petugas 1</label>
+                        <input type="text" id="nama_penanggung_jawab" v-model="formData.petugas1" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="sumber_dana" class="mb-2 text-lg font-semibold">Nama Petugas 3</label>
+                        <input type="text" id="sumber_dana" v-model="formData.petugas3" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Tugas</label>
+                        <input id="surat_tugas" type="file" @change="handleFileChange()"
+                            class="rounded-lg bg-gray-50 border-2 border-gray-300" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-6">
+                <button @click="submitForm"
+                    class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
+            </div>
+        </section>
+    </MainLayoutDinas>
+</template> -->
+
+
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
+import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
+import axios from '~/plugins/axios';
+
+const $axios = axios().provide.axios;
+
+const route = useRoute();
+const dashboardStore = useDashboardDinasStore();
+
+const formData = ref({
+    no_doc: '',
+    title: '',
+    surattugas: null,  // Initialize as null to properly handle file uploads
+    note: '',
+    tanggal: '',
+    petugas1: '',
+    petugas2: '',
+    petugas3: '',
+    petugas4: '',
+    id_docs: '',
+});
+
+const fetchDocuments = async () => {
+    const id_docs = route.query.id;
+    if (id_docs) {
+        try {
+            await dashboardStore.getAllDocuments();
+            const document = dashboardStore.data.find(doc => doc.id_docs == id_docs);
+            if (document) {
+                formData.value = {
+                    no_doc: document.no_doc,
+                    tanggal: document.createdAt,
+                    title: document.title,
+                    note: '',
+                    petugas1: '',
+                    petugas2: '',
+                    petugas3: '',
+                    petugas4: '',
+                    surattugas: null, // Initialize surattugas as null
+                    id_docs: document.id_docs
+                };
+            }
+        } catch (error) {
+            console.error('Failed to fetch document details:', error);
+        }
+    }
+};
+
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    formData.value.surattugas = file; // Assign the file to surattugas in formData
+};
+
+const submitForm = async () => {
+    const form = new FormData();
+    form.append('no_doc', formData.value.no_doc);
+    form.append('tanggal', formData.value.tanggal);
+    form.append('title', formData.value.title);
+    form.append('note', formData.value.note);
+    form.append('petugas1', formData.value.petugas1);
+    form.append('petugas2', formData.value.petugas2);
+    form.append('petugas3', formData.value.petugas3);
+    form.append('petugas4', formData.value.petugas4);
+    form.append('id_docs', formData.value.id_docs); 
+
+    if (formData.value.surattugas) {
+        form.append('surattugas', formData.value.surattugas); // Append the file if it exists
+    } else {
+        console.warn('No file selected for surattugas');
+    }
+
+    try {
+        const response = await $axios.post('http://100.123.244.133:8000/form/addform', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log('Form submitted successfully:', response.data);
+        // Add further logic here, such as redirecting the user or showing a success message
+    } catch (error) {
+        console.error('Failed to submit the form:', error.response ? error.response.data : error.message);
+    }
+};
+
+onMounted(() => {
+    fetchDocuments();
+});
+</script>
+
+<style scoped>
+.shadow-xl {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<template>
+    <MainLayoutDinas>
+        <section class="h-screen flex flex-col justify-center items-center bg-white">
+            <div class="flex flex-row justify-center items-center gap-10">
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
+                        <input type="text" id="no_doc" v-model="formData.no_doc" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
+                        <input id="tanggal" type="text" v-model="formData.tanggal" readonly
+                            class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Petugas 2</label>
+                        <input type="text" id="nama_penerima" v-model="formData.petugas2"
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Nama Petugas 4</label>
+                        <input type="text" id="jenis_bantuan" v-model="formData.petugas4" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="judul_dokumen" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
+                        <input type="text" id="judul_dokumen" v-model="formData.title" readonly
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penanggung_jawab" class="mb-2 text-lg font-semibold">Nama Petugas 1</label>
+                        <input type="text" id="nama_penanggung_jawab" v-model="formData.petugas1" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="sumber_dana" class="mb-2 text-lg font-semibold">Nama Petugas 3</label>
+                        <input type="text" id="sumber_dana" v-model="formData.petugas3" 
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Tugas</label>
+                        <input id="surat_tugas" type="file" @change="handleFileChange"
+                            class="rounded-lg bg-gray-50 border-2 border-gray-300" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-6">
+                <button @click="submitForm"
+                    class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
+            </div>
+        </section>
+    </MainLayoutDinas>
+</template>

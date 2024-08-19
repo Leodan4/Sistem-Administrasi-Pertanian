@@ -26,7 +26,7 @@
             <div @click.prevent="navigateTo('/user/pengumuman_hasil/')"
                 class="flex flex-col items-center justify-center w-60 h-60  bg-white rounded-xl shadow-xl border-4">
                 <img src="public/user/copy-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Dalam Proses</p>
+                <p class="font-semibold text-center">Pengumuman Hasil</p>
             </div>
 
             <div @click.prevent="navigateTo('/user/verifikasi/')"
