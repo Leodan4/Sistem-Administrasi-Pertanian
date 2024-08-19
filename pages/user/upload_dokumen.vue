@@ -1,6 +1,6 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white mt-96 md:mt-6">
-        <Header />
+    <section class="h-screen flex flex-col justify-center items-center bg-white">
+        <Header2></Header2>
         <div class="text-2xl font-bold mb-10 pt-40">Upload Dokumen</div>
 
         <div class="flex flex-row justify-center gap-10">
@@ -137,12 +137,12 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Header from '~/components/user/header.vue';
-import { useUploadDokumen } from '~/stores/user/upload_dokumen';
+import Header2 from '~/components/user/header_2.vue';
+import { useUploadDokumen } from '~/stores/user/upload_dokumen'
 
 export default {
     components: {
-        Header,
+        Header2
     },
     setup() {
         const id_users = localStorage.getItem("userID");
