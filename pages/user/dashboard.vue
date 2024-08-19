@@ -1,46 +1,16 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white ">
-        <Header></Header>
+    <section class="h-screen flex flex-col justify-center items-center bg-white mt-64 md:mt-0 sm:mt-0">
+        <Header > </Header>
 
-        <div class="flex justify-center items-center space-x-4">
-            <div @click.prevent="navigateTo('/user/upload_dokumen/')"
-                class="flex flex-col items-center justify-center w-60 h-60 bg-white rounded-xl shadow-xl border-4">
-                <img src="/public/user/upload-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Upload Dokumen</p>
-            </div>
-
-            <div @click.prevent="navigateTo('/user/progress_dokumen/')"
-                class="flex flex-col items-center justify-center w-60 h-60 bg-white rounded-xl shadow-xl border-4">
-                <img src="/public/user/hourglass-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Progres Dokumen</p>
-            </div>
-
-            <div @click.prevent="navigateTo('/user/revisi_dokumen/')"
-                class="flex flex-col items-center justify-center w-60 h-60 bg-white rounded-xl shadow-xl border-4">
-                <img src="/public/user/file-pen-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Revisi Dokumen</p>
+        <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-center items-center gap-4">
+            <div @click="navigateTo(item.url)" v-for="item in navigation"
+                class="flex flex-col items-center justify-center gap-2 p-8 h-full bg-white rounded-xl shadow-xl border-4">
+                <Icon :icon="item.icon" color="#0E9F6E" :height="64" />
+                <p class="font-semibold text-center">{{ item.title }}</p>
             </div>
         </div>
 
-        <div class="flex justify-center items-center my-10 space-x-4">
-            <div @click.prevent="navigateTo('/user/pengumuman_hasil/')"
-                class="flex flex-col items-center justify-center w-60 h-60  bg-white rounded-xl shadow-xl border-4">
-                <img src="public/user/copy-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Pengumuman Hasil</p>
-            </div>
 
-            <div @click.prevent="navigateTo('/user/verifikasi/')"
-                class="flex flex-col items-center justify-center w-60 h-60 bg-white rounded-xl shadow-xl border-4">
-                <<img src="public/user/clipboard-check-outline.svg" class="mb-8 w-20"></img>
-                    <p class="font-semibold text-center">Verifikasi Lapangan</p>
-            </div>
-
-            <div @click.prevent="navigateTo('/user/dokumentasi/')"
-                class="flex flex-col items-center justify-center w-60 h-60 bg-white rounded-xl shadow-xl border-4">
-                <img src="public/user/image-outline.svg" class="mb-8 w-20"></img>
-                <p class="font-semibold text-center">Dokumentasi</p>
-            </div>
-        </div>
 
     </section>
 </template>
@@ -49,18 +19,20 @@
 import axios from "../plugins/axios";
 import { ref, onMounted } from "vue";
 import Header from "~/components/user/header.vue";
+import { Icon } from '@iconify/vue';
 
 const $axios = axios().provide.axios;
 
 export default {
     components: {
         Header,
+        Icon,
     },
 
     setup() {
         const loginData = ref(null);
         const userID = ref(localStorage.getItem("userID"));
-        console.log(userID.value); 
+        console.log(userID.value);
 
         // const getLoginData = async () => {
         //     try {
@@ -95,6 +67,43 @@ export default {
         navigateTo(path) {
             this.$router.push(path);
         },
+    },
+
+    data() {
+        return {
+            navigation: [
+                {
+                    url: "/user/upload_dokumen/",
+                    icon: "ph:upload-bold",
+                    title: "Upload Dokumen",
+                },
+                {
+                    url: "/user/progress_dokumen/",
+                    icon: "octicon:hourglass-16",
+                    title: "Progres Dokumen",
+                },
+                {
+                    url: "/user/revisi_dokumen/",
+                    icon: "flowbite:file-pen-outline",
+                    title: "Revisi Dokumen",
+                },
+                {
+                    url: "/user/pengumuman_hasil/",
+                    icon: "flowbite:file-copy-outline",
+                    title: "Pengumuman Hasil",
+                },
+                {
+                    url: "/user/verifikasi/",
+                    icon: "flowbite:clipboard-check-outline",
+                    title: "Verifikasi Lapangan",
+                },
+                {
+                    url: "/user/dokumentasi/",
+                    icon: "entypo:image",
+                    title: "Dokumentasi",
+                }
+            ]
+        };
     },
 };
 </script>

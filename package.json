@@ -42,6 +42,7 @@
     "vue3-toastify": "^0.2.1"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.2",
     "@nuxt/image": "npm:@nuxt/image-edge@latest",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "autoprefixer": "^10.4.17",
