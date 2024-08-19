@@ -1,9 +1,10 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white">
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-0 md:mt-32">
         <Header2></Header2>
         <div class="text-2xl font-bold mb-10">Revisi Dokumen</div>
 
-        <div class="flex flex-col justify-center items-center space-y-10">
+        <div class="flex flex-col justify-center items-center gap-10">
+
             <div class="flex flex-col w-[500px]">
                 <label for="judul_proposal_1" class="mb-4 text-xl font-semibold">Judul Proposal</label>
                 <input id="judul_proposal_1" type="text" name="judul_proposal" placeholder="Input Judul Proposal"

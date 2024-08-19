@@ -1,16 +1,16 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white">
-        <AdminTopNav></AdminTopNav>
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-40 md:mt-40">
+        <Header_2/>
         <div class="text-2xl font-bold mb-10">Upload Dokumen</div>
 
-        <div class="flex flex-col justify-center items-center space-y-10">
+        <div class="flex flex-col justify-center gap-10">
             <div class="flex flex-col w-[500px]">
                 <label for="berkas" class="mb-4 text-xl font-semibold">Pilih Berkas</label>
                 <input id="berkas" type="file" name="berkas" placeholder="Input Pilih Berkas"
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" />
             </div>
 
-            <div>
+            <div class="flex justify-center items-center">
                 <button class="bg-green-500 text-white border rounded-xl px-10 py-2">Upload Dokumen</button>
             </div>
 
@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import AdminTopNav from '~/components/admin/TopNav.vue';
+import Header_2 from '~/components/user/header_2.vue';
 
 export default {
     components: {
-        AdminTopNav
+        Header_2
     },
     methods: {
         navigateTo(path) {

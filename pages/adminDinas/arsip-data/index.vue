@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <MainLayoutDinas>
     <div class="w-full mt-20 text-black px-8">
       <Table :headers="tableHeader" :rows="documents">
@@ -35,7 +35,7 @@
       </div>
 
     </div>
-  </MainLayoutDinas>
+  </Main>
 </template>
 
 <script setup>
@@ -78,7 +78,7 @@ const navigateToDetail = (id_docs) => {
 
 <style>
 /* Add any custom styles here */
-</style>
+</style> -->
 
 <!-- <template>
   <MainLayoutDInas>

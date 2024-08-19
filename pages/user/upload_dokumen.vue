@@ -1,7 +1,7 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white">
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-96 md:mt-32">
         <Header2></Header2>
-        <div class="text-2xl font-bold mb-10 pt-40">Upload Dokumen</div>
+        <div class="text-2xl font-bold mb-10">Upload Dokumen</div>
 
         <div class="flex flex-row justify-center gap-10">
             
