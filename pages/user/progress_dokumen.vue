@@ -1,6 +1,6 @@
 <!-- <template>
     <section class="h-screen flex flex-col justify-center items-center bg-white">
-        <AdminTopNav></AdminTopNav>
+        <Header2></Header2>
         <div class="text-2xl font-bold mb-10">Progress Dokumen</div>
 
         <div class="flex flex-col justify-center items-center space-y-10">
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import AdminTopNav from '~/components/admin/TopNav.vue';
+import Header2 from '~/components/admin/TopNav.vue';
 
 export default {
     components: {
-        AdminTopNav
+        Header2
     },
     methods: {
         navigateTo(path) {
@@ -62,7 +62,7 @@ export default {
 
 <template>
     <section class="h-screen flex flex-col justify-center items-center bg-white">
-        <AdminTopNav></AdminTopNav>
+        <Header2></Header2>
         <div class="text-2xl font-bold mb-10">Progress Dokumen</div>
 
         <div class="flex flex-col justify-center items-center space-y-10">
@@ -99,12 +99,12 @@ export default {
 </template>
 
 <script>
-import AdminTopNav from '~/components/admin/TopNav.vue';
+import Header2 from '~/components/user/header_2.vue';
 import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
 
 export default {
     components: {
-        AdminTopNav
+        Header2
     },
     data() {
         return {

@@ -1,6 +1,6 @@
 <template>
     <section class="h-screen flex flex-col justify-center items-center bg-white">
-        <AdminTopNav></AdminTopNav>
+        <Header2></Header2>
         <div class="text-2xl font-bold mb-10">Verifikasi Lapangan</div>
 
         <div class="flex flex-row justify-center items-center gap-10 ">
@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import AdminTopNav from '~/components/admin/TopNav.vue';
+import Header2 from '~/components/user/header_2.vue';
 
 export default {
     components: {
-        AdminTopNav
+        Header2
     },
     methods: {
         navigateTo(path) {
