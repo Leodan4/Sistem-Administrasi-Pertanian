@@ -1,24 +1,24 @@
 <template>
-    <section class="h-screen flex flex-col justify-start items-center bg-white mt-96 md:mt-32">
-        <Header2></Header2>
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-32 md:mt-32">
+        <Header2/>
         <div class="text-2xl font-bold mb-10">Upload Dokumen</div>
 
-        <div class="flex flex-row justify-center gap-10">
+        <div class="flex flex-row justify-center items-center gap-5 md:gap-10">
             
-            <div class=" grid md:grid-cols-2 gap-6">
-                <div class="flex flex-col w-[500px]">
+            <div class="grid md:grid-cols-2 gap-6 px-8 md:px-20">
+                <div class="flex flex-col w-full ">
                     <label for="title" class="mb-2 text-lg font-semibold">Judul Proposal</label>
                     <input id="title" type="text" v-model="title" placeholder="Input Judul Proposal"
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full ">
                     <label for="deskripsi" class="mb-2 text-lg font-semibold">Deskripsi</label>
                     <input id="deskripsi" type="text" v-model="deskripsi" placeholder="Input Deskripsi"
                         class="rounded-lg bg-gray-50 w-full border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full ">
                     <label for="jenis_bantuan_sarana" class="mb-2 text-lg font-semibold">Jenis Bantuan Sarana</label>
                     <select id="jenis_bantuan_sarana" v-model="jenis_bantuan_sarana"
                         class="rounded-lg bg-gray-50 border-2 border-gray-400">
@@ -31,7 +31,7 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full ">
                     <label for="jenis_bantuan_prasarana" class="mb-2 text-lg font-semibold">Jenis Bantuan
                         Prasarana</label>
                     <select id="jenis_bantuan_prasarana" v-model="jenis_bantuan_prasarana"
@@ -47,7 +47,7 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full ">
                     <label for="jenis_bantuan_pangan" class="mb-2 text-lg font-semibold">Jenis Bantuan Ketahanan
                         Pangan</label>
                     <select id="jenis_bantuan_pangan" v-model="jenis_bantuan_pangan"
@@ -61,7 +61,7 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="lembar_persetujuan_kepala_desa" class="mb-2 text-lg font-semibold">Lembar Persetujuan
                         Kepala Desa</label>
                     <input id="lembar_persetujuan_kepala_desa" type="file"
@@ -69,7 +69,7 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full ">
                     <label for="lembar_persetujuan_PPL_Mantri" class="mb-2 text-lg font-semibold">Lembar Persetujuan
                         PPL/Mantri</label>
                     <input id="lembar_persetujuan_PPL_Mantri" type="file"
@@ -77,7 +77,7 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="lembar_persetujuan_BPP" class="mb-2 text-lg font-semibold">Lembar Persetujuan
                         BPP</label>
                     <input id="lembar_persetujuan_BPP" type="file"
@@ -85,7 +85,7 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="lembar_persetujuan_kecamatan" class="mb-2 text-lg font-semibold">Lembar Persetujuan
                         Kecamatan</label>
                     <input id="lembar_persetujuan_kecamatan" type="file"
@@ -93,7 +93,7 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="sk_pembentukan_kelompok" class="mb-2 text-lg font-semibold">SK Pembentukan
                         Kelompok</label>
                     <input id="sk_pembentukan_kelompok" type="file"
@@ -101,14 +101,14 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="keanggotaan_SIMHULTAN" class="mb-2 text-lg font-semibold">Keanggotaan SIMHULTAN</label>
                     <input id="keanggotaan_SIMHULTAN" type="file"
                         @change="handleFileUpload('keanggotaan_SIMHULTAN', $event)"
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="Daftar_anggota_dan_ktp_anggota" class="mb-2 text-lg font-semibold">Daftar Anggota dan
                         KTP Anggota</label>
                     <input id="Daftar_anggota_dan_ktp_anggota" type="file"
@@ -116,7 +116,7 @@
                         class="rounded-lg bg-gray-50 border-2 border-gray-400" />
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="Rincian_proposal" class="mb-2 text-lg font-semibold">Rincian Proposal (Luas lahan,
                         komoditas, geo, rincian permohonan)</label>
                     <input id="Rincian_proposal" type="file" @change="handleFileUpload('Rincian_proposal', $event)"

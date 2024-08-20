@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-[#0E9F6E] w-full h-min fixed top-0">
-        <div class="flex justify-between items-center py-4 px-32 text-white text-2xl font-bold w-full">
+    <div class="bg-[#0E9F6E] w-full md:w-full h-max fixed top-0 right-0">
+        <div class="flex justify-between items-center py-4 px-10 md:px-32 text-white text-2xl font-bold w-full md:w-full">
             <!-- Ikon Kembali di Kiri -->
             <button @click="goBack" class="w-8 focus:outline-none">
                 <img src="/public/panah_kiri.png" alt="Back" class="w-8">

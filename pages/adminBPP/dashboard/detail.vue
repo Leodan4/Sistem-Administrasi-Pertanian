@@ -177,9 +177,9 @@ onMounted(() => {
         <select v-model="formData.type_doc" id="type_doc" class="bg-gray-100 border border-gray-300 rounded-lg">
           <option value="" disabled selected>Pilih Jenis Bantuan</option>
           <option value="baru">Baru</option>
-          <option value="validbpp">Valid BPP</option>
+          <option value="validBPP">Valid BPP</option>
           <option value="revisi">Revisi</option>
-          <option value="tidak-valid">Tidak Valid</option>
+          <option value="tidakvalid">Tidak Valid</option>
         </select>
 
       </div>

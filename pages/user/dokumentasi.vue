@@ -1,10 +1,10 @@
 <template>
-    <section class="h-screen flex flex-col justify-start items-center bg-white mt-40 md:mt-40">
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-32 md:mt-32">
         <Header_2/>
         <div class="text-2xl font-bold mb-10">Upload Dokumen</div>
 
-        <div class="flex flex-col justify-center gap-10">
-            <div class="flex flex-col w-[500px]">
+        <div class="flex flex-col justify-center items-center gap-5 md:gap-10">
+            <div class="flex flex-col w-[350px] md:w-[500px]">
                 <label for="berkas" class="mb-4 text-xl font-semibold">Pilih Berkas</label>
                 <input id="berkas" type="file" name="berkas" placeholder="Input Pilih Berkas"
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" />
