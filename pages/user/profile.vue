@@ -64,15 +64,29 @@
 
 <script>
 import Header2 from '~/components/user/header_2.vue';
+import { useUserStore } from '~/stores/user/profile';
 
 export default {
     components: {
         Header2
     },
-    methods: {
-        navigateTo(path) {
-            this.$router.push(path);
+    setup() {
+        const userStore = useUserStore();
+        const user = ref({}); // Gunakan ref untuk reactive data
+
+        onMounted(async () => {
+            await userStore.getData();
+            user.value = userStore.user;
+        });
+
+        function editProfile() {
+            // Logic untuk menangani edit profile, jika diperlukan
         }
+
+        return {
+            user,
+            editProfile
+        };
     }
 };
 </script>

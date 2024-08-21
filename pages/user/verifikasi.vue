@@ -8,46 +8,53 @@
             <div class="grid md:grid-cols-2 gap-6 px-4 md:px-32">
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="judul_proposal" class="mb-2 text-lg font-semibold">Judul Proposal</label>
-                    <input id="judul_proposal" type="text" name="judul_proposal" placeholder="Input Judul Proposal"
-                        class="rounded-lg bg-gray-50  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.title }}
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
-                    <input id="tanggal" type="date" name="tanggal" placeholder=""
-                        class="rounded-lg bg-gray-50 w-full  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.tanggal }}
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="nama_petugas_1" class="mb-2 text-lg font-semibold">Nama Petugas 1</label>
-                    <input id="nama_petugas_1" type="text" name="nama_petugas_1" placeholder="Input Nama Petugas 1"
-                        class="rounded-lg bg-gray-50  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.petugas1 }}
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="nama_petugas_2" class="mb-2 text-lg font-semibold">Nama Petugas 2</label>
-                    <input id="nama_petugas_2" type="text" name="nama_petugas_2" placeholder="Input Nama Petugas 2"
-                        class="rounded-lg bg-gray-50  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.petugas2 }}
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="nama_petugas_3" class="mb-2 text-lg font-semibold">Nama Petugas 3</label>
-                    <input id="nama_petugas_3" type="text" name="nama_petugas_3" placeholder="Input Nama Petugas 3"
-                        class="rounded-lg bg-gray-50  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.petugas3 }}
+                    </div>
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="nama_petugas_4" class="mb-2 text-lg font-semibold">Nama Petugas 4</label>
-                    <input id="nama_petugas_4" type="text" name="nama_petugas_4" placeholder="Input Nama Petugas 4"
-                        class="rounded-lg bg-gray-50  border-2   border-gray-300" />
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.petugas4 }}
+                    </div>
                 </div>
             </div>
 
             <div class="w-full px-4 md:px-32">
                 <div class="flex flex-col w-full ">
                     <label for="catatan_verifikasi" class="mb-2 text-lg font-semibold">Catatan Verifikasi</label>
-                    <textarea id="catatan_verifikasi" name="catatan_verifikasi" placeholder="Input Catatan Verifikasi"
-                        class="rounded-lg bg-gray-50 w-full h-20 resize-none"></textarea>
+                    <div id="no_doc" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.catatan_revisi }}
+                    </div>
                 </div>
             </div>
 
@@ -61,16 +68,66 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import axios from "../plugins/axios";
 import Header2 from '~/components/user/header_2.vue';
+import { useRouter } from 'vue-router';
+
+const $axios = axios().provide.axios;
 
 export default {
     components: {
         Header2
     },
-    methods: {
-        navigateTo(path) {
-            this.$router.push(path);
-        }
+    setup() {
+        const router = useRouter();
+        const formData = ref({
+            title: "",
+            tanggal: "",
+            petugas1: "",
+            petugas2: "",
+            petugas3: "",
+            petugas4: "",
+            catatan_revisi: "",
+        });
+
+        const getData = async () => {
+            try {
+                const id_users = localStorage.getItem('userID');
+
+                if (id_users) {
+                    const response = await $axios.get(`/form/form/?id_users=${id_users}`);
+                    const data = response.data.data[0];
+
+                    formData.value = {
+                        title: data.title || "",
+                        tanggal: data.tanggal || "",
+                        petugas1: data.petugas1 || "",
+                        petugas2: data.petugas2 || "",
+                        petugas3: data.petugas3 || "",
+                        petugas4: data.petugas4 || "",
+                        catatan_revisi: data.catatan_revisi || ""
+                    };
+                } else {
+                    console.error('User ID not found in local storage');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        onMounted(() => {
+            getData();
+        });
+
+        const navigateTo = (path) => {
+            router.push(path);
+        };
+
+        return {
+            formData,
+            navigateTo
+        };
     }
 };
 </script>

@@ -9,13 +9,10 @@
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'validBPP',
-                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'baru',
-                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'tidakvalid',
-                  'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'revisi',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tervalidasi',
                 }"
               >
-                {{ row?.status_baru_proposal }}
+                {{ row?.type_doc }}
               </span>
             </td>
             <td class="py-2 px-4 text-start">
@@ -42,8 +39,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';
@@ -62,6 +59,7 @@ const tableHeader = ref([
 const fetchDocuments = async (page = 1) => {
   try {
     await dashboardStore.getAllDocuments(page);
+    console.log("Documents after fetch:", documents.value);  // Log the documents after fetch
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -72,7 +70,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_baru_proposal === 'validBPP') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 

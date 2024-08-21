@@ -21,12 +21,12 @@
 
             <div class="flex flex-col w-full pt-10">
                 <label for="status text-black font-semibold">Pilih Status</label>
-                <select name="status" id="status" class="bg-gray-100 border border-gray-300 rounded-lg">
+                <select v-model="formData.type_doc" id="type_doc" class="bg-gray-100 border border-gray-300 rounded-lg">
                     <option value="" disabled selected>Pilih Jenis Bantuan</option>
-                    <option value="gabang">Baru</option>
-                    <option value="gudang">Valid BPP</option>
-                    <option value="sumur_bor">Revisi</option>
-                    <option value="saluran_irigasi">Tidak Valid</option>
+                    <option value="baru">Baru</option>
+                    <option value="tervalidasi">Valid BPP</option>
+                    <option value="revisi">Revisi</option>
+                    <option value="tidak_valid">Tidak Valid</option>
                 </select>
 
             </div>
@@ -36,7 +36,7 @@
                     <h3 class="text-md font-semibold text-gray-600">Catatan</h3>
                 </div>
                 <div class="p-4">
-                    <textarea
+                    <textarea v-model="formData.catatan_revisi" id="catatan_revisi"
                         class="w-full h-24 bg-gray-50 border border-gray-300 rounded-lg p-2 text-sm text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         placeholder="Input text"></textarea>
                 </div>
@@ -44,7 +44,8 @@
 
             <div class="flex gap-4 justify-end">
                 <button class="border-2 border-green-500 text-green-500 rounded-xl px-6 py-2">Revisi</button>
-                <button class="bg-green-500 text-white border rounded-xl px-6 py-2">Lanjutkan</button>
+                <button @click="updateDocument"
+                    class="bg-green-500 text-white border rounded-xl px-6 py-2">Lanjutkan</button>
             </div>
 
         </div>
@@ -57,6 +58,9 @@ import { useRoute, useRouter } from 'vue-router';
 import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
 import Table from "~/components/global/table.vue";
+import axios from "../plugins/axios";
+
+const $axios = axios().provide.axios;
 
 const route = useRoute();
 const router = useRouter();
@@ -69,6 +73,11 @@ const tableHeader = ref([
 ]);
 
 const documentDetails = ref([]);
+
+const formData = ref({
+    type_doc: '',
+    catatan_revisi: ''
+});
 
 const fetchDocumentDetails = async () => {
     const id_docs = route.query.id;
@@ -93,9 +102,25 @@ const fetchDocumentDetails = async () => {
     }
 };
 
+
+const updateDocument = async () => {
+    try {
+        const response = await $axios.put(`/doc/${route.query.id}`, {
+            type_doc: formData.value.type_doc,
+            catatan_revisi: formData.value.catatan_revisi,
+        });
+        console.log('Document updated successfully:', response.data);
+        // Redirect or show a success message
+    } catch (error) {
+        console.error('Failed to update document:', error);
+    }
+};
+
 const handleDetailClick = (filePath) => {
+    const baseUrl = "https://pertanian.harvestdigital.online/hars6496/New%20directory/";
     if (filePath) {
-        window.open(filePath, '_blank');
+        const fullUrl = `${baseUrl}${filePath}`;
+        window.open(fullUrl, '_blank');
     } else {
         console.log("Invalid file path:", filePath);
     }
