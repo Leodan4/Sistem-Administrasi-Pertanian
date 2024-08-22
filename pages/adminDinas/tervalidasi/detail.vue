@@ -225,7 +225,7 @@ const submitForm = async () => {
     form.append('petugas2', formData.value.petugas2);
     form.append('petugas3', formData.value.petugas3);
     form.append('petugas4', formData.value.petugas4);
-    form.append('id_docs', formData.value.id_docs); 
+    form.append('id_docs', formData.value.id_docs);
 
     if (formData.value.surattugas) {
         form.append('surattugas', formData.value.surattugas); // Append the file if it exists
@@ -259,47 +259,52 @@ onMounted(() => {
 
 <template>
     <MainLayoutDinas>
-        <section class="h-screen flex flex-col justify-center items-center bg-white">
-            <div class="flex flex-row justify-center items-center gap-10">
-                <div>
+        <section class="h-screen flex flex-col justify-start items-center bg-white mt-32 md:mt-32">
+            <div class="flex flex-row justify-center items-center gap-5 md:gap-10">
+
+                <div class="grid md:grid-cols-2 gap-6 px-8 md:px-20">
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
                         <input type="text" id="no_doc" v-model="formData.no_doc" readonly
                             class="rounded-lg bg-gray-100 border border-gray-300" />
                     </div>
-                    <div class="flex flex-col w-[500px] py-4">
-                        <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
-                        <input id="tanggal" type="text" v-model="formData.tanggal" readonly
-                            class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
-                    </div>
-                    <div class="flex flex-col w-[500px] py-4">
-                        <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Petugas 2</label>
-                        <input type="text" id="nama_penerima" v-model="formData.petugas2"
-                            class="rounded-lg bg-gray-100 border border-gray-300" />
-                    </div>
-                    <div class="flex flex-col w-[500px] py-4">
-                        <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Nama Petugas 4</label>
-                        <input type="text" id="jenis_bantuan" v-model="formData.petugas4" 
-                            class="rounded-lg bg-gray-100 border border-gray-300" />
-                    </div>
-                </div>
 
-                <div>
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="judul_dokumen" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
                         <input type="text" id="judul_dokumen" v-model="formData.title" readonly
                             class="rounded-lg bg-gray-100 border border-gray-300" />
                     </div>
+
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
+                        <input id="tanggal" type="text" v-model="formData.tanggal" readonly
+                            class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
+                    </div>
+
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="nama_penanggung_jawab" class="mb-2 text-lg font-semibold">Nama Petugas 1</label>
-                        <input type="text" id="nama_penanggung_jawab" v-model="formData.petugas1" 
+                        <input type="text" id="nama_penanggung_jawab" v-model="formData.petugas1"
                             class="rounded-lg bg-gray-100 border border-gray-300" />
                     </div>
+
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Petugas 2</label>
+                        <input type="text" id="nama_penerima" v-model="formData.petugas2"
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="sumber_dana" class="mb-2 text-lg font-semibold">Nama Petugas 3</label>
-                        <input type="text" id="sumber_dana" v-model="formData.petugas3" 
+                        <input type="text" id="sumber_dana" v-model="formData.petugas3"
                             class="rounded-lg bg-gray-100 border border-gray-300" />
                     </div>
+
+                    <div class="flex flex-col w-[500px] py-4">
+                        <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Nama Petugas 4</label>
+                        <input type="text" id="jenis_bantuan" v-model="formData.petugas4"
+                            class="rounded-lg bg-gray-100 border border-gray-300" />
+                    </div>
+
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Tugas</label>
                         <input id="surat_tugas" type="file" @change="handleFileChange"

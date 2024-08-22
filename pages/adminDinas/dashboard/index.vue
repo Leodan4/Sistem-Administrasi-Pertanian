@@ -10,13 +10,13 @@
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'validBPP',
-                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'baru',
-                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'tidakvalid',
-                  'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_baru_proposal === 'revisi',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tervalidasi',
+                  // 'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'baru',
+                  // 'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tidak_valid',
+                  // 'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'revisi',
                 }"
               >
-                {{ row?.status_baru_proposal }}
+                {{ row?.type_doc }}
               </span>
             </td>
             <td class="py-2 px-4 text-left">
@@ -68,7 +68,10 @@ onMounted(() => {
   fetchDocuments();
 });
 
-const documents = computed(() => dashboardStore.data);
+const documents = computed(() => {
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
+  return filteredDocs.length > 0 ? filteredDocs : [];
+});
 const pagination = computed(() => dashboardStore.pagination);
 
 const navigateToDetail = (id_docs) => {

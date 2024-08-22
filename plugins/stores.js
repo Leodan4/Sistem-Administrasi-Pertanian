@@ -1,5 +1,7 @@
 import { useGeneralStore } from "~/stores/general";
 import { useLoginStore } from "~/stores/login";
+import { defineNuxtPlugin } from "#app";
+import { useUserStore } from "~/stores/user/profile";
 
 // BPP
 import { useDashboardBPPStore } from "~/stores/adminBPP/dashboardBPP";
@@ -24,6 +26,7 @@ export default defineNuxtPlugin((NuxtApp) => {
     provide: {
       generalStore: useGeneralStore(),
       loginStore: useLoginStore(),
+      userStore: useUserStore(),
 
       // dinas
       useDashboardDinasStore: useDashboardDinasStore(),
