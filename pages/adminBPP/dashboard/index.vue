@@ -1,4 +1,4 @@
-<template>
+  <template>
   <MainLayoutBPP>
     <div class="w-full mt-20 text-black px-8">
       <Table :headers="tableHeader" :rows="documents">
