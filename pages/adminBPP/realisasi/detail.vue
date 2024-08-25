@@ -3,39 +3,39 @@
         <div class="modal-content">
             <h3 class="font-bold text-lg pb-4">Detail</h3>
             <form ref="form">
-    <div class="flex gap-8 justify-center items-center">
-        <div class="w-1/2">
-        <div class="form-group">
-            <label for="document-number">No Dokumen</label>
-            <input type="text" id="document-number" v-model="formData.no_doc" readonly
-                class="rounded-lg bg-gray-100 border border-gray-300" />
-        </div>
-        <div class="form-group">
-            <label for="status">Status</label>
-            <input type="text" id="status" v-model="formData.status" readonly
-                class="rounded-lg bg-gray-100 border border-gray-300" />
-        </div>
-    </div>
+                <div class="flex gap-8 justify-center items-center">
+                    <div class="w-1/2">
+                        <div class="form-group">
+                            <label for="document-number">No Dokumen</label>
+                            <input type="text" id="document-number" v-model="formData.no_doc" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" id="status" v-model="formData.status" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+                    </div>
 
-    <div class="w-1/2">
-        <div class="form-group">
-            <label for="title">Judul</label>
-            <input type="text" id="title" v-model="formData.title" readonly
-                class="rounded-lg bg-gray-100 border border-gray-300" />
-        </div>
-        <div class="form-group">
-            <label for="date">Tanggal</label>
-            <input type="text" id="date" v-model="formData.createdAt" readonly
-                class="rounded-lg bg-gray-100 border border-gray-300" />
-        </div>
-    </div>
-</div>
+                    <div class="w-1/2">
+                        <div class="form-group">
+                            <label for="title">Judul</label>
+                            <input type="text" id="title" v-model="formData.title" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Tanggal</label>
+                            <input type="text" id="date" v-model="formData.createdAt" readonly
+                                class="rounded-lg bg-gray-100 border border-gray-300" />
+                        </div>
+                    </div>
+                </div>
 
-<div class="form-group mt-4">
-    <label for="assistance-type">Jenis Bantuan</label>
-    <input type="text" id="tittle" v-model="formData.jenis_bantuan" readonly
-        class="rounded-lg bg-gray-100 border border-gray-300" />
-</div>
+                <div class="form-group mt-4">
+                    <label for="assistance-type">Jenis Bantuan</label>
+                    <input type="text" id="tittle" v-model="formData.jenis_bantuan" readonly
+                        class="rounded-lg bg-gray-100 border border-gray-300" />
+                </div>
 
 
                 <div class="form-group">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="flex justify-center items-center">
                     <button type="button" class="close-button" @click="closeModal">Tutup</button>
-                    <button type="button" class="print-button" @click="printPDF">Cetak PDF</button>  
+                    <button type="button" class="print-button" @click="printPDF">Cetak PDF</button>
                 </div>
             </form>
         </div>
@@ -82,7 +82,7 @@ export default {
         printPDF() {
             // Buat instance jsPDF
             const pdf = new jsPDF('p', 'mm', 'a4');
-            
+
             // Data untuk tabel
             const tableData = [
                 ['No Dokumen', this.formData.no_doc],
@@ -164,6 +164,7 @@ export default {
     margin-right: 40px;
     text-align: center;
 }
+
 .print-button {
     display: block;
     width: 50%;

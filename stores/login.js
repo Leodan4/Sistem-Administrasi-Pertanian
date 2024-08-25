@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "../plugins/axios";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const $axios = axios().provide.axios;
 
@@ -8,7 +10,7 @@ export const useLoginStore = defineStore("login", {
     username: "",
     password: "",
     token: localStorage.getItem("token") || "",
-    userID: localStorage.getItem("userID") || "",
+    id_users: localStorage.getItem("id_users") || "",
     error: null,
   }),
   persist: true,
@@ -25,17 +27,18 @@ export const useLoginStore = defineStore("login", {
 
         if (response && response.data && response.data.data && response.data.data.token) {
           const token = response.data.data.token;
-          const userID = response.data.data.id_users;
+          const id_users = response.data.data.id_users;
+          const username = response.data.data.username;
           // const userData = response.data.data;
 
           localStorage.setItem("token", token);
-          // localStorage.setItem("userID", userName);
-          localStorage.setItem("userID", userID);
+          localStorage.setItem("username", username);
+          localStorage.setItem("id_users", id_users);
 
           this.$patch({ 
             token: token, 
-            // username: userData, 
-            // userID: id_user,
+            id_users: id_users,
+            username: username,
             error: null 
           });
 
@@ -52,12 +55,15 @@ export const useLoginStore = defineStore("login", {
           ? error.response.data.message
           : "Kesalahan tidak diketahui";
         this.$patch({ error: errorMessage });
+        toast.error(errorMessage, {
+          autoClose: 2000,
+        })
         throw error;
       }
     },
     logout() {
       localStorage.removeItem("token");
-      localStorage.removeItem("userID");
+      localStorage.removeItem("id_users");
       this.$patch({ token: "", username: "", password: "", error: null });
       // Optionally, redirect to the login page
       window.location.href = "/login";

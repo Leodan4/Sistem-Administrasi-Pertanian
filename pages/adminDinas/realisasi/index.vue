@@ -88,10 +88,7 @@ const pagination = computed(() => realisasiStore.pagination);
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'validBPP',
-                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'baru',
-                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tidakvalid',
-                  'bg-red-100 text-blue-800 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'revisi',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tervalidasi',
                 }"
               >
                 {{ row?.type_doc }}
@@ -150,7 +147,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'validBPP') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 

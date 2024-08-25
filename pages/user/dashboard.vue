@@ -31,8 +31,8 @@ export default {
 
     setup() {
         const loginData = ref(null);
-        const userID = ref(localStorage.getItem("userID"));
-        console.log(userID.value);
+        const id_users = ref(localStorage.getItem("id_users"));
+        console.log(id_users.value);
 
         // const getLoginData = async () => {
         //     try {

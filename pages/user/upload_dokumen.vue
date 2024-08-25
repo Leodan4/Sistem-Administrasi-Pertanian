@@ -139,13 +139,15 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Header2 from '~/components/user/header_2.vue';
 import { useUploadDokumen } from '~/stores/user/upload_dokumen'
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
     components: {
         Header2
     },
     setup() {
-        const id_users = localStorage.getItem("userID");
+        const id_users = localStorage.getItem("id_users");
         const title = ref("");
         const deskripsi = ref("");
         const jenis_bantuan_sarana = ref("");
@@ -174,10 +176,15 @@ export default {
                 const response = await uploadDokumen.submitForm();
                 console.log(response);
 
-                router.push('/dashboard');
-                window.location.reload();
+                toast.success("Dokumen berhasil diupload", {
+                    onClose: () => {
+                        router.push('/user/dashboard');
+                        // window.location.reload();
+                    }
+                });
             } catch (error) {
                 console.error("Gagal upload dokumen", error);
+                toast.error("Gagal upload dokumen");
             }
         };
 
