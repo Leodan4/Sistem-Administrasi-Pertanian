@@ -143,6 +143,12 @@ onMounted(() => {
             </div>
 
             <div class="flex flex-col w-screen px-8 md:px-96">
+                <label for="status" class="mb-2 md:mb-4 text-xl font-semibold">Status</label>
+                <input id="status" type="text" name="status" placeholder="Input Status"
+                    class="rounded-lg bg-gray-50 border-2 border-gray-300" v-model="documentData.status" />
+            </div>
+
+            <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="catatan_bpp" class="mb-2 md:mb-4 text-xl font-semibold">Catatan BPP</label>
                 <textarea id="catatan_bpp" name="catatan_bpp" placeholder="Input Catatan BPP"
                     class="rounded-lg bg-gray-50 border-2 border-gray-300"
@@ -163,7 +169,7 @@ onMounted(() => {
             </div>
 
             <div>
-                <button @click="submitRevisi" class="bg-green-500 text-white border rounded-xl px-10 py-2">Revisi</button>
+                <button @click="navigateTo('/user/revisi_dokumen')" class="bg-green-500 text-white border rounded-xl px-10 py-2">Revisi</button>
             </div>
         </div>
     </section>
@@ -186,6 +192,7 @@ const dashboardStore = useDashboardDinasStore();
 // Reactive object to hold the document data
 const documentData = ref({
     judul_proposal: '',
+    status: '',
     catatan_bpp: '',
     catatan_dinas: '',
     tanggal: ''
@@ -207,6 +214,7 @@ const fetchDocuments = async (page = 1) => {
         if (fetchedData) {
             idDokumen = fetchedData.id_docs; 
             documentData.value.judul_proposal = fetchedData.title || '';
+            documentData.value.status = fetchedData.type_doc || '';
             documentData.value.catatan_bpp = fetchedData.note || '';
             documentData.value.catatan_dinas = fetchedData.catatan_revisi || '';
             documentData.value.tanggal = dashboardStore.formatDate(fetchedData.createdAt) || '';
@@ -216,32 +224,32 @@ const fetchDocuments = async (page = 1) => {
     }
 };
 
-const submitRevisi = async () => {
-    if (!idDokumen) {
-        console.error('Document ID not found');
-        return;
-    }
+// const submitRevisi = async () => {
+//     if (!idDokumen) {
+//         console.error('Document ID not found');
+//         return;
+//     }
 
-    try {
-        const response = await $axios.put(`/doc/${idDokumen}`, {
-            title: documentData.value.judul_proposal,
-            note: documentData.value.catatan_bpp,
-            catatan_revisi: documentData.value.catatan_dinas,
-            createdAt: documentData.value.tanggal,
-            updatedAt: new Date().toISOString()
-        });
-        console.log('Document updated successfully:', response.data);
+//     try {
+//         const response = await $axios.put(`/doc/${idDokumen}`, {
+//             title: documentData.value.judul_proposal,
+//             note: documentData.value.catatan_bpp,
+//             catatan_revisi: documentData.value.catatan_dinas,
+//             createdAt: documentData.value.tanggal,
+//             updatedAt: new Date().toISOString()
+//         });
+//         console.log('Document updated successfully:', response.data);
 
-        toast.success("Dokumen berhasil direvisi", {
-            onClose: () => {
-                router.push('/user/dashboard');
-            }
-        });
-    } catch (error) {
-        console.error('Failed to update document:', error);
-        toast.error("Dokumen gagal direvisi");
-    }
-};
+//         toast.success("Dokumen berhasil direvisi", {
+//             onClose: () => {
+//                 router.push('/user/dashboard');
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Failed to update document:', error);
+//         toast.error("Dokumen gagal direvisi");
+//     }
+// };
 
 // Fetch the documents when the component is mounted
 onMounted(() => {

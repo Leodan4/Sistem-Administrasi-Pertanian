@@ -53,6 +53,11 @@
                 </div>
               </div>
             </form>
+
+            <div class="text-center mt-4">
+              <button @click="navigateTo('/register')" class="text-sm font-semibold">Belum punya akun? Daftar</button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -157,12 +162,17 @@ export default {
       }
     };
 
+    const navigateTo = (path) => {
+      router.push(path);
+    };
+
     return {
       username,
       password,
       showPassword,
       togglePasswordVisibility,
       handleLogin,
+      navigateTo,
     };
   },
 };

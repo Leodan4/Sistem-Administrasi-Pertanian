@@ -4,10 +4,13 @@ import { useProfileStore } from "~/stores/profile";
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const token = localStorage.getItem("token");
 
+  // Halaman publik yang tidak membutuhkan autentikasi
+  const publicPages = ["/login", "/register"];
+
   // Check if the token exists
   if (!token) {
     // Redirect to login page if the token is not found in localStorage
-    if (to.path !== "/login") {
+    if (!publicPages.includes(to.path)) {
       return navigateTo("/login");
     }
     return;
@@ -39,7 +42,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     "/adminDinas/realisasi",
     "/adminDinas/sumber-dana",
     "/adminDinas/help",
-    
   ];
   const requiresAuth = authenticatedPaths.some((path) =>
     to.path.startsWith(path)
