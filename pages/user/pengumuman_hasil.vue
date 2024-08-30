@@ -75,7 +75,7 @@ export default {
         });
         const getData = async () => {
             try {
-                const id_users = localStorage.getItem('userID');
+                const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
                     const response = await $axios.get(`/formhasil/formhasil/?id_users=${id_users}`);
@@ -212,7 +212,7 @@ export default {
 
         const getData = async () => {
             try {
-                const id_users = localStorage.getItem('userID');
+                const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
                     const response = await $axios.get(`http://100.123.244.133:8000/formhasil/formhasil/?id_users=${id_users}`);

@@ -93,10 +93,10 @@ export default {
 
         const getData = async () => {
             try {
-                const id_users = localStorage.getItem('userID');
+                const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
-                    const response = await $axios.get(`/form/form/?id_users=${id_users}`);
+                    const response = await $axios.get(`/mit/form/?id_users=${id_users}`);
                     const data = response.data.data[0];
 
                     formData.value = {

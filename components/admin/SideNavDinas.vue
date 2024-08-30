@@ -1,5 +1,14 @@
 <template>
-    <aside class="text-gray-600 bg-white min-h-screen w-[250px] border-2 flex z-40 fixed flex-col">
+    <button @click="toggleSidebar" class="fixed top-4 left-4 z-50 p-2 bg-green-500 text-white rounded">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+                d="M3 5h14a1 1 0 110 2H3a1 1 0 110-2zm0 4h14a1 1 0 110 2H3a1 1 0 110-2zm0 4h14a1 1 0 110 2H3a1 1 0 110-2z">
+            </path>
+        </svg>
+    </button>
+
+    <aside
+        :class="['text-gray-600 bg-white min-h-screen border-2 flex z-40 fixed flex-col transition-transform duration-300', { '-translate-x-full': !isSidebarOpen, 'w-[250px]': isSidebarOpen }]">
         <div class="flex justify-center pt-8">
             <img src="/logo.png" alt="Logo" class="w-36">
         </div>
@@ -85,6 +94,11 @@ import { useLoginStore } from "@/stores/login"; // Adjust the import path as nee
 export default {
     setup() {
         const loginStore = useLoginStore();
+        const isSidebarOpen = ref(true);
+
+        const toggleSidebar = () => {
+            isSidebarOpen.value = !isSidebarOpen.value;
+        };
 
         const handleLogout = () => {
             loginStore.logout();
@@ -140,7 +154,7 @@ export default {
             checkActiveMenu();
         });
 
-        return { activeMenu, navigateTo, handleLogout };
+        return { activeMenu, navigateTo, handleLogout, toggleSidebar, isSidebarOpen };
     }
 };
 </script>

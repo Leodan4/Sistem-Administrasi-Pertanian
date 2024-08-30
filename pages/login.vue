@@ -2,7 +2,8 @@
   <section>
     <div class="h-screen w-screen flex items-center justify-center bg-cover"
       :style="{ 'background-image': 'url(/assets/bg-login.svg)' }">
-      <div class="w-full mx-4 text-left align-bottom transition-all transform bg-white rounded-xl sm:max-w-md sm:w-full">
+      <div
+        class="w-full mx-4 text-left align-bottom transition-all transform bg-white rounded-xl sm:max-w-md sm:w-full">
         <div class="grid flex-wrap items-center justify-center grid-cols-1 mx-auto shadow-xl lg:grid-cols-1 rounded-xl">
           <div class="w-full px-8 py-5">
             <div>
@@ -27,7 +28,8 @@
                 <div>
                   <h3 class="font-semibold">Sandi</h3>
                   <div class="relative">
-                    <input required :type="showPassword ? 'text' : 'password'" name="password" id="password" v-model="password"
+                    <input required :type="showPassword ? 'text' : 'password'" name="password" id="password"
+                      v-model="password"
                       class="block w-full px-3 py-1 my-2 text-base text-neutral-600 bg-white placeholder-gray-500 transition duration-500 ease-in-out transform border-1 border-gray-300 rounded-lg bg-with-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                       placeholder="Masukkan Sandi" />
                     <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -51,6 +53,11 @@
                 </div>
               </div>
             </form>
+
+            <div class="text-center mt-4">
+              <button @click="navigateTo('/register')" class="text-sm font-semibold">Belum punya akun? Daftar</button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -63,6 +70,8 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useLoginStore } from "@/stores/login";
 import { useGeneralStore } from "@/stores/general";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   setup() {
@@ -81,6 +90,38 @@ export default {
       showPassword.value = !showPassword.value;
     };
 
+    // const handleLogin = async () => {
+    //   const loginData = {
+    //     username: username.value,
+    //     password: password.value,
+    //   };
+
+    //   try {
+    //     const response = await loginStore.loginUser(loginData);
+
+    //     console.log(response);
+
+    //     if (response && response.data && response.data.role) {
+    //       const role = response.data.role;
+
+
+    //       if (role === "adminBPP") {
+    //         router.replace("/adminBPP/dashboard");
+    //       } else if (role === "adminDinas") {
+    //         router.replace("/adminDinas/dashboard");
+    //       } else if (role === "user") {
+    //         router.replace("/user/dashboard");
+    //       } else {
+    //         console.error("Role tidak valid:", role);
+    //       }
+    //     } else {
+    //       console.error("Respon tidak valid dari server");
+    //     }
+    //   } catch (error) {
+    //     console.error("Gagal login", error);
+    //   }
+    // };
+
     const handleLogin = async () => {
       const loginData = {
         username: username.value,
@@ -95,15 +136,24 @@ export default {
         if (response && response.data && response.data.role) {
           const role = response.data.role;
 
-          if (role === "adminBPP") {
-            router.replace("/adminBPP/dashboard");
-          } else if (role === "adminDinas") {
-            router.replace("/adminDinas/dashboard");
-          } else if (role === "user") {
-            router.replace("/user/dashboard");
-          } else {
-            console.error("Role tidak valid:", role);
-          }
+          // Tampilkan toastify setelah login berhasil
+          toast.success("Login berhasil! Redirecting...", {
+            autoClose: 2000, // Durasi toastify tampil dalam milidetik
+          });
+
+          // Tambahkan delay sebelum navigasi
+          setTimeout(() => {
+            if (role === "adminBPP") {
+              router.replace("/adminBPP/dashboard");
+            } else if (role === "adminDinas") {
+              router.replace("/adminDinas/dashboard");
+            } else if (role === "user") {
+              router.replace("/user/dashboard");
+            } else {
+              console.error("Role tidak valid:", role);
+            }
+          }, 2000); // Delay selama 2 detik
+
         } else {
           console.error("Respon tidak valid dari server");
         }
@@ -112,12 +162,17 @@ export default {
       }
     };
 
+    const navigateTo = (path) => {
+      router.push(path);
+    };
+
     return {
       username,
       password,
       showPassword,
       togglePasswordVisibility,
       handleLogin,
+      navigateTo,
     };
   },
 };

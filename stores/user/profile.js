@@ -15,7 +15,7 @@ export const useUserStore = defineStore("userStore", {
         this.error = null;
 
         // Ambil id_users dari localStorage
-        const idUsers = localStorage.getItem("userID");
+        const idUsers = localStorage.getItem("id_users");
 
         // Periksa apakah id_users ada di localStorage
         if (!idUsers) {
