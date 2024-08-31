@@ -153,7 +153,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_baru_proposal === 'tidakvalid') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tidak_valid') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 
