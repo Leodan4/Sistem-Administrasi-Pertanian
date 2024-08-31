@@ -4,7 +4,6 @@
         <div class="text-2xl font-bold mb-10">Verifikasi Lapangan</div>
 
         <div class="flex flex-col justify-center items-center gap-5 md:gap-10">
-
             <div class="grid md:grid-cols-2 gap-6 px-4 md:px-32">
                 <div class="flex flex-col w-[350px] md:w-[500px] ">
                     <label for="judul_proposal" class="mb-2 text-lg font-semibold">Judul Proposal</label>
@@ -57,12 +56,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-
         <div class="py-6">
-            <button class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Download Surat Tugas</button>
+            <button @click="printPDF" class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Download Surat Tugas</button>
         </div>
     </section>
 </template>
@@ -70,6 +67,8 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from "../plugins/axios";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import Header2 from '~/components/user/header_2.vue';
 import { useRouter } from 'vue-router';
 
@@ -116,24 +115,47 @@ export default {
             }
         };
 
+        const printPDF = () => {
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const kopImage = '/KOPPTabalong.png'; // Ganti dengan path atau URL gambar kop surat
+            pdf.addImage(kopImage, 'PNG', -10.5, 5, 230, 30); 
+            const startY = 40;
+
+            const tableData = [
+                ['Judul Proposal', formData.value.title],
+                ['Tanggal', formData.value.tanggal],
+                ['Nama Petugas 1', formData.value.petugas1],
+                ['Nama Petugas 2', formData.value.petugas2],
+                ['Nama Petugas 3', formData.value.petugas3],
+                ['Nama Petugas 4', formData.value.petugas4],
+                ['Catatan Verifikasi', formData.value.catatan_revisi],
+            ];
+
+            pdf.autoTable({
+                head: [['Kolom', 'Data yang Diperoleh']],
+                body: tableData,
+                startY: startY,
+                theme: 'grid',
+                margin: { top: 10, right: 10, bottom: 10, left: 10 },
+                headStyles: {
+                    fillColor: [0, 100, 0],
+                    textColor: [255, 255, 255],
+                    fontSize: 12,
+                }
+            });
+
+            const fileName = `Verifikasi Lapangan - ${formData.value.title}.pdf`;
+            pdf.save(fileName);
+        };
+
         onMounted(() => {
             getData();
         });
 
-        const navigateTo = (path) => {
-            router.push(path);
-        };
-
         return {
             formData,
-            navigateTo
+            printPDF,
         };
     }
 };
 </script>
-
-<style scoped>
-.shadow-xl {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-</style>

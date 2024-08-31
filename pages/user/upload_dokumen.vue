@@ -19,33 +19,34 @@
                 </div>
 
                 <div class="flex flex-col w-full">
-                    <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
-                    <div class="relative">
-                        <div @click="toggleDropdown"
-                            class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 cursor-pointer">
-                            <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan' }}</span>
-                            <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
-                        </div>
-                        <div v-if="isDropdownOpen"
-                            class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
-                            <ul>
-                                <li v-for="option in displayedOptions" :key="option.value"
-                                    @click="onOptionSelect(option)"
-                                    :class="{ 'bg-green-500 text-white': selectedOption === option.label, 'hover:bg-green-600 hover:text-white': selectedOption !== option.label }">
-                                    <span>{{ option.label }}</span>
-                                    <ul v-if="selectedOption === option.label" class="pl-4">
-                                        <li v-for="subOption in option.subOptions" :key="subOption.value"
-                                            @click.stop="onSubOptionSelect(subOption)"
-                                            class="p-2 cursor-pointer hover:bg-white hover:text-green-500"
-                                            :class="{ 'text-green-500': selectedSubOption === subOption.label }">
-                                            {{ subOption.label }}
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
+    <div class="relative">
+        <div @click="toggleDropdown"
+            class="rounded-lg bg-white border-2 border-gray-400 p-2 cursor-pointer">
+            <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan' }}</span>
+            <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
+        </div>
+        <div v-if="isDropdownOpen"
+            class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
+            <ul>
+                <li v-for="option in displayedOptions" :key="option.value"
+                    @click="onOptionSelect(option)"
+                    :class="{ 'text-grey-500': selectedOption === option.label }"
+                    class="text-black p-2 cursor-pointer hover:bg-white hover:text-grey-500">
+                    <span>{{ option.label }}</span>
+                    <ul v-if="selectedOption === option.label" class="pl-4">
+                        <li v-for="subOption in option.subOptions" :key="subOption.value"
+                            @click.stop="onSubOptionSelect(subOption)"
+                            class="p-2 cursor-pointer hover:bg-white hover:text-green-500"
+                            :class="{ 'text-green-500': selectedSubOption === subOption.label }">
+                            {{ subOption.label }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 
                 <div class="flex flex-col w-full">

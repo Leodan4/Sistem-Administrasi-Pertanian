@@ -134,7 +134,6 @@ export default {
         <div class="text-2xl font-bold mb-10">Pengumuman Hasil</div>
 
         <div class="flex flex-row justify-center items-center gap-5 md:gap-10">
-
             <div class="grid md:grid-cols-2 gap-4 md:gap-6 px-3 md:px-20">
                 <div class="flex flex-col w-[350px] md:w-[500px]">
                     <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
@@ -172,17 +171,16 @@ export default {
                 </div>
 
                 <div class="flex flex-col w-[350px] md:w-[500px]">
-                    <label for="sumber_daya" class="mb-2 text-lg font-semibold">Sumber Dana</label>
-                    <div id="sumber_daya" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                    <label for="sumber_dana" class="mb-2 text-lg font-semibold">Sumber Dana</label>
+                    <div id="sumber_dana" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
                         {{ formData.sumber_dana }}
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="py-6">
-            <button class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Download Surat Serah Terima</button>
+            <button @click="printPDF" class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Download Surat Serah Terima</button>
         </div>
     </section>
 </template>
@@ -191,6 +189,8 @@ export default {
 import { ref, onMounted } from 'vue';
 import axios from "../plugins/axios";
 import Header2 from '~/components/user/header_2.vue';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { useRouter } from 'vue-router';
 
 const $axios = axios().provide.axios;
@@ -238,13 +238,45 @@ export default {
             getData();
         });
 
-        const navigateTo = (path) => {
-            router.push(path);
+        const printPDF = () => {
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            // Gambar kop surat
+            const kopImage = '/KOPPTabalong.png';
+            pdf.addImage(kopImage, 'PNG', -10.5, 5, 230, 30);
+
+            const startY = 40;
+
+            // Data tabel
+            const tableData = [
+                ['No Dokumen', formData.value.no_doc],
+                ['Judul Dokumen', formData.value.judul_dokumen],
+                ['Nama Penerima', formData.value.nama_penerima],
+                ['Nama Penanggung Jawab', formData.value.nama_penanggung_jawab],
+                ['Jenis Bantuan', formData.value.jenis_bantuan],
+                ['Sumber Dana', formData.value.sumber_dana]
+            ];
+
+            pdf.autoTable({
+                head: [['Kolom', 'Data yang Diperoleh']],
+                body: tableData,
+                startY: startY,
+                theme: 'grid',
+                margin: { top: 10, right: 10, bottom: 10, left: 10 },
+                headStyles: {
+                    fillColor: [0, 100, 0],
+                    textColor: [255, 255, 255],
+                    fontSize: 12,
+                }
+            });
+
+            const fileName = `Surat Serah Terima - ${formData.value.no_doc}.pdf`;
+            pdf.save(fileName);
         };
 
         return {
             formData,
-            navigateTo
+            printPDF
         };
     }
 };

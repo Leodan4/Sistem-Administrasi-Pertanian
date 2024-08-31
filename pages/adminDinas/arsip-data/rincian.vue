@@ -1,79 +1,28 @@
-<template>
-  <MainLayoutDinas>
-    <section class="h-screen flex flex-col justify-center items-center bg-white">
-      <div class="flex flex-row justify-center items-center gap-10">
-        <div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
-            <input type="text" id="no_doc" v-model="formData.no_doc" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
-            <input id="tanggal" type="text" v-model="formData.tanggal" readonly
-              class="rounded-lg bg-gray-50 w-full border-2 border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Penerima</label>
-            <input type="text" id="nama_penerima" v-model="formData.nama_penerima" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
-            <input type="text" id="jenis_bantuan" v-model="formData.jenis_bantuan" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-        </div>
-
-        <div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="judul_dokumen" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
-            <input type="text" id="judul_dokumen" v-model="formData.judul_dokumen" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="nama_penanggung_jawab" class="mb-2 text-lg font-semibold">Nama Penanggung Jawab</label>
-            <input type="text" id="nama_penanggung_jawab" v-model="formData.nama_penanggung_jawab" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="sumber_dana" class="mb-2 text-lg font-semibold">Sumber Dana</label>
-            <input type="text" id="sumber_dana" v-model="formData.sumber_dana" readonly
-              class="rounded-lg bg-gray-100 border border-gray-300" />
-          </div>
-          <div class="flex flex-col w-[500px] py-4">
-            <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Tugas</label>
-            <input id="surat_tugas" type="file" @change="handleFileChange"
-              class="rounded-lg bg-gray-50 border-2 border-gray-300" />
-          </div>
-        </div>
-      </div>
-
-      <div class="py-6">
-        <button @click="saveFormData" class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
-      </div>
-    </section>
-  </MainLayoutDinas>
-</template>
-
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
-import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
+import axios from "../plugins/axios";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
+const $axios = axios().provide.axios;
 
 const route = useRoute();
+const router = useRouter();
 const dashboardStore = useDashboardDinasStore();
 
 const formData = ref({
   no_doc: '',
   tanggal: '',
+  judul_dokumen: '',
   nama_penerima: '',
   jenis_bantuan: '',
-  judul_dokumen: '',
-  nama_penanggung_jawab: '',
+  nama_penangung_jawab: '',
   sumber_dana: '',
-  surat_tugas: null
+  surat_serah_terima_bantuan: null,
+  id_docs: '',
 });
 
 const fetchDocuments = async () => {
@@ -86,12 +35,13 @@ const fetchDocuments = async () => {
         formData.value = {
           no_doc: document.no_doc,
           tanggal: document.createdAt,
-          nama_penerima: document.nama_penerima,
-          jenis_bantuan: document.jenis_bantuan,
           judul_dokumen: document.title,
-          nama_penanggung_jawab: document.nama_penanggung_jawab,
-          sumber_dana: document.sumber_dana,
-          surat_tugas: null
+          nama_penerima: '',
+          jenis_bantuan: '',
+          nama_penangung_jawab: '',
+          sumber_dana: '',
+          surat_serah_terima_bantuan: null,
+          id_docs: document.id_docs
         };
       }
     } catch (error) {
@@ -100,26 +50,152 @@ const fetchDocuments = async () => {
   }
 };
 
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  formData.value.surat_serah_terima_bantuan = file;
+};
+
+const submitForm = async () => {
+  const form = new FormData();
+  form.append('no_doc', formData.value.no_doc);
+  form.append('tanggal', formData.value.tanggal);
+  form.append('title', formData.value.judul_dokumen);
+  form.append('nama_penerima', formData.value.nama_penerima);
+  form.append('jenis_bantuan', formData.value.jenis_bantuan);
+  form.append('nama_penangung_jawab', formData.value.nama_penangung_jawab);
+  form.append('sumber_dana', formData.value.sumber_dana);
+  form.append('id_docs', formData.value.id_docs);
+
+  if (formData.value.surat_serah_terima_bantuan) {
+    form.append('surat_serah_terima_bantuan', formData.value.surat_serah_terima_bantuan);
+  }
+
+  try {
+    // Debug: Log form data
+    for (let [key, value] of form.entries()) {
+      console.log(key, value);
+    }
+
+    const response = await $axios.post('/formhasil/addform', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log('Form submitted successfully:', response.data);
+    toast.success("Upload Berhasil", {
+      onClose: () => {
+        router.push('/adminDinas/realisasi/'); // Use router instance
+      }
+    });
+  } catch (error) {
+    console.error('Failed to submit the form:', error.response ? error.response.data : error.message);
+    toast.error('Failed to submit the form', {
+      autoClose: 3000,
+    })
+  }
+};
+
 onMounted(() => {
   fetchDocuments();
 });
-
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  formData.value.surat_tugas = file;
-};
-
-const saveFormData = async () => {
-  try {
-    // Add logic to save form data
-    console.log('Form Data:', formData.value);
-    // Example: Use the store to save data
-    // await useTervalidasiDinasStore().saveDocument(formData.value);
-  } catch (error) {
-    console.error('Failed to save form data:', error);
-  }
-};
 </script>
+
+
+<template>
+  <MainLayoutDInas>
+    <section class="h-screen flex flex-col justify-center items-center bg-white">
+      <div class="flex flex-row justify-center items-center gap-10 ">
+        <div class="">
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="no_doc" class="mb-2 text-lg font-semibold">No Dokumen</label>
+            <input id="no_doc" type="text" name="no_doc" placeholder="Input No Dokumen"
+              class="rounded-lg bg-gray-50  border-2 border-gray-300" v-model="formData.no_doc" readonly />
+          </div>
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="tanggal" class="mb-2 text-lg font-semibold">Tanggal</label>
+            <input id="tanggal" type="text" name="tanggal" placeholder=""
+              class="rounded-lg bg-gray-50 w-full  border-2   border-gray-300" v-model="formData.tanggal" readonly />
+          </div>
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="nama_penerima" class="mb-2 text-lg font-semibold">Nama Penerima</label>
+            <input id="nama_penerima" type="text" name="nama_penerima" placeholder="Input Nama Penerima"
+              class="rounded-lg bg-gray-50  border-2   border-gray-300" v-model="formData.nama_penerima" />
+          </div>
+
+          <div class="flex flex-col w-full">
+            <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
+            <div class="relative">
+              <div @click="toggleDropdown" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 cursor-pointer">
+                <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan' }}</span>
+                <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
+              </div>
+              <div v-if="isDropdownOpen" class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
+                <ul>
+                  <li v-for="option in displayedOptions" :key="option.value" @click="onOptionSelect(option)"
+                    :class="{ 'bg-green-500 text-white': selectedOption === option.label, 'hover:bg-green-600 hover:text-white': selectedOption !== option.label }">
+                    <span>{{ option.label }}</span>
+                    <ul v-if="selectedOption === option.label" class="pl-4">
+                      <li v-for="subOption in option.subOptions" :key="subOption.value"
+                        @click.stop="onSubOptionSelect(subOption)"
+                        class="p-2 cursor-pointer hover:bg-white hover:text-green-500"
+                        :class="{ 'text-green-500': selectedSubOption === subOption.label }">
+                        {{ subOption.label }}
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="">
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="judul_doc" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
+            <input id="judul_doc" type="text" name="judul_doc" placeholder="Input Judul Dokumen"
+              class="rounded-lg bg-gray-50 w-full  border-2 border-gray-300" v-model="formData.judul_dokumen"
+              readonly />
+          </div>
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="nama_penangung_jawab" class="mb-2 text-lg font-semibold">Nama Penanggung Jawab</label>
+            <input id="nama_penangung_jawab" type="text" name="nama_penangung_jawab"
+              placeholder="Input Nama Penanggung Jawab" class="rounded-lg bg-gray-50  border-2   border-gray-300"
+              v-model="formData.nama_penangung_jawab" />
+          </div>
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="sumber_dana" class="mb-2 text-lg font-semibold">Sumber Dana</label>
+            <select id="sumber_dana" name="sumber_dana" class="rounded-lg bg-gray-50 border-2 border-gray-300"
+              v-model="formData.sumber_dana">
+              <option value="" disabled selected>Pilih Sumber Dana</option>
+              <option value="APBN">APBN</option>
+              <option value="APBD">APBD</option>
+              <!-- <option value="dana3">Dana 3</option> -->
+              <!-- Tambahkan opsi lain sesuai kebutuhan -->
+            </select>
+          </div>
+
+          <div class="flex flex-col w-[500px] py-4">
+            <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Serah Terima Bantuan</label>
+            <input id="surat_tugas" type="file" name="surat_tugas" placeholder="Input Nama"
+              class="rounded-lg bg-gray-50  border-2   border-gray-300" @change="handleFileChange" />
+          </div>
+
+        </div>
+      </div>
+
+      <div class="py-6">
+        <button @click="submitForm" class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
+      </div>
+    </section>
+  </MainLayoutDInas>
+</template>
 
 <style scoped>
 .shadow-xl {

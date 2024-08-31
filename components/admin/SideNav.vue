@@ -287,7 +287,6 @@ export default {
       } else if (currentPath === '/adminBPP/arsip-data/') {
         setActiveMenu('arsip-data');
       } else if (currentPath === '/adminBPP/help/') {
-        setActiveMenu('help');
       }
     };
 

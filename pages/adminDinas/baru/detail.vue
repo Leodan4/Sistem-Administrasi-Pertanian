@@ -15,6 +15,10 @@
                             <input type="checkbox" class="custom-checkbox" :value="row.value"
                                 @change="handleCheckboxChange(row.value, $event)" />
                         </td>
+                        <td class="py-2 px-6 text-left">
+                            <input type="checkbox" class="custom-checkbox" :value="row.value"
+                                @change="handleCheckboxChange(row.value, $event)" />
+                        </td>
                     </tr>
                 </template>
             </Table>
@@ -69,7 +73,8 @@ const dashboardStore = useDashboardDinasStore();
 const tableHeader = ref([
     "Kelengkapan Dokumen",
     "Info",
-    "Aksi"
+    "Sesuai SKPD",
+    "Sesuai Kebijakan"
 ]);
 
 const documentDetails = ref([]);
