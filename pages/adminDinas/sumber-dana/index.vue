@@ -9,7 +9,7 @@
           <tr v-else v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
             <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
             <td class="py-2 px-4 text-left">{{ row?.sumber_dana }}</td>
-            <td class="py-2 px-4 text-center ">
+            <td class="py-2 px-4 text-center">
               <button class="bg-[#1C64F2] hover:bg-blue-800 text-white py-1 px-4 mx-2 rounded">Edit</button>
               <button class="bg-[#E02424] hover:bg-red-800 text-white py-1 px-4 rounded">Hapus</button>
             </td>
@@ -34,11 +34,11 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
+import axios from '~/plugins/axios';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';
 
-const dashboardStore = useDashboardDinasStore();
+const $axios = axios().provide.axios;
 
 const tableHeader = ref([
   "No Dokumen",
@@ -46,10 +46,18 @@ const tableHeader = ref([
   "Aksi",
 ]);
 
+const documents = ref([]);
+const pagination = ref({
+  currentPage: 1,
+  hasPrev: false,
+  hasNext: false,
+});
+
 const fetchDocuments = async (page = 1) => {
   try {
-    await dashboardStore.getAllDocuments(page);
-    console.log("Documents after fetch:", documents.value);
+    const response = await $axios.get(`/formhasil/docs?page=${page}`);
+    documents.value = response.data.data || []; // Adjust if the API response structure differs
+    pagination.value = response.data.pagination || {}; // Adjust if the API response structure differs
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -58,11 +66,4 @@ const fetchDocuments = async (page = 1) => {
 onMounted(() => {
   fetchDocuments();
 });
-
-const documents = computed(() => {
-  return dashboardStore.data || [];
-});
-
-const pagination = computed(() => dashboardStore.pagination);
-
 </script>

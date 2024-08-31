@@ -25,6 +25,66 @@ const formData = ref({
   id_docs: '',
 });
 
+const selectedOption = ref("");
+const selectedSubOption = ref("");
+const isDropdownOpen = ref(false);
+
+const categories = [
+  {
+    name: "Jenis Bantuan Sarana",
+    subOptions: [
+      { value: "pupuk", label: "Pupuk" },
+      { value: "obat_obatan", label: "Obat-obatan" },
+      { value: "bibit", label: "Bibit" },
+      { value: "alsin", label: "Alsin" },
+      { value: "dll_sarana", label: "dll" }
+    ]
+  },
+  {
+    name: "Jenis Bantuan Prasarana",
+    subOptions: [
+      { value: "gabang", label: "Gabang" },
+      { value: "gudang", label: "Gudang" },
+      { value: "sumur_bor", label: "Sumur Bor" },
+      { value: "saluran_irigasi", label: "Saluran Irigasi" },
+      { value: "cetak_sawah", label: "Cetak Sawah" },
+      { value: "embung", label: "Embung" },
+      { value: "dll_prasarana", label: "dll" }
+    ]
+  },
+  {
+    name: "Jenis Bantuan Ketahanan Pangan",
+    subOptions: [
+      { value: "lumbung", label: "Lumbung" },
+      { value: "bansos_modal_usaha", label: "Bansos Modal Usaha" },
+      { value: "lantai_jemur", label: "Lantai Jemur" },
+      { value: "alat_pengolahan_hasil", label: "Alat Pengolahan Hasil" },
+      { value: "dll_pangan", label: "dll" }
+    ]
+  }
+];
+
+const displayedOptions = ref(categories.map(category => ({
+  value: category.name,
+  label: category.name,
+  subOptions: category.subOptions
+})));
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const onOptionSelect = (option) => {
+  selectedOption.value = option.label;
+  selectedSubOption.value = ""; // Clear the selected sub-option
+};
+
+const onSubOptionSelect = (subOption) => {
+  selectedSubOption.value = subOption.label;
+  formData.value.jenis_bantuan = subOption.label; // Update formData
+  isDropdownOpen.value = false;
+};
+
 const fetchDocuments = async () => {
   const id_docs = route.query.id;
   if (id_docs) {
@@ -101,6 +161,7 @@ onMounted(() => {
 </script>
 
 
+
 <template>
   <MainLayoutDInas>
     <section class="h-screen flex flex-col justify-center items-center bg-white">
@@ -125,7 +186,7 @@ onMounted(() => {
               class="rounded-lg bg-gray-50  border-2   border-gray-300" v-model="formData.nama_penerima" />
           </div>
 
-          <div class="flex flex-col w-full">
+          <div class="flex flex-col w-full py-4">
             <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
             <div class="relative">
               <div @click="toggleDropdown" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 cursor-pointer">

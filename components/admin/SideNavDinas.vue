@@ -148,6 +148,8 @@ export default {
                 setActiveMenu('import-data');
             } else if (currentPath === '/adminDinas/rekap-data/') {
                 setActiveMenu('rekap-data');
+            } else if (currentPath === '/adminDinas/rekap-data/rincian') {
+                setActiveMenu('rekap-data');
             } else if (currentPath === '/adminDinas/arsip-data/') {
                 setActiveMenu('arsip-data');
             } else if (currentPath === '/adminDinas/help/') {
