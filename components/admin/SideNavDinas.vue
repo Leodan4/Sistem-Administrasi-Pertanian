@@ -9,7 +9,7 @@
 
     <aside
         :class="['text-gray-600 bg-white min-h-screen border-2 flex z-40 fixed flex-col transition-transform duration-300', { '-translate-x-full': !isSidebarOpen, 'w-[250px]': isSidebarOpen }]">
-        <div class="flex justify-center pt-8">
+        <div class="flex justify-center pt-16">
             <img src="/logo.png" alt="Logo" class="w-36">
         </div>
         <svg class="w-6 h-6 font-bold fill-white" fill="#fff" aria-hidden="true" viewBox="0 0 20 20"
@@ -19,7 +19,7 @@
             </path>
         </svg>
 
-        <div class="menu mt-8 mx-6">
+        <div class="menu mx-6">
             <a href="#" :class="{ 'active rounded-lg': activeMenu === 'dashboard' }"
                 @click.prevent="navigateTo('/adminDinas/dashboard/', 'dashboard')"
                 class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">
@@ -128,13 +128,19 @@ export default {
                 setActiveMenu('dashboard');
             } else if (currentPath === '/adminDinas/baru/') {
                 setActiveMenu('baru');
+            } else if (currentPath === '/adminDinas/baru/detail') {
+                setActiveMenu('baru');
             } else if (currentPath === '/adminDinas/tidak-sesuai/') {
                 setActiveMenu('tidak-sesuai'); // Ensure this matches the actual route
             } else if (currentPath === '/adminDinas/revisi/') {
                 setActiveMenu('revisi'); // Fix any inconsistencies here
             } else if (currentPath === '/adminDinas/tervalidasi/') {
                 setActiveMenu('tervalidasi');
+            } else if (currentPath === '/adminDinas/tervalidasi/form_realisasi') {
+                setActiveMenu('tervalidasi');
             } else if (currentPath === '/adminDinas/realisasi/') {
+                setActiveMenu('realisasi');
+            } else if (currentPath === '/adminDinas/realisasi/Pengumuman_hasil') {
                 setActiveMenu('realisasi');
             } else if (currentPath === '/adminDinas/sumber-dana/') {
                 setActiveMenu('sumber-dana');

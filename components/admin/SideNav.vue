@@ -171,7 +171,7 @@ export default {
     </button>
 
     <aside :class="['text-gray-600 bg-white min-h-screen border-2 flex z-40 fixed flex-col transition-transform duration-300', { '-translate-x-full': !isSidebarOpen, 'w-[250px]': isSidebarOpen }]" >
-      <div class="flex justify-center pt-8">
+      <div class="flex justify-center pt-16">
         <img src="/logo.png" alt="Logo" class="w-36">
       </div>
 
@@ -183,7 +183,7 @@ export default {
         </path>
       </svg>
 
-      <div class="menu my-8 mx-6">
+      <div class="menu mx-6">
         <a href="#" :class="{ 'active rounded-lg': activeMenu === 'dashboard' }"
           @click.prevent="navigateTo('/adminBPP/dashboard/', 'dashboard')"
           class="block my-2 py-2 px-4 rounded-lg transition duration-300 hover:text-white hover:bg-green-500">
