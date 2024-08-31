@@ -3,7 +3,7 @@
     </div>
     <section class="h-screen flex flex-col justify-center items-center bg-white mt-96 md:mt-32 px-10 md:px-40 lg:px-80">
 
-        <div class="text-2xl font-bold mb-10 mt-4">Verifikasi Lapangan</div>
+        <div class="text-2xl font-bold mb-10 mt-4">Register</div>
 
         <div class="flex flex-col justify-center gap-10 w-full">
 
@@ -110,8 +110,7 @@
         </div>
 
         <div class="py-6">
-            <button @click="submitForm" class="bg-green-500 text-white border rounded-xl px-10 py-2">Edit
-                Profile</button>
+            <button @click="submitForm" class="bg-green-500 text-white border rounded-xl px-10 py-2">Add New User</button>
         </div>
     </section>
 </template>

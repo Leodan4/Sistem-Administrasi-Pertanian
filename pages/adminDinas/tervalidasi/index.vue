@@ -16,7 +16,7 @@
               </span>
             </td>
             <td class="py-2 px-4 text-start">
-              <button @click="navigateToDetail(row.id_docs)" class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 mx-4 rounded-lg">Detail</button>
+              <button @click="openModal(row.id_docs)" class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 mx-4 rounded-lg">Detail</button>
               <button @click="navigateToRealisasi(row.id_docs)" class="bg-white border border-[#0E9F6E] text-[#0E9F6E] py-1 px-4 rounded-lg">Realisasi</button>
             </td>
           </tr>
@@ -34,6 +34,8 @@
         </button>
       </div>
 
+      <ModalComponent :isOpen="isModalOpen" :formData="formData" @close="closeModal" />
+
     </div>
   </MainLayoutDInas>
 </template>
@@ -44,6 +46,7 @@ import { useRouter } from 'vue-router';
 import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';
+import ModalComponent from '~/pages/adminDinas/tervalidasi/detail.vue';
 
 const router = useRouter(); // Initialize router
 const dashboardStore = useDashboardDinasStore();
@@ -55,11 +58,35 @@ const tableHeader = ref([
   "Aksi",
 ]);
 
+const isModalOpen = ref(false);
+const formData = ref({});
+
+const openModal = (id_docs) => {
+  const selectedDoc = documents.value.find(doc => doc.id_docs === id_docs);
+  if (selectedDoc) {
+    const formattedDate = selectedDoc.createdAt.split('T')[0];
+
+    formData.value = {
+      no_doc: selectedDoc.no_doc,
+      title: selectedDoc.title,
+      type_doc: selectedDoc.type_doc,
+      createdAt: formattedDate,
+      jenis_bantuan: selectedDoc.jenis_bantuan,
+      deskripsi: selectedDoc.deskripsi || "-",
+    };
+    isModalOpen.value = true;
+  }
+};
+
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
 
 const fetchDocuments = async (page = 1) => {
   try {
     await dashboardStore.getAllDocuments(page);
-    console.log("Documents after fetch:", documents.value);  // Log the documents after fetch
+    console.log("Documents after fetch:", documents.value);
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -76,11 +103,6 @@ const documents = computed(() => {
 
 const pagination = computed(() => dashboardStore.pagination);
 const hasDocuments = computed(() => documents.value.length > 0);
-
-const navigateToDetail = (id_docs) => {
-  router.push({ path: '/adminDinas/tervalidasi/detail', query: { id: id_docs } });
-};
-
 
 const navigateToRealisasi = (id_docs) => {
   router.push({ path: '/adminDinas/tervalidasi/form_realisasi', query: { id: id_docs } });

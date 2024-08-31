@@ -10,7 +10,7 @@
             <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
             <td class="py-2 px-4 text-left">{{ row?.nama_kelompok }}</td>
             <td class="py-2 px-4 text-left">{{ row?.alamat_bpp }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.jenis_bantuan }}</td>
+            <td class="py-2 px-14 text-left">{{ row?.jenis_bantuan }}</td>
             <td class="py-2 px-4 text-left">{{ row?.sumber_dana }}</td>
           </tr>
         </template>
@@ -58,8 +58,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_tidak_sesuai_proposal === 'TelahDisesuaikan' && 'belumDisesuaikan') : [];
-  return filteredDocs.length > 0 ? filteredDocs : [];
+  return dashboardStore.data || [];
 });
 
 const pagination = computed(() => dashboardStore.pagination);
