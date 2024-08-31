@@ -12,11 +12,11 @@
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.status_tidak_sesuai_proposal === 'TelahDisesuaikan',
-                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.status_tidak_sesuai_proposal === 'belumDisesuaikan',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tervalidasi',
+                  'bg-red-100 text-red-800 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tidak_valid',
                 }"
               >
-                {{ row?.status_tidak_sesuai_proposal }}
+                {{ row?.type_doc }}
               </span>
             </td>
             <td class="py-2 px-4 text-left">
@@ -97,7 +97,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.status_tidak_sesuai_proposal === 'TelahDisesuaikan' && 'belumDisesuaikan') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tidak_valid' || doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 

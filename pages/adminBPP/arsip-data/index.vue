@@ -205,10 +205,7 @@ onMounted(() => {
     fetchDocuments();
 });
 
-const documents = computed(() => {
-    const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'validBPP') : [];
-    return filteredDocs.length > 0 ? filteredDocs : [];
-});
+const documents = computed(() => dashboardStore.data);
 
 const pagination = computed(() => dashboardStore.pagination);
 const hasDocuments = computed(() => documents.value.length > 0);

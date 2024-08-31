@@ -86,7 +86,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'validBPP') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 
