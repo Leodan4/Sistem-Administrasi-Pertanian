@@ -58,6 +58,8 @@ import { useDashboardBPPStore } from '~/stores/adminBPP/dashboardBPP';
 import MainLayoutBPP from '~/layouts/MainLayoutBPP.vue';
 import Table from "~/components/global/table.vue";
 import axios from "../plugins/axios";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const $axios = axios().provide.axios;
 
@@ -110,9 +112,14 @@ const updateDocument = async () => {
       note: formData.value.note,
     });
     console.log('Document updated successfully:', response.data);
-    // Redirect or show a success message
+    toast.success('Document updated successfully', {
+      autoClose: 3000
+    });
   } catch (error) {
     console.error('Failed to update document:', error);
+    toast.error('Failed to update document', {
+      autoClose: 3000,
+    });
   }
 };
 

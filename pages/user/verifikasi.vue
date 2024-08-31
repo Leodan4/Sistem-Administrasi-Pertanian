@@ -96,7 +96,7 @@ export default {
                 const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
-                    const response = await $axios.get(`/mit/form/?id_users=${id_users}`);
+                    const response = await $axios.get(`/form/form/?id_users=${id_users}`);
                     const data = response.data.data[0];
 
                     formData.value = {
@@ -106,7 +106,7 @@ export default {
                         petugas2: data.petugas2 || "",
                         petugas3: data.petugas3 || "",
                         petugas4: data.petugas4 || "",
-                        catatan_revisi: data.catatan_revisi || ""
+                        catatan_revisi: data.docs.catatan_revisi || ""
                     };
                 } else {
                     console.error('User ID not found in local storage');
