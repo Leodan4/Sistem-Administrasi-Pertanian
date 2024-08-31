@@ -6,11 +6,11 @@
         <template #rows="{ rows }">
           <tr v-for="(row, index) in rows" :key="index" class="text-sm text-gray-500 border">
             <td class="py-2 px-6 text-left text-black font-bold">{{ row?.no_doc }}</td>
-            <td class="py-2 px-4 text-left">{{ row?.uraian }}</td>
+            <td class="py-2 px-6 text-left">{{ row?.deskripsi }}</td>
             <td class="py-2 px-4 text-left">
               <span
                 :class="{
-                  'bg-purple-100 text-purple-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'baru',
+                  'bg-green-100 text-green-700 font-semibold px-4 py-1 rounded-md capitalize': row?.type_doc === 'tervalidasi',
                 }"
               >
                 {{ row?.type_doc }}
@@ -66,7 +66,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'baru') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 const pagination = computed(() => dashboardStore.pagination);
