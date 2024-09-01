@@ -23,9 +23,8 @@ export const useUserStore = defineStore("userStore", {
             }
 
             try {
-                const response = await $axios.get(
-                `/user/?id_users=${idUsers}`
-                );
+                const response = await $axios.get(`/user/id/?id_users=${idUsers}`);
+                console.log("USER DATA: ", response.data);
                 this.user = response.data;
             } catch (err) {
                 this.error = err.message || "Terjadi kesalahan saat mengambil data";

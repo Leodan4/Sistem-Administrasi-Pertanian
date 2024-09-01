@@ -89,38 +89,7 @@ export default {
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
-
-    // const handleLogin = async () => {
-    //   const loginData = {
-    //     username: username.value,
-    //     password: password.value,
-    //   };
-
-    //   try {
-    //     const response = await loginStore.loginUser(loginData);
-
-    //     console.log(response);
-
-    //     if (response && response.data && response.data.role) {
-    //       const role = response.data.role;
-
-
-    //       if (role === "adminBPP") {
-    //         router.replace("/adminBPP/dashboard");
-    //       } else if (role === "adminDinas") {
-    //         router.replace("/adminDinas/dashboard");
-    //       } else if (role === "user") {
-    //         router.replace("/user/dashboard");
-    //       } else {
-    //         console.error("Role tidak valid:", role);
-    //       }
-    //     } else {
-    //       console.error("Respon tidak valid dari server");
-    //     }
-    //   } catch (error) {
-    //     console.error("Gagal login", error);
-    //   }
-    // };
+    
 
     const handleLogin = async () => {
       const loginData = {
@@ -136,12 +105,10 @@ export default {
         if (response && response.data && response.data.role) {
           const role = response.data.role;
 
-          // Tampilkan toastify setelah login berhasil
           toast.success("Login berhasil! Redirecting...", {
-            autoClose: 2000, // Durasi toastify tampil dalam milidetik
+            autoClose: 2000,
           });
 
-          // Tambahkan delay sebelum navigasi
           setTimeout(() => {
             if (role === "adminBPP") {
               router.replace("/adminBPP/dashboard");
@@ -152,7 +119,7 @@ export default {
             } else {
               console.error("Role tidak valid:", role);
             }
-          }, 2000); // Delay selama 2 detik
+          }, 2000);
 
         } else {
           console.error("Respon tidak valid dari server");
