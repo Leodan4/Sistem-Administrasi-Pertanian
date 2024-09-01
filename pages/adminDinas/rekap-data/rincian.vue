@@ -30,19 +30,19 @@ const fetchDocuments = async () => {
     if (id_docs) {
         try {
             const response = await $axios.get('/formhasil/formhasil/');
-            const documents = response.data.data; 
+            const documents = response.data.data;
 
             const document = documents.find(doc => doc.id_docs == id_docs);
             if (document) {
                 formData.value = {
-                    no_doc: document.no_doc,
-                    tanggal: document.createdAt,
-                    judul_dokumen: document.title,
-                    nama_penerima: '',
-                    jenis_bantuan: '',
-                    nama_penangung_jawab: '',
-                    sumber_dana: '',
-                    surat_serah_terima_bantuan: null,
+                    no_doc: document.no_doc || "--",
+                    tanggal: document.createdAt || "--",
+                    judul_dokumen: document.title || "--",
+                    nama_penerima: document.nama_penerima || "--",
+                    jenis_bantuan: document.jenis_bantuan || "--",
+                    nama_penangung_jawab: document.nama_penangung_jawab || "--",
+                    sumber_dana: document.sumber_dana || "--",
+                    surat_serah_terima_bantuan: document.surat_serah_terima_bantuan || "--",
                     id_docs: document.id_docs
                 };
             }
@@ -133,30 +133,9 @@ onMounted(() => {
 
                     <div class="flex flex-col w-full py-4">
                         <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
-                        <div class="relative">
-                            <div @click="toggleDropdown"
-                                class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 cursor-pointer">
-                                <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan' }}</span>
-                                <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
-                            </div>
-                            <div v-if="isDropdownOpen"
-                                class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
-                                <ul>
-                                    <li v-for="option in displayedOptions" :key="option.value"
-                                        @click="onOptionSelect(option)"
-                                        :class="{ 'bg-green-500 text-white': selectedOption === option.label, 'hover:bg-green-600 hover:text-white': selectedOption !== option.label }">
-                                        <span>{{ option.label }}</span>
-                                        <ul v-if="selectedOption === option.label" class="pl-4">
-                                            <li v-for="subOption in option.subOptions" :key="subOption.value"
-                                                @click.stop="onSubOptionSelect(subOption)"
-                                                class="p-2 cursor-pointer hover:bg-white hover:text-green-500"
-                                                :class="{ 'text-green-500': selectedSubOption === subOption.label }">
-                                                {{ subOption.label }}
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div id="surat_tugas" type="text" name="surat_tugas"
+                            class="rounded-lg bg-gray-50  border-2 h-11 border-gray-300">
+                            {{ formData.jenis_bantuan }}
                         </div>
                     </div>
 
@@ -182,29 +161,28 @@ onMounted(() => {
 
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="sumber_dana" class="mb-2 text-lg font-semibold">Sumber Dana</label>
-                        <select id="sumber_dana" name="sumber_dana"
-                            class="rounded-lg bg-gray-50 border-2 border-gray-300" v-model="formData.sumber_dana">
-                            <option value="" disabled selected>Pilih Sumber Dana</option>
-                            <option value="APBN">APBN</option>
-                            <option value="APBD">APBD</option>
-                            <!-- <option value="dana3">Dana 3</option> -->
-                            <!-- Tambahkan opsi lain sesuai kebutuhan -->
-                        </select>
+                        <div id="sumber_dana" name="sumber_dana"
+                            class="flex items-center px-3 rounded-lg h-11 bg-gray-50 border-2 border-gray-300">
+                            {{ formData.sumber_dana }}
+                        </div>
                     </div>
 
                     <div class="flex flex-col w-[500px] py-4">
                         <label for="surat_tugas" class="mb-2 text-lg font-semibold">Surat Serah Terima Bantuan</label>
-                        <input id="surat_tugas" type="file" name="surat_tugas" placeholder="Input Nama"
-                            class="rounded-lg bg-gray-50  border-2   border-gray-300" @change="handleFileChange" />
+                        <div id="surat_tugas" type="text" name="surat_tugas"
+                            class="flex items-center px-3 rounded-lg h-11 bg-gray-50 border-2 border-gray-300">
+                            {{ formData.surat_serah_terima_bantuan }}
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="py-6">
-                <button @click="submitForm"
-                    class="bg-green-500 text-white border-2 rounded-xl px-10 py-2">Simpan</button>
+            <div class="py-4">
+                <h1 class="items-start text-lg font-semibold">Dokumentasi</h1>
             </div>
+
+
         </section>
     </MainLayoutDInas>
 </template>

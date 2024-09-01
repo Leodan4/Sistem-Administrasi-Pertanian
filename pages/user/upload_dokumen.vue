@@ -1,6 +1,6 @@
 <template>
     <section class="h-screen flex flex-col justify-start items-center bg-white mt-32 md:mt-32">
-                                                                                                                                                                                                                                                                                                                                                                <Header2 />
+        <Header2 />
         <div class="text-2xl font-bold mb-10">Upload Dokumen</div>
 
         <div class="flex flex-row justify-center items-center gap-5 md:gap-10">
@@ -19,35 +19,39 @@
                 </div>
 
                 <div class="flex flex-col w-full">
-    <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
-    <div class="relative">
-        <div @click="toggleDropdown"
-            class="rounded-lg bg-white border-2 border-gray-400 p-2 cursor-pointer">
-            <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan' }}</span>
-            <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
-        </div>
-        <div v-if="isDropdownOpen"
-            class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
-            <ul>
-                <li v-for="option in displayedOptions" :key="option.value"
-                    @click="onOptionSelect(option)"
-                    :class="{ 'text-grey-500': selectedOption === option.label }"
-                    class="text-black p-2 cursor-pointer hover:bg-white hover:text-grey-500">
-                    <span>{{ option.label }}</span>
-                    <ul v-if="selectedOption === option.label" class="pl-4">
-                        <li v-for="subOption in option.subOptions" :key="subOption.value"
-                            @click.stop="onSubOptionSelect(subOption)"
-                            class="p-2 cursor-pointer hover:bg-white hover:text-green-500"
-                            :class="{ 'text-green-500': selectedSubOption === subOption.label }">
-                            {{ subOption.label }}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+                    <label for="jenis_bantuan" class="mb-2 text-lg font-semibold">Jenis Bantuan</label>
+                    <div class="relative">
+                        <div @click="toggleDropdown"
+                            class="rounded-lg bg-white border-2 border-gray-400 p-2 cursor-pointer">
+                            <span v-if="!selectedSubOption">{{ selectedOption ? selectedOption : 'Pilih Jenis Bantuan'
+                                }}</span>
+                            <span v-if="selectedSubOption">{{ selectedSubOption }}</span>
+                        </div>
+                        <div v-if="isDropdownOpen"
+                            class="absolute z-10 mt-1 w-full rounded-lg bg-white border-2 border-gray-400">
+                            <ul>
+                                <li v-for="option in displayedOptions" :key="option.value"
+                                    @click="onOptionSelect(option)"
+                                    :class="{ 'bg-white text-grey-500': selectedOption === option.label }"
+                                    class="text-black p-2 cursor-pointer">
+                                    <span>{{ option.label }}</span>
+                                    <ul v-if="selectedOption === option.label" class="pl-4">
+                                        <li v-for="subOption in option.subOptions" :key="subOption.value"
+                                            @click.stop="onSubOptionSelect(subOption)"
+                                            class="p-2 cursor-pointer hover:bg-green-500 hover:text-white"
+                                            :class="{ 'text-green-500': selectedSubOption === subOption.label }">
+                                            {{ subOption.label }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
+
+
+                <!-- :class="{ 'text-grey-500': selectedOption === option.label }" -->
 
                 <div class="flex flex-col w-full">
                     <label for="lembar_persetujuan_kepala_desa" class="mb-2 text-lg font-semibold">Lembar Persetujuan
@@ -250,7 +254,6 @@ export default {
 .shadow-xl {
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
-
 </style>
 
 

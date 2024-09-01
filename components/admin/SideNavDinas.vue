@@ -152,6 +152,8 @@ export default {
                 setActiveMenu('rekap-data');
             } else if (currentPath === '/adminDinas/arsip-data/') {
                 setActiveMenu('arsip-data');
+            } else if (currentPath === '/adminDinas/arsip-data/rincian') {
+                setActiveMenu('arsip-data');
             } else if (currentPath === '/adminDinas/help/') {
                 setActiveMenu('help');
             }

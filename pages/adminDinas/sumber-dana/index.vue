@@ -1,7 +1,7 @@
 <template>
   <MainLayoutDInas>
     <div class="w-full mt-20 text-black px-8">
-      <Table :headers="tableHeader" :rows="documents">
+      <Table :headers="tableHeader" :rows="currentDocuments">
         <template #rows="{ rows }">
           <tr v-if="rows.length === 0">
             <td colspan="4" class="py-2 px-4 text-center text-gray-500">No documents available</td>
@@ -18,16 +18,15 @@
       </Table>
 
       <div class="flex justify-end mt-8">
-        <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev"
+        <button @click="fetchDocuments(pagination.hasPrev - 1)" :disabled="!pagination.hasPrev"
           class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-3 rounded-l border-2 border-gray-300">
           Previous
         </button>
-        <button @click="fetchDocuments(pagination.currentPage + 1)" :disabled="!pagination.hasNext"
+        <button @click="fetchDocuments(pagination.hasNext + 1)" :disabled="!pagination.hasNext"
           class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-6 rounded-r border-2 border-gray-300">
           Next
         </button>
       </div>
-
     </div>
   </MainLayoutDInas>
 </template>
@@ -51,17 +50,33 @@ const pagination = ref({
   currentPage: 1,
   hasPrev: false,
   hasNext: false,
+  totalPages: 0,
 });
+
+const limit = 7;
 
 const fetchDocuments = async (page = 1) => {
   try {
-    const response = await $axios.get(`/formhasil/docs?page=${page}`);
-    documents.value = response.data.data || []; // Adjust if the API response structure differs
-    pagination.value = response.data.pagination || {}; // Adjust if the API response structure differs
+    const offset = (page - 1) * limit;
+    const response = await $axios.get(`/formhasil/docs?limit=${limit}&offset=${offset}`);
+    documents.value = response.data.data || [];
+    pagination.value = {
+      currentPage: page,
+      hasPrev: page > 1,
+      hasNext: response.data.hasMore, // Ensure `hasMore` is returned from your API
+      totalPages: Math.ceil(response.data.total / limit) // Total pages based on total items
+    };
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
 };
+
+// Computed property to slice documents based on current page
+const currentDocuments = computed(() => {
+  const start = (pagination.value.currentPage - 1) * limit;
+  const end = start + limit;
+  return documents.value.slice(start, end);
+});
 
 onMounted(() => {
   fetchDocuments();
