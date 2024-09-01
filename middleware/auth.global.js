@@ -1,4 +1,4 @@
-import { verifyAuth } from "~/lib/auth";
+// import { verifyAuth } from "~/lib/auth";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const token = localStorage.getItem("token");
@@ -15,11 +15,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
 
-  const verifiedToken = await verifyAuth(token).catch((err) => {
-    console.log(err);
-    // Token verification failed, remove the token from localStorage
-    localStorage.removeItem("token");
-  });
+  // const verifiedToken = await verifyAuth(token).catch((err) => {
+  //   console.log(err);
+  //   // Token verification failed, remove the token from localStorage
+  //   localStorage.removeItem("token");
+  // });
 
   const authenticatedPaths = [
     "/adminBPP/dashboard",
@@ -46,23 +46,23 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     to.path.startsWith(path)
   );
 
-  if (verifiedToken && to.path === "/login") {
-    return navigateTo("/adminBPP/dashboard");
-  }
-
-  if (!verifiedToken && requiresAuth) {
-    return navigateTo("/login");
-  }
-
-  // if (verifiedToken && requiresAuth && !useProfileStore().$state.IsSave) {
-  //   useNuxtApp().$profileStore.getUserLogin();
+  // if (verifiedToken && to.path === "/login") {
+  //   return navigateTo("/adminBPP/dashboard");
   // }
 
-  if (to.path === "/" && verifiedToken) {
-    return navigateTo("/adminBPP/dashboard");
-  }
+  // if (!verifiedToken && requiresAuth) {
+  //   return navigateTo("/login");
+  // }
 
-  if (to.path === "/" && !verifiedToken) {
-    return navigateTo("/login");
-  }
+  // // if (verifiedToken && requiresAuth && !useProfileStore().$state.IsSave) {
+  // //   useNuxtApp().$profileStore.getUserLogin();
+  // // }
+
+  // if (to.path === "/" && verifiedToken) {
+  //   return navigateTo("/adminBPP/dashboard");
+  // }
+
+  // if (to.path === "/" && !verifiedToken) {
+  //   return navigateTo("/login");
+  // }
 });

@@ -53,7 +53,7 @@ export const useLoginStore = defineStore("login", {
         console.error("Terjadi kesalahan saat login:", error);
         const errorMessage = error.response && error.response.data && error.response.data.message
           ? error.response.data.message
-          : "Kesalahan tidak diketahui";
+          : error.message;
         this.$patch({ error: errorMessage });
         toast.error(errorMessage, {
           autoClose: 2000,
