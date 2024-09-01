@@ -252,7 +252,7 @@ export default {
         localStorage.clear();
         
         // Jika ingin lebih spesifik:
-        localStorage.removeItem("id");
+        localStorage.removeItem("id_users");
         localStorage.removeItem("token");
         localStorage.removeItem("role");
         localStorage.removeItem("email");
