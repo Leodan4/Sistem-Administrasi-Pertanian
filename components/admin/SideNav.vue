@@ -247,8 +247,24 @@ export default {
     };
 
     const handleLogout = () => {
-      loginStore.logout();
-    };
+    if (window.confirm("Apakah Anda yakin ingin logout?")) {
+        // Hapus semua item dari localStorage
+        localStorage.clear();
+        
+        // Jika ingin lebih spesifik:
+        localStorage.removeItem("id_users");
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("email");
+        localStorage.removeItem("username");
+
+        // Lakukan logout dari store, jika ada
+        loginStore.logout();
+
+        // Redirect ke halaman login atau beranda setelah logout
+        router.push('/');
+    }
+};
 
     const router = useRouter();
     const activeMenu = ref('dashboard'); // Default menu yang aktif
@@ -287,6 +303,7 @@ export default {
       } else if (currentPath === '/adminBPP/arsip-data/') {
         setActiveMenu('arsip-data');
       } else if (currentPath === '/adminBPP/help/') {
+        setActiveMenu('help');
       }
     };
 
