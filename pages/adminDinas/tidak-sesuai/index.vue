@@ -70,7 +70,7 @@ const openModal = (row) => {
     title: row.title,
     note: row.note,
     deskripsi: row.deskripsi,
-    status: row.status,
+    status: row.type_doc,
     status_tidak_sesuai_proposal: row.status_tidak_sesuai_proposal,
     createdAt: formattedDate,
     jenis_bantuan: row.jenis_bantuan,

@@ -112,7 +112,7 @@ const updateDocument = async () => {
       note: formData.value.note,
     });
     console.log('Document updated successfully:', response.data);
-    toast.success('Document updated successfully', {
+    toast.success('Berhasil Update Dokumen!', {
       autoClose: 3000
     });
   } catch (error) {

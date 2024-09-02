@@ -1,9 +1,8 @@
 <template>
-    <div class="w-full md:w-full h-24 bg-green-500 text-white fixed top-0 right-0">
-    </div>
-    <section class="h-screen flex flex-col justify-center items-center bg-white mt-96 md:mt-32 px-10 md:px-40 lg:px-80">
 
-        <div class="text-2xl font-bold mb-10 mt-4">Register</div>
+    <section class="h-screen flex flex-col justify-center items-center bg-white mt-96 md:mt-32 px-10 md:px-40 lg:px-80">
+        <Header2></Header2>
+        <div class="text-2xl font-bold mb-10 mt-4">Pendaftaran Akun</div>
 
         <div class="flex flex-col justify-center gap-10 w-full">
 
@@ -110,18 +109,23 @@
         </div>
 
         <div class="py-6">
-            <button @click="submitForm" class="bg-green-500 text-white border rounded-xl px-10 py-2">Add New User</button>
+            <button @click="submitForm" class="bg-green-500 text-white border rounded-xl px-10 py-2">Daftar</button>
         </div>
     </section>
 </template>
-
 <script>
 import axios from "../plugins/axios";
 import { ref } from 'vue';
+import { toast } from 'vue3-toastify'; // Import toast
+import 'vue3-toastify/dist/index.css'; // Import CSS for toast
+import Header2 from '~/components/user/header_2.vue';
 
 const $axios = axios().provide.axios;
 
 export default {
+    components: {
+        Header2
+    },
     setup() {
         const user = ref({
             email: '',
@@ -139,7 +143,24 @@ export default {
             pilih_bpp: ''
         });
 
+        const validateForm = () => {
+            // Check if any field is empty
+            for (const key in user.value) {
+                if (user.value[key] === '') {
+                    return false;
+                }
+            }
+            return true;
+        };
+
         const submitForm = async () => {
+            if (!validateForm()) {
+                toast.error('Semua field harus diisi!', {
+                    autoClose: 3000,
+                });
+                return;
+            }
+
             try {
                 const response = await $axios.post('/user/adduser', {
                     email: user.value.email,
@@ -157,8 +178,14 @@ export default {
                     pilih_bpp: user.value.pilih_bpp
                 });
                 console.log('User registered successfully:', response.data);
+                toast.success('Berhasil Terdaftar! Silahkan Login', {
+                    autoClose: 2000,
+                });
             } catch (error) {
                 console.error('Error registering user:', error);
+                toast.error('Terdapat Error. Mohon Coba Lagi.', {
+                    autoClose: 3000,
+                });
             }
         };
 
@@ -170,8 +197,9 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .shadow-xl {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 </style>

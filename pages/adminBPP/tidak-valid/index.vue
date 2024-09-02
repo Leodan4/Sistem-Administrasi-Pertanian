@@ -126,8 +126,9 @@ const openModal = (row) => {
 
   formData.value = {
     no_doc: row.no_doc,
+    title: row.title,
     deskripsi: row.deskripsi,
-    status: row.status,
+    status: row.type_doc,
     createdAt: formattedDate,
     jenis_bantuan: row.jenis_bantuan,
     deskripsi: row.deskripsi || "-",

@@ -116,67 +116,63 @@ export default {
 
 
 
-
-
-
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white mt-96 md:mt-0">
+    <section class="h-screen flex flex-col justify-start items-center bg-white mt-32 md:mt-32">
         <Header2></Header2>
         <div class="text-2xl font-bold mb-10">Profile</div>
-
-        <div class="flex flex-row justify-center gap-10">
-            <div class="grid md:grid-cols-2 gap-6">
-
-                <div class="flex flex-col w-[500px]">
+        <div class="w-full max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-6 px-8 md:px-20">
+                
+                <div class="flex flex-col w-full">
                     <label for="email" class="mb-2 text-lg font-semibold">Email</label>
                     <div id="email" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.email }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="password" class="mb-2 text-lg font-semibold">Password</label>
                     <div id="password" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.password }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="nik" class="mb-2 text-lg font-semibold">NIK</label>
                     <div id="nik" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.nik }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="nama" class="mb-2 text-lg font-semibold">Nama</label>
                     <div id="nama" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.username }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="alamat" class="mb-2 text-lg font-semibold">Alamat</label>
                     <div id="alamat" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.addres_kab + ', ' + user.addres_kec + ', ' + user.addres_des }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="telp" class="mb-2 text-lg font-semibold">Telp</label>
                     <div id="telp" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.telp }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="nama_kelompok_tani" class="mb-2 text-lg font-semibold">Nama Kelompok Tani</label>
                     <div id="nama_kelompok_tani" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.name_kel_tani }}
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[500px]">
+                <div class="flex flex-col w-full">
                     <label for="alamat_kelompok_tani" class="mb-2 text-lg font-semibold">Alamat Kelompok Tani</label>
                     <div id="alamat_kelompok_tani" class="rounded-lg h-11 bg-gray-50 flex items-center px-3 border-2">
                         {{ user.addres_kel_kab + ', ' + user.addres_kel_kac + ', ' + user.addres_kel_des }}

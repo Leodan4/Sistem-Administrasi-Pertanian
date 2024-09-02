@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       title: "SIBP",
-      link: [{ rel: "icon", type: "image/x-icon", href: "/logo.png" }],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/logo1.png" }],
     },
   },
   pages: true,

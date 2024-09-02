@@ -1,5 +1,5 @@
 <template>
-    <section class="h-screen flex flex-col justify-center items-center bg-white mt-0 md:mt-0 sm:mt-0">
+    <section class="h-screen flex flex-col justify-center items-center bg-white mt-8 md:mt-0 sm:mt-0">
         <Header></Header>
 
         <div class="flex flex-col justify-center items-center w-full px-12 sm:px-8 md:px-16 lg:px-32 xl:px-64 gap-6">
