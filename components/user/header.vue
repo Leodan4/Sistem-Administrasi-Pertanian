@@ -29,7 +29,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useLoginStore } from "@/stores/login";
+import { useLoginStore } from "~/stores/login";
 
 
 const router = useRouter();

@@ -89,7 +89,7 @@ import '@fortawesome/fontawesome-free/css/all.css'; // Import stylesheet Font Aw
 import { initFlowbite } from "flowbite";
 import { useRouter } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
-import { useLoginStore } from "@/stores/login"; // Adjust the import path as needed
+import { useLoginStore } from "~/stores/login"; // Adjust the import path as needed
 
 export default {
     setup() {

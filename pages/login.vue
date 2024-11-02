@@ -68,8 +68,8 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useLoginStore } from "@/stores/login";
-import { useGeneralStore } from "@/stores/general";
+import { useLoginStore } from "~/stores/login";
+import { useGeneralStore } from "~/stores/general";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 

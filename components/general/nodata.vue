@@ -1,6 +1,6 @@
 <script setup>
 import { Vue3Lottie } from "vue3-lottie";
-import NoData from "@/assets/animation/no-data.json";
+import NoData from "~/assets/animation/no-data.json";
 
 // Define the props with default values
 const props = defineProps({
