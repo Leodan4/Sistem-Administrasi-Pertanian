@@ -118,7 +118,7 @@ const pagination = computed(() => realisasiStore.pagination);
 
 <script setup>
 import { computed, ref, onMounted } from 'vue';
-import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import { useRouter } from 'vue-router';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';

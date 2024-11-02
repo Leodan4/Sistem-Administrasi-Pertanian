@@ -43,7 +43,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import Table from '~/components/global/table.vue';
 import ModalComponent from '~/pages/adminDinas/tervalidasi/detail.vue';

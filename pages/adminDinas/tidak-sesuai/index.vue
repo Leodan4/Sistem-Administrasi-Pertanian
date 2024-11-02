@@ -45,7 +45,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useDashboardDinasStore } from '/stores/adminDinas/dashboardDinas';
+import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import MainLayoutDInas from '~/layouts/MainLayoutDinas.vue';
 import ModalComponent from "~/pages/adminDinas/tidak-sesuai/detail.vue";
 import Table from '~/components/global/table.vue';
