@@ -1,8 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
+  alias: {
+    '@': '/Sistem-Administrasi-Pertanian',
+  },
   app: {
     head: {
+      
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       title: "SIBP",
