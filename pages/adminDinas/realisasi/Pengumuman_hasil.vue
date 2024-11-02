@@ -175,7 +175,7 @@ onMounted(() => {
 
                   <div class="flex flex-col w-full">
                       <label for="judul_doc" class="mb-2 text-lg font-semibold">Judul Dokumen</label>
-                      <input type="text" id="judul_doc" v-model="formData.judul_dokumen" readonly
+                      <input type="text" id="judul_doc" v-model="formData.judul_dokumen" readonlyxx
                           class="rounded-lg bg-gray-50 w-full border-2 border-gray-400" />
                   </div>
 
