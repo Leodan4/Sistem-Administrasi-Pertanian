@@ -310,10 +310,11 @@ export default {
         const idUsers = localStorage.getItem('id_users');
         const notif = ref({});
 
-        async function getDatas() {
+        async function getData() {
             try {
-                const response = await $axios.get(`/notif/${idUsers}`);
-                notif.value = response.data.data;
+                const response = await $axios.get(`/user/id/?id_users=${idUsers}`);
+                user.value = response.data.data;
+                user.value.password = '';
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
             }
