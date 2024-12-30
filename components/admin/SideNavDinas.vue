@@ -8,7 +8,7 @@
     </button>
 
     <aside
-        :class="['text-gray-600 bg-white min-h-screen border-2 flex z-40 fixed flex-col transition-transform duration-300', { '-translate-x-full': !isSidebarOpen, 'w-[250px]': isSidebarOpen }]">
+        :class="['text-gray-600 bg-white h-full border-2 flex z-40 fixed flex-col overflow-y-scroll transition-transform duration-300', { '-translate-x-full': !isSidebarOpen, 'w-[250px]': isSidebarOpen }]">
         <div class="flex justify-center pt-16">
             <img src="/logo.png" alt="Logo" class="w-36">
         </div>

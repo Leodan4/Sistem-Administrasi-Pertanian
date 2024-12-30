@@ -9,6 +9,16 @@
                 <input id="berkas" type="file" name="berkas" placeholder="Input Pilih Berkas"
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" />
             </div>
+            <div class="flex flex-col w-[350px] md:w-[500px]">
+                <label for="berkas" class="mb-4 text-xl font-semibold">Pilih Berkas</label>
+                <input id="berkas" type="file" name="berkas" placeholder="Input Pilih Berkas"
+                    class="rounded-lg bg-gray-50 border-2 border-gray-300" />
+            </div>
+            <div class="flex flex-col w-[350px] md:w-[500px]">
+                <label for="berkas" class="mb-4 text-xl font-semibold">Pilih Berkas</label>
+                <input id="berkas" type="file" name="berkas" placeholder="Input Pilih Berkas"
+                    class="rounded-lg bg-gray-50 border-2 border-gray-300" />
+            </div>
 
             <div class="flex justify-center items-center">
                 <button class="bg-green-500 text-white border rounded-xl px-10 py-2">Upload Dokumen</button>
