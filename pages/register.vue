@@ -67,8 +67,8 @@
       </div>
 
       <div class="flex flex-col w-full">
-        <label for="pilih_bpp" class="mb-2 text-lg font-semibold">Pilih BPP</label>
-        <select id="pilih_bpp" class="bg-gray-100 border border-gray-300 rounded-lg w-full" v-model="user.pilih_bpp">
+        <label for="wilayah_bpp" class="mb-2 text-lg font-semibold">Pilih BPP</label>
+        <select id="wilayah_bpp" class="bg-gray-100 border border-gray-300 rounded-lg w-full" v-model="user.wilayah_bpp">
           <option value="" selected disabled>Pilih BPP</option>
           <option value="BPP MUARA UYA">BPP MUARA UYA</option>
           <option value="BPP JARO">BPP JARO</option>
@@ -124,7 +124,7 @@ export default {
       addres_kel_kab: '',
       addres_kel_kac: '',
       addres_kel_des: '',
-      pilih_bpp: '',
+      wilayah_bpp: '',
     };
 
     const user = ref({ ...defaultUser });
