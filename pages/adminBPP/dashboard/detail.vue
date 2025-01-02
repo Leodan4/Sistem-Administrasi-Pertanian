@@ -124,7 +124,7 @@ const updateDocument = async () => {
 };
 
 const handleDetailClick = (filePath) => {
-  const baseUrl = "https://pertanian.harvestdigital.online/hars6496/New%20directory/";
+  const baseUrl = "";
   if (filePath) {
     const fullUrl = `${baseUrl}${filePath}`;
     window.open(fullUrl, '_blank');
