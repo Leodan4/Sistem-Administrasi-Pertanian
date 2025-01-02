@@ -206,11 +206,16 @@ export default {
         };
 
         const handleFileUpload = (key, event) => {
-            const file = event.target.files[0];
-            if (file) {
-                uploadDokumen.formData.append(key, file);
+        const file = event.target.files[0];
+        if (file) {
+            if (file.size > 10 * 1024 * 1024) {
+            toast.error('Ukuran File maksimal 10 MB');
+            event.target.value = "";
+            return;
             }
-        };
+            uploadDokumen.formData.append(key, file);
+        }
+    };
 
         const handleUploadDokumen = async () => {
             uploadDokumen.formData.append("id_users", id_users);
@@ -228,7 +233,6 @@ export default {
                     }
                 });
             } catch (error) {
-                console.error("Gagal upload dokumen", error);
                 toast.error("Gagal upload dokumen");
             }
         };
