@@ -148,7 +148,6 @@ export default {
         const isDropdownOpen = ref(false);
         const router = useRouter();
         const uploadDokumen = useUploadDokumen();
-
         const categories = [
             {
                 name: "Jenis Bantuan Sarana",
@@ -218,23 +217,40 @@ export default {
     };
 
         const handleUploadDokumen = async () => {
-            uploadDokumen.formData.append("id_users", id_users);
-            uploadDokumen.formData.append("title", title.value);
-            uploadDokumen.formData.append("deskripsi", deskripsi.value);
-            uploadDokumen.formData.append("jenis_bantuan", selectedSubOption.value || selectedOption.value);
+            uploadDokumen.formData.append('id_users', id_users);
+            uploadDokumen.formData.append('title', title.value);
+            uploadDokumen.formData.append('deskripsi', deskripsi.value);
+            uploadDokumen.formData.append('catatan_revisi', '');
+            uploadDokumen.formData.append('uraian', '');
 
+            const bantuanFields = {
+                'Jenis Bantuan Sarana': 'jenis_bantuan_sarana',
+                'Jenis Bantuan Ketahanan Pangan': 'jenis_bantuan_pangan',
+                'Jenis Bantuan Prasarana': 'jenis_bantuan_prasarana',
+            };
+
+            Object.values(bantuanFields).forEach((field) => {
+                uploadDokumen.formData.append(field, '');
+            });
+
+            const selectedField = bantuanFields[selectedOption.value];
+            if (selectedField) {
+                uploadDokumen.formData.set(selectedField, selectedSubOption.value || ''); 
+            }
             try {
                 const response = await uploadDokumen.submitForm();
                 console.log(response);
 
-                toast.success("Dokumen berhasil diupload", {
-                    onClose: () => {
-                        router.push('/user/dashboard');
-                    }
+                toast.success('Dokumen berhasil diupload', {
+                onClose: () => {
+                    router.push('/user/dashboard');
+                },
                 });
+                uploadDokumen.formData = new FormData();
             } catch (error) {
-                toast.error("Gagal upload dokumen");
-            }
+                toast.error('Gagal upload dokumen');
+                uploadDokumen.formData = new FormData();
+            } 
         };
 
         return {
