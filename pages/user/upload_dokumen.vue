@@ -119,8 +119,15 @@
         </div>
 
         <div class="py-6">
-            <button class="bg-green-500 text-white border rounded-xl px-10 py-2"
-                @click="handleUploadDokumen">Simpan</button>
+            <button 
+                class="bg-green-500 text-white border rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500  px-10 py-2 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="handleUploadDokumen"
+                :disabled="isLoading">
+                <span v-if="isLoading" class="mr-2">
+                    <i class="animate-spin fas fa-spinner"></i>
+                </span>
+                <span>{{ isLoading ? "Menyimpan..." : "Simpan" }}</span>
+            </button> 
         </div>
 
     </section>
@@ -148,6 +155,7 @@ export default {
         const isDropdownOpen = ref(false);
         const router = useRouter();
         const uploadDokumen = useUploadDokumen();
+        const isLoading = ref(false);
         const categories = [
             {
                 name: "Jenis Bantuan Sarana",
@@ -217,6 +225,7 @@ export default {
     };
 
         const handleUploadDokumen = async () => {
+            isLoading.value = true;
             uploadDokumen.formData.append('id_users', id_users);
             uploadDokumen.formData.append('title', title.value);
             uploadDokumen.formData.append('deskripsi', deskripsi.value);
@@ -239,8 +248,6 @@ export default {
             }
             try {
                 const response = await uploadDokumen.submitForm();
-                console.log(response);
-
                 toast.success('Dokumen berhasil diupload', {
                 onClose: () => {
                     router.push('/user/dashboard');
@@ -250,7 +257,10 @@ export default {
             } catch (error) {
                 toast.error('Gagal upload dokumen');
                 uploadDokumen.formData = new FormData();
-            } 
+                isLoading.value = false;
+            } finally {
+                isLoading.value = false;
+            }
         };
 
         return {
@@ -265,12 +275,15 @@ export default {
             onSubOptionSelect,
             handleFileUpload,
             handleUploadDokumen,
+            isLoading
         };
     },
 };
 </script>
 
 <style scoped>
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 .shadow-xl {
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
