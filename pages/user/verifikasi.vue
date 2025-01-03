@@ -90,22 +90,31 @@ export default {
             catatan_revisi: "",
         });
 
+        const formateDate = (date) => {
+            if (!date) return '';
+
+            const d = new Date(date);
+            return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+        }
+
         const getData = async () => {
             try {
                 const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
                     const response = await $axios.get(`/form/form/?id_users=${id_users}`);
-                    const data = response.data.data[0];
+                    const data = response.data.data;
+
+                    const latestData = data[data.length - 1];
 
                     formData.value = {
-                        title: data.title || "",
-                        tanggal: data.tanggal || "",
-                        petugas1: data.petugas1 || "",
-                        petugas2: data.petugas2 || "",
-                        petugas3: data.petugas3 || "",
-                        petugas4: data.petugas4 || "",
-                        catatan_revisi: data.docs.catatan_revisi || ""
+                        title: latestData.title || "",
+                        tanggal: formateDate(latestData.tanggal) || "",
+                        petugas1: latestData.petugas1 || "",
+                        petugas2: latestData.petugas2 || "",
+                        petugas3: latestData.petugas3 || "",
+                        petugas4: latestData.petugas4 || "",
+                        catatan_revisi: latestData.note || ""
                     };
                 } else {
                     console.error('User ID not found in local storage');
