@@ -71,6 +71,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Header2 from '~/components/user/header_2.vue';
 import { useRouter } from 'vue-router';
+import { formateDate } from '~/lib/utils';
 
 const $axios = axios().provide.axios;
 
@@ -89,13 +90,6 @@ export default {
             petugas4: "",
             catatan_revisi: "",
         });
-
-        const formateDate = (date) => {
-            if (!date) return '';
-
-            const d = new Date(date);
-            return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
-        }
 
         const getData = async () => {
             try {

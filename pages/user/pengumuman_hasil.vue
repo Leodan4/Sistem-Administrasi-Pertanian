@@ -176,6 +176,30 @@ export default {
                         {{ formData.sumber_dana }}
                     </div>
                 </div>
+                <div class="flex flex-col w-[350px] md:w-[500px]">
+                    <label for="sumber_dana" class="mb-2 text-lg font-semibold">Tanggal</label>
+                    <div id="sumber_dana" class="rounded-lg bg-gray-50 border-2 border-gray-400 p-2 h-11">
+                        {{ formData.tanggal }}
+                    </div>
+                </div>
+                <div class="flex flex-col w-[350px] md:w-[500px]">
+                    <label for="sumber_dana" class="mb-2 text-lg font-semibold">Surat Serah Terima Bantuan</label>
+                    <div class="flex justify-between items-center gap-3">
+                        <div id="sumber_dana" class="rounded-lg bg-gray-50 border-2 border-gray-400 w-full p-2 h-11 ">
+                        </div>
+                        <div class="">
+                            <a
+                        v-if="formData.surat_serah_terima_bantuan"
+                        :href="formData.surat_serah_terima_bantuan"
+                        download
+                        class=" flex group justify-between items-center gap-1 bg-blue-500 text-white px-2 py-3 rounded-lg hover:bg-blue-700 "
+                    >
+                        <Icon icon="material-symbols:download" :width="24" />
+                        Download 
+                    </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -192,12 +216,15 @@ import Header2 from '~/components/user/header_2.vue';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { useRouter } from 'vue-router';
+import { formateDate } from '~/lib/utils';
+import { Icon } from '@iconify/vue';
 
 const $axios = axios().provide.axios;
 
 export default {
     components: {
-        Header2
+        Header2,
+        Icon
     },
     setup() {
         const router = useRouter();
@@ -215,7 +242,7 @@ export default {
                 const id_users = localStorage.getItem('id_users');
 
                 if (id_users) {
-                    const response = await $axios.get(`/formhasil/formhasil/?id_users=${id_users}`);
+                    const response = await $axios.get(`/formhasil/formhasil/${id_users}`);
                     const data = response.data.data[0];
 
                     formData.value = {
@@ -224,7 +251,9 @@ export default {
                         jenis_bantuan: data.jenis_bantuan || "",
                         judul_dokumen: data.title || "",
                         nama_penanggung_jawab: data.nama_penangung_jawab || "",
-                        sumber_dana: data.sumber_dana || ""
+                        sumber_dana: data.sumber_dana || "",
+                        tanggal: formateDate(data.createdAt),
+                        surat_serah_terima_bantuan: data.surat_serah_terima_bantuan
                     };
                 } else {
                     console.error('User ID not found in local storage');

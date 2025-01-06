@@ -26,14 +26,15 @@ export const useLoginStore = defineStore("login", {
         );
 
         if (response && response.data && response.data.data && response.data.data.token) {
-          const token = response.data.data.token;
-          const id_users = response.data.data.id_users;
-          const username = response.data.data.username;
-          // const userData = response.data.data;
+          const { token, id_users, username, docs, formhasil, Form } = response.data.data;
 
           localStorage.setItem("token", token);
           localStorage.setItem("username", username);
           localStorage.setItem("id_users", id_users);
+          localStorage.setItem("docs", docs === "User Do Not Access" ? false : true);
+          localStorage.setItem("formhasil", formhasil === "User Do Not Access" ? false : true);
+          localStorage.setItem("Form", Form === "User Do Not Access" ? false : true);
+
 
           this.$patch({ 
             token: token, 

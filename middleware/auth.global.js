@@ -2,6 +2,9 @@
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const token = localStorage.getItem("token");
+  const docs = localStorage.getItem("docs");
+  const form = localStorage.getItem("Form");
+  const formhasil = localStorage.getItem("formhasil");
 
   // Halaman publik yang tidak membutuhkan autentikasi
   const publicPages = ["/login", "/register"];
@@ -13,6 +16,29 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo("/login");
     }
     return;
+  }
+
+  const pagesRequiringDocs = ["/user/revisi_dokumen"];
+  const pagesRequiringFormHasil = ["/user/pengumuman_hasil"];
+  const pagesRequiringVerifikasi = ["/user/verifikasi"];
+
+  if (pagesRequiringDocs.some((path) => to.path.startsWith(path)) && docs === "false") {
+    alert("Anda belum memiliki akses untuk revisi dokumen");
+    return navigateTo("/user/dashboard");
+  }
+
+  if (
+    pagesRequiringFormHasil.some((path) => to.path.startsWith(path)) &&
+    formhasil === "false"
+  ) {
+   alert("Anda belum memiliki akses untuk pengumuman hasil");
+    return navigateTo("/user/dashboard");
+  }
+
+  if (pagesRequiringVerifikasi.some((path) => to.path.startsWith(path)) && form === "false") {
+    alert("Anda belum memiliki akses untuk verifikasi");
+
+    return navigateTo("/user/dashboard");
   }
 
   // const verifiedToken = await verifyAuth(token).catch((err) => {
