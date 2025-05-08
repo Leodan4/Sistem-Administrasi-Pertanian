@@ -138,33 +138,33 @@ onMounted(() => {
         <div class="flex flex-col justify-center items-center gap-5 md:gap-10">
             <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="judul_proposal_1" class="mb-2 md:mb-4 text-xl font-semibold">Judul Proposal</label>
-                <input id="judul_proposal_1" type="text" name="judul_proposal" placeholder="Input Judul Proposal"
+                <input id="judul_proposal_1" type="text" name="judul_proposal" disabled placeholder="Input Judul Proposal"
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" v-model="documentData.judul_proposal" />
             </div>
 
             <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="status" class="mb-2 md:mb-4 text-xl font-semibold">Status</label>
-                <input id="status" type="text" name="status" placeholder="Input Status"
+                <input id="status" type="text" name="status" placeholder="Input Status" disabled
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" v-model="documentData.status" />
             </div>
 
             <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="catatan_bpp" class="mb-2 md:mb-4 text-xl font-semibold">Catatan BPP</label>
-                <textarea id="catatan_bpp" name="catatan_bpp" placeholder="Input Catatan BPP"
+                <textarea id="catatan_bpp" name="catatan_bpp" placeholder="Input Catatan BPP" disabled
                     class="rounded-lg bg-gray-50 border-2 border-gray-300"
                     v-model="documentData.catatan_bpp"></textarea>
             </div>
 
             <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="catatan_dinas" class="mb-2 md:mb-4 text-xl font-semibold">Catatan Dinas</label>
-                <textarea id="catatan_dinas" name="catatan_dinas" placeholder="Input Catatan Dinas"
+                <textarea id="catatan_dinas" name="catatan_dinas" placeholder="Input Catatan Dinas" disabled
                     class="rounded-lg bg-gray-50 border-2 border-gray-300"
                     v-model="documentData.catatan_dinas"></textarea>
             </div>
 
             <div class="flex flex-col w-screen px-8 md:px-96">
                 <label for="tanggal" class="mb-2 md:mb-4 text-xl font-semibold">Tanggal</label>
-                <input id="tanggal" type="date" name="tanggal" placeholder="Input Tanggal"
+                <input id="tanggal" type="date" name="tanggal" placeholder="Input Tanggal" disabled
                     class="rounded-lg bg-gray-50 border-2 border-gray-300" v-model="documentData.tanggal" />
             </div>
 

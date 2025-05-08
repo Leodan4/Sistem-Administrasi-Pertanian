@@ -1,4 +1,3 @@
-
 <template>
   <MainLayoutDinas>
     <div class="w-full mt-20 text-black px-8">
@@ -19,6 +18,10 @@
                 {{ row?.type_doc }}
               </span>
             </td>
+            <td class="py-2 px-4 text-left">{{ row?.user?.username }}</td>
+            <td class="py-2 px-4 text-left">{{ row?.user?.name_kel_tani }}</td>
+            <td class="py-2 px-4 text-left">{{ row?.user?.addres_des }}</td>
+            <td class="py-2 px-4 text-left">{{ row?.user?.addres_kec }}</td>
             <td class="py-2 px-4 text-left">
               <button @click="navigateToDetail(row.id_docs)" class="bg-[#0E9F6E] hover:bg-green-700 text-white py-1 px-4 rounded">Detail</button>
             </td>
@@ -30,9 +33,7 @@
         <button @click="fetchDocuments(pagination.currentPage - 1)" :disabled="!pagination.hasPrev" class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-3 rounded-l border-2 border-gray-300">
           Previous
         </button>
-        <button @click="fetchDocuments(pagination.currentPage + 1)" :disabled="!pagination.hasNext" class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-6 rounded-r border-2 border-gray-300">
-          Next
-        </button>
+        <button @click="fetchDocuments(pagination.currentPage + 1)" :disabled="!pagination.hasNext" class="bg-white hover:bg-[#DEF7EC] text-[#6B7280] hover:text-[#0E9F6E] font-bold py-2 px-6 rounded-r border-2 border-gray-300">Next</button>
       </div>
     </div>
   </MainLayoutDinas>
@@ -40,25 +41,20 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router'; 
+import { useRouter } from 'vue-router';
 import { useDashboardDinasStore } from '~/stores/adminDinas/dashboardDinas';
 import MainLayoutDinas from '~/layouts/MainLayoutDinas.vue';
-import Table from "~/components/global/table.vue";
+import Table from '~/components/global/table.vue';
 
 const router = useRouter(); // Initialize router
 const dashboardStore = useDashboardDinasStore();
 
-const tableHeader = ref([
-  "No Dokumen",
-  "Uraian",
-  "Status",
-  "Aksi",
-]);
+const tableHeader = ref(['No Dokumen', 'Uraian', 'Status', 'Petani', 'Poktan', 'Desa', 'Kecamatan', 'Aksi']);
 
 const fetchDocuments = async (page = 1) => {
   try {
     await dashboardStore.getAllDocuments(page);
-    console.log("Documents after fetch:", documents.value);  // Log the documents after fetch
+    console.log('Documents after fetch:', documents.value); // Log the documents after fetch
   } catch (error) {
     console.error('Failed to fetch documents:', error);
   }
@@ -69,7 +65,7 @@ onMounted(() => {
 });
 
 const documents = computed(() => {
-  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter(doc => doc.type_doc === 'tervalidasi') : [];
+  const filteredDocs = dashboardStore.data ? dashboardStore.data.filter((doc) => doc.type_doc === 'tervalidasi') : [];
   return filteredDocs.length > 0 ? filteredDocs : [];
 });
 const pagination = computed(() => dashboardStore.pagination);
